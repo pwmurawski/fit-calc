@@ -41,7 +41,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       foodProductData: response.data,
     },
-    revalidate: 60,
   };
 };
 

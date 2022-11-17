@@ -44,7 +44,7 @@ export default function SelectedProduct({
         <Name>{name}</Name>
         <DeleteBtn
           onClick={(e) => {
-            e.stopPropagation();
+            e.preventDefault();
             deleteHandler(selectedId, dateTime);
           }}
         />

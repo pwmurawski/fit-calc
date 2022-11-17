@@ -8,7 +8,7 @@ const postSelectedProduct = async (
   req?: NextApiRequest,
   res?: NextApiResponse
 ) => {
-  const data = await fitCalcApi<{ id: string }>("/selectedProduct", {
+  const data = await fitCalcApi<{ id: string }, "weight">("/selectedProduct", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

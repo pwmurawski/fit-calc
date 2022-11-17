@@ -22,7 +22,7 @@ export default function AddFoodProductForm({
 
   return (
     <>
-      {loading ? <Loading /> : null}
+      {loading ? <Loading stopClick /> : null}
       <Form
         onSubmit={(e) => {
           e.preventDefault();

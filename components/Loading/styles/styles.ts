@@ -1,5 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   --width: 80px;
@@ -14,6 +13,15 @@ export const Container = styled.div`
   width: var(--width);
   height: var(--height);
   z-index: 1;
+
+  ${({ stopClick }: { stopClick?: boolean }) =>
+    stopClick &&
+    css`
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    `}
 `;
 
 export const Spinner = styled.div`

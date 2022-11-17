@@ -7,7 +7,7 @@ const fitCalcApi = async <Data, ErrorsKeys extends string = string>(
   options?: RequestInit
 ) => {
   try {
-    const baseUrl = process.env.API_BASE_URL ?? "http://127.0.0.1:9000/api";
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const response = await fetch(`${baseUrl}${url}`, options);
     const data: IResponse<Data, ErrorsKeys> = {

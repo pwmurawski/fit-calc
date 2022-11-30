@@ -8,8 +8,8 @@ import { IGetServerProps } from "../interfaces/IGetServerProps";
 import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { token } = userAuth(req, res);
-  if (!token)
+  const { isUser } = userAuth(req, res);
+  if (!isUser)
     return {
       redirect: {
         destination: "/login",

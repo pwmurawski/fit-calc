@@ -1,10 +1,22 @@
-import useLoginForm from "../../../hooks/useLoginForm";
-import { SubmitType } from "../../../interfaces/LoginFormType";
+import useForm from "../../../hooks/useForm";
+import { FormInitType } from "../../../interfaces/FormTypes";
+import { KeysType, SubmitType } from "../../../interfaces/AuthFormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
 import Loading from "../../Loading/Loading";
 import { Form, SubmitBtn } from "./styles/styles";
 
-interface ILoginFormProps {
+const initFormValue: FormInitType<KeysType> = {
+  username: {
+    value: "",
+    rules: ["email", "required"],
+  },
+  password: {
+    value: "",
+    rules: [{ rule: "min", length: 4 }, "required"],
+  },
+};
+
+interface IAuthFormProps {
   submitBtnText?: string;
   onSubmit: SubmitType;
 }
@@ -13,18 +25,15 @@ const defaultProps = {
   submitBtnText: "Zaloguj sie",
 };
 
-export default function LoginForm({
-  onSubmit,
-  submitBtnText,
-}: ILoginFormProps) {
+export default function AuthForm({ onSubmit, submitBtnText }: IAuthFormProps) {
   const {
     formVal,
     onChange,
     onSubmitHandler,
-    backendErrors,
     loading,
+    backendErrors,
     isErrorForm,
-  } = useLoginForm();
+  } = useForm(initFormValue);
 
   return (
     <>
@@ -61,4 +70,4 @@ export default function LoginForm({
   );
 }
 
-LoginForm.defaultProps = defaultProps;
+AuthForm.defaultProps = defaultProps;

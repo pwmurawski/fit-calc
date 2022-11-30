@@ -25,10 +25,10 @@ export default function FoodProducts({
 }: {
   foodProducts: IFoodProductData[];
 }) {
-  const { token, logoutHandler } = useAuth();
+  const { isUser, logoutHandler } = useAuth();
 
   useEffect(() => {
-    if (!token) logoutHandler();
+    if (!isUser) logoutHandler();
   }, []);
 
   return (

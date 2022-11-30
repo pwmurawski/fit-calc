@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect } from "react";
+import Link from "next/link";
 import getFoodProduct from "../../api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
@@ -51,11 +52,11 @@ interface IFoodProductPageProps {
 export default function FoodProductPage({
   foodProductData,
 }: IFoodProductPageProps) {
-  const { token, logoutHandler } = useAuth();
+  const { isUser, logoutHandler } = useAuth();
   const addFoodProductToMeal = useAddFoodProductToMeal();
 
   useEffect(() => {
-    if (!token) logoutHandler();
+    if (!isUser) logoutHandler();
   }, []);
 
   if (!foodProductData) return <Loading />;
@@ -65,6 +66,7 @@ export default function FoodProductPage({
         kcal={foodProductData.kcal}
         submit={(weight) => addFoodProductToMeal(foodProductData.id, weight)}
       />
+      <Link href={`/foodProducts/edit/${foodProductData.id}`}>Edit</Link>
       <NutritionalValues foodProductData={foodProductData} />
       {foodProductData.code ? <BarCode value={foodProductData.code} /> : null}
     </>

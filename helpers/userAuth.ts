@@ -1,23 +1,20 @@
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
-import { NextApiRequest, NextApiResponse } from "next";
+import { ReqType, ResType } from "../interfaces/IGetServerProps";
 
-const COOKIE_KEY = "token";
-const reg = /^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\\+\\/=]*)/;
+export const COOKIE_KEY_USER = "isUserLogin";
 
-const userAuth = (req?: NextApiRequest, res?: NextApiResponse) => {
-  const login = (token: string) => {
-    setCookie(COOKIE_KEY, token, { req, res });
+const userAuth = (req?: ReqType, res?: ResType) => {
+  const login = () => {
+    setCookie(COOKIE_KEY_USER, true, { req, res });
   };
 
   const logout = () => {
-    deleteCookie(COOKIE_KEY, { req, res });
+    deleteCookie(COOKIE_KEY_USER, { req, res });
   };
 
-  const token = getCookie(COOKIE_KEY, { req, res });
-  if (token) {
-    if (reg.test(token.toString())) return { token, login, logout };
-  }
-  return { login, logout };
+  const isUser = getCookie(COOKIE_KEY_USER, { req, res });
+
+  return { isUser, login, logout };
 };
 
 export default userAuth;

@@ -1,11 +1,11 @@
-import LoginForm from "../../components/Forms/LoginForm/LoginForm";
+import AuthForm from "../../components/Forms/AuthForm/AuthForm";
 import userAuth from "../../helpers/userAuth";
 import { IGetServerProps } from "../../interfaces/IGetServerProps";
 import useAuth from "../../hooks/useAuth";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { token } = userAuth(req, res);
-  if (token)
+  const { isUser } = userAuth(req, res);
+  if (isUser)
     return {
       redirect: {
         destination: "/",
@@ -18,5 +18,5 @@ export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
 export default function Login() {
   const { loginHandler } = useAuth();
 
-  return <LoginForm onSubmit={loginHandler} />;
+  return <AuthForm onSubmit={loginHandler} />;
 }

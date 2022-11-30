@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IResponse } from "../interfaces/IResponse";
-import { BackendErrorsValuesType } from "../interfaces/LoginFormType";
 import useFormValidLive from "./useFormValidLive";
 import getBackendErrors from "../helpers/getBackendErrors";
 import isErrorForm from "../helpers/isErrorForm";
+import {
+  FormType,
+  FormDefaultValueType,
+  SubmitType,
+  FormRespValueType,
+  BackendErrorsValuesType,
+} from "../interfaces/FormTypes";
 
-const useForm = <InitFormValue>(initFormValue: InitFormValue) => {
-  const [formVal, onChange] = useFormValidLive(initFormValue);
+const useForm = <InitFormValue>(
+  initFormValue: InitFormValue,
+  defaultValue?: FormDefaultValueType<InitFormValue>
+) => {
+  const [formVal, onChange, setFormData] = useFormValidLive(initFormValue);
   const [backendErrors, setBackendErrors] =
     useState<Record<keyof InitFormValue, BackendErrorsValuesType>>();
+  const [loading, setLoading] = useState(false);
 
   const setError = async <T, Y extends string>(
     response: IResponse<T, Y> | undefined
@@ -19,7 +29,53 @@ const useForm = <InitFormValue>(initFormValue: InitFormValue) => {
     }
   };
 
-  return { formVal, onChange, backendErrors, setError, isErrorForm };
+  const onSubmitHandler = async (submit: SubmitType<InitFormValue>) => {
+    setLoading(true);
+    let formResponseValue: object = {};
+
+    Object.entries(formVal as FormType<InitFormValue>).forEach((entries) => {
+      const [keys, values] = entries as [
+        keyof InitFormValue,
+        { value: string }
+      ];
+      formResponseValue = {
+        ...formResponseValue,
+        [keys]: values?.value,
+      };
+    });
+
+    if (formResponseValue) {
+      const res = await submit(
+        formResponseValue as FormRespValueType<InitFormValue>
+      );
+      setError(res);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (defaultValue) {
+      Object.entries(defaultValue).forEach((entries) => {
+        const [keys, values] = entries as [keyof InitFormValue, string];
+        setFormData((state: FormType<InitFormValue>) => ({
+          ...state,
+          [keys]: {
+            ...state[keys],
+            value: values ?? state[keys].value,
+          },
+        }));
+      });
+    }
+  }, [defaultValue]);
+
+  return {
+    formVal,
+    onChange,
+    onSubmitHandler,
+    loading,
+    backendErrors,
+    isErrorForm,
+  };
 };
 
 export default useForm;

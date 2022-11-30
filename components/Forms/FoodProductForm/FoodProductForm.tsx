@@ -1,24 +1,62 @@
-import { SubmitType } from "../../../interfaces/FormAddFoodProductType";
+import { FormInitType } from "../../../interfaces/FormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
 import { AddBtn, Form } from "./styles/styles";
 import Loading from "../../Loading/Loading";
-import useAddFoodProductForm from "../../../hooks/useAddFoodProductForm";
+import useForm from "../../../hooks/useForm";
+import {
+  DefaultValueType,
+  KeysType,
+  SubmitType,
+} from "../../../interfaces/FoodProductFormTypes";
 
-interface IAddFoodProductFormProps {
+interface IFoodProductFormProps {
   submit: SubmitType;
+  defaultValue?: DefaultValueType;
 }
 
-export default function AddFoodProductForm({
+const defaultProps = {
+  defaultValue: undefined,
+};
+
+const initForm: FormInitType<KeysType> = {
+  name: {
+    value: "",
+    rules: [{ rule: "min", length: 3 }, "required"],
+  },
+  kcal: {
+    value: "",
+    rules: ["required"],
+  },
+  protein: {
+    value: "",
+    rules: ["required"],
+  },
+  fat: {
+    value: "",
+    rules: ["required"],
+  },
+  carbs: {
+    value: "",
+    rules: ["required"],
+  },
+  code: {
+    value: "",
+    rules: [],
+  },
+};
+
+export default function FoodProductForm({
   submit,
-}: IAddFoodProductFormProps) {
+  defaultValue = undefined,
+}: IFoodProductFormProps) {
   const {
     formVal,
     onChange,
-    onSubmitHandler,
     backendErrors,
-    loading,
     isErrorForm,
-  } = useAddFoodProductForm();
+    loading,
+    onSubmitHandler,
+  } = useForm(initForm, defaultValue);
 
   return (
     <>
@@ -87,3 +125,5 @@ export default function AddFoodProductForm({
     </>
   );
 }
+
+FoodProductForm.defaultProps = defaultProps;

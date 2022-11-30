@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useState } from "react";
 import GlobalContext from "../../../context/GlobalContext/GlobalContext";
-import { IMealData } from "../../../interfaces/IMealData";
+import { IMealData } from "../../../interfaces/IMealsData";
 import {
   Container,
   Name,

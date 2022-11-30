@@ -37,6 +37,7 @@ export default function InputCustom({
         ref={inputRef}
         value={value}
         onChange={onChange}
+        step="0.1"
         placeholder=" "
       />
       <Label onClick={() => inputRef.current?.focus()}>{placeholder}</Label>

@@ -1,19 +1,45 @@
+import { useContext, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Container, Logo, LogoutBtn } from "./styles/styles";
+import {
+  Calendar,
+  Container,
+  Logo,
+  LogoutBtn,
+  LogoutImg,
+} from "./styles/styles";
+import logout from "../../assets/logout.png";
+import GlobalContext from "../../context/GlobalContext/GlobalContext";
 
 export default function Header() {
-  const { logoutHandler } = useAuth();
+  const { state, dispatch } = useContext(GlobalContext);
+  const { isUser, logoutHandler } = useAuth();
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    setUser(!!isUser);
+  }, [isUser]);
 
   return (
     <Container>
       <Logo>FitCALC</Logo>
-      <LogoutBtn
-        onClick={() => {
-          logoutHandler();
-        }}
-      >
-        Log out
-      </LogoutBtn>
+      {user ? (
+        <>
+          <Calendar
+            type="date"
+            value={state.date?.toLocaleDateString("fr-CA")}
+            onChange={(e) =>
+              dispatch({ type: "setDate", date: new Date(e.target.value) })
+            }
+          />
+          <LogoutBtn
+            onClick={() => {
+              logoutHandler();
+            }}
+          >
+            <LogoutImg src={logout.src} alt="logout" />
+          </LogoutBtn>
+        </>
+      ) : null}
     </Container>
   );
 }

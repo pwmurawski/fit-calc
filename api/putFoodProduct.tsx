@@ -4,9 +4,9 @@ import {
 } from "../interfaces/FoodProductFormTypes";
 import fitCalcApi from "./fitCalcApi";
 
-const postFoodProduct = async (body?: IFoodProductFormValue) => {
-  const data = await fitCalcApi<{ id: string }, KeysType>("/foodProduct", {
-    method: "POST",
+const putFoodProduct = async (id: string, body?: IFoodProductFormValue) => {
+  const data = await fitCalcApi<null, KeysType>(`/foodProduct/${id}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
@@ -16,4 +16,4 @@ const postFoodProduct = async (body?: IFoodProductFormValue) => {
   return data;
 };
 
-export default postFoodProduct;
+export default putFoodProduct;

@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import postFoodProduct from "../api/postFoodProduct";
 import revalidate from "../helpers/revalidate";
-import { IAddFoodProductFormVal } from "../interfaces/IAddFoodProductFormVal";
+import { IFoodProductFormValue } from "../interfaces/FoodProductFormTypes";
 
 const useAddFoodProduct = () => {
   const { back, prefetch } = useRouter();
 
-  const addFoodProduct = async (data: IAddFoodProductFormVal) => {
+  const addFoodProduct = async (data: IFoodProductFormValue) => {
     const res = await postFoodProduct(data);
     if (res?.status === 200) {
       await revalidate("/foodProducts");

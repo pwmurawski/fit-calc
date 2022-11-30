@@ -1,5 +1,5 @@
 import { FoodProductKeyType } from "../interfaces/IFoodProductData";
-import { ISelectedProductResponse } from "../interfaces/ISelectedProductResponse";
+import { ISelectedProductResponse } from "../interfaces/ISelectedProduct";
 import { ISummaryCalorieMacroData } from "../interfaces/ISummaryCalorieMacroData";
 
 const reduce = (arr: ISelectedProductResponse[], key: FoodProductKeyType) => {

@@ -1,20 +1,14 @@
-import { getCookie } from "cookies-next";
-import { NextApiRequest, NextApiResponse } from "next";
 import { IBodySelectedProduct } from "../interfaces/IBodySelectedProduct";
 import fitCalcApi from "./fitCalcApi";
 
-const postSelectedProduct = async (
-  body: IBodySelectedProduct,
-  req?: NextApiRequest,
-  res?: NextApiResponse
-) => {
+const postSelectedProduct = async (body: IBodySelectedProduct) => {
   const data = await fitCalcApi<{ id: string }, "weight">("/selectedProduct", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookie("token", { req, res })}`,
     },
     body: JSON.stringify(body),
+    credentials: "include",
   });
 
   return data;

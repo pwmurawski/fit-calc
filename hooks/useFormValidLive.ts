@@ -6,7 +6,8 @@ const useFormValidLive = <State>(
   initForm: State
 ): [
   formData: State,
-  changeHandler: (value: string, fieldName: keyof State) => void
+  changeHandler: typeof changeHandler,
+  setFormData: typeof setFormData
 ] => {
   const [formData, setFormData] = useState<any>(initForm);
 
@@ -23,7 +24,7 @@ const useFormValidLive = <State>(
     });
   };
 
-  return [formData, changeHandler];
+  return [formData, changeHandler, setFormData];
 };
 
 export default useFormValidLive;

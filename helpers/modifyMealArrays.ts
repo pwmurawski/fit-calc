@@ -2,7 +2,7 @@ import { FoodProductKeyType } from "../interfaces/IFoodProductData";
 
 import { IMealResponse } from "../interfaces/IMealResponse";
 import { IMealsData } from "../interfaces/IMealsData";
-import { ISelectedProductResponse } from "../interfaces/ISelectedProductResponse";
+import { ISelectedProductResponse } from "../interfaces/ISelectedProduct";
 
 const filterMap = (mealId: string, arr: ISelectedProductResponse[]) => {
   return arr

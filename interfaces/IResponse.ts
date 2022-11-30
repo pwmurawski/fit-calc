@@ -6,7 +6,6 @@ export type ValuesResBackendErrorsType =
 
 export interface IResponse<Data, ErrorsKeys extends string> {
   status: number;
-  token?: string;
   data?: Data;
   code?: number;
   message?: string;

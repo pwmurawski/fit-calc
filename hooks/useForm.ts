@@ -31,17 +31,16 @@ const useForm = <InitFormValue>(
 
   const onSubmitHandler = async (submit: SubmitType<InitFormValue>) => {
     setLoading(true);
-    let formResponseValue: object = {};
+    const formResponseValue: object = {};
 
     Object.entries(formVal as FormType<InitFormValue>).forEach((entries) => {
       const [keys, values] = entries as [
         keyof InitFormValue,
         { value: string }
       ];
-      formResponseValue = {
-        ...formResponseValue,
+      Object.assign(formResponseValue, {
         [keys]: values?.value,
-      };
+      });
     });
 
     if (formResponseValue) {

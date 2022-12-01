@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import getLogout from "../api/getLogout";
+import getUserId from "../api/getUserId";
 import postLogin from "../api/postLogin";
 import postRegister from "../api/postRegister";
 import userAuth from "../helpers/userAuth";
@@ -11,8 +12,9 @@ const useAuth = () => {
 
   const loginHandler = async (formValue: ILoginFormValue) => {
     const res = await postLogin(formValue);
-    if (res?.status === 204) {
-      login();
+    const resp = await getUserId();
+    if (res?.status === 204 && resp?.data) {
+      login(resp.data.userId);
       push("/");
     }
     return res;

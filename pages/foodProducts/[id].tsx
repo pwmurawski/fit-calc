@@ -1,7 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { useEffect } from "react";
-import Link from "next/link";
 import getFoodProduct from "../../api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
@@ -11,6 +9,7 @@ import useAddFoodProductToMeal from "../../hooks/useAddFoodProductToMeal";
 import getFoodProducts from "../../api/getFoodProducts";
 import Loading from "../../components/Loading/Loading";
 import useAuth from "../../hooks/useAuth";
+import Options from "../../components/Options/Options";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -53,11 +52,8 @@ export default function FoodProductPage({
   foodProductData,
 }: IFoodProductPageProps) {
   const { isUser, logoutHandler } = useAuth();
+  if (!isUser) logoutHandler();
   const addFoodProductToMeal = useAddFoodProductToMeal();
-
-  useEffect(() => {
-    if (!isUser) logoutHandler();
-  }, []);
 
   if (!foodProductData) return <Loading />;
   return (
@@ -66,7 +62,13 @@ export default function FoodProductPage({
         kcal={foodProductData.kcal}
         submit={(weight) => addFoodProductToMeal(foodProductData.id, weight)}
       />
-      <Link href={`/foodProducts/edit/${foodProductData.id}`}>Edit</Link>
+      <Options
+        ids={{
+          foodProductId: foodProductData.id,
+          foodProductUserId: foodProductData.userId,
+          userAuthId: isUser,
+        }}
+      />
       <NutritionalValues foodProductData={foodProductData} />
       {foodProductData.code ? <BarCode value={foodProductData.code} /> : null}
     </>

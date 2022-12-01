@@ -1,5 +1,4 @@
 import { GetStaticProps } from "next";
-import { useEffect } from "react";
 import AddNewFoodProduct from "../../components/AddNewFoodProduct/AddNewFoodProduct";
 import FoodProductsTable from "../../components/FoodProductsTable/FoodProductsTable";
 import getFoodProducts from "../../api/getFoodProducts";
@@ -26,10 +25,7 @@ export default function FoodProducts({
   foodProducts: IFoodProductData[];
 }) {
   const { isUser, logoutHandler } = useAuth();
-
-  useEffect(() => {
-    if (!isUser) logoutHandler();
-  }, []);
+  if (!isUser) logoutHandler();
 
   return (
     <>

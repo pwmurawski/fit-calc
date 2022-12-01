@@ -20,6 +20,7 @@ export default function WeightForm({ submit, kcal }: IWeightInputProps) {
       <Container>
         <Input
           type="number"
+          step="0.1"
           placeholder="0"
           min="0"
           value={weight}
@@ -27,7 +28,7 @@ export default function WeightForm({ submit, kcal }: IWeightInputProps) {
         />
         <Unit>g</Unit>
       </Container>
-      <Kcal>{Math.round((kcal * +weight) / 100)} kcal</Kcal>
+      <Kcal>{Number(((kcal * +weight) / 100).toFixed(1))} kcal</Kcal>
       <SubmitBtn type="submit" />
     </Form>
   );

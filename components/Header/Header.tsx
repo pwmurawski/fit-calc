@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import useAuth from "../../hooks/useAuth";
 import {
   Calendar,
@@ -13,16 +13,11 @@ import GlobalContext from "../../context/GlobalContext/GlobalContext";
 export default function Header() {
   const { state, dispatch } = useContext(GlobalContext);
   const { isUser, logoutHandler } = useAuth();
-  const [user, setUser] = useState(false);
-
-  useEffect(() => {
-    setUser(!!isUser);
-  }, [isUser]);
 
   return (
     <Container>
       <Logo>FitCALC</Logo>
-      {user ? (
+      {isUser ? (
         <>
           <Calendar
             type="date"

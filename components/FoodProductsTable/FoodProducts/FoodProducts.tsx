@@ -1,4 +1,4 @@
-import { IFoodProductData } from "../../../interfaces/IFoodProductData";
+import { IFoodProductData } from "../../../types/IFoodProductData";
 import FoodProduct from "./FoodProduct/FoodProduct";
 
 interface IFoodProductsProps {

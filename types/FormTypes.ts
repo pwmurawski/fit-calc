@@ -16,15 +16,9 @@ export type FormDefaultValueType<T> = Partial<Record<keyof T, string>>;
 
 export type FormRespValueType<T> = Record<keyof T, string>;
 
-export type SubmitType<T> = (data: FormRespValueType<T>) => Promise<
-  | IResponse<
-      {
-        id: string;
-      } | null,
-      string
-    >
-  | undefined
->;
+export type SubmitType<T> = (
+  data: FormRespValueType<T>
+) => Promise<IResponse<any, string> | undefined>;
 
 export type BackendErrorsValuesType = {
   error?: string;

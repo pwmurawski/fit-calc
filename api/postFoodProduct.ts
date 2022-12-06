@@ -1,7 +1,4 @@
-import {
-  IFoodProductFormValue,
-  KeysType,
-} from "../interfaces/FoodProductFormTypes";
+import { IFoodProductFormValue, KeysType } from "../types/FoodProductFormTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const postFoodProduct = async (body?: IFoodProductFormValue) => {

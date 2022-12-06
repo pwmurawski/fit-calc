@@ -1,8 +1,8 @@
 /* eslint-disable no-empty */
 import { deleteCookie } from "cookies-next";
 import { COOKIE_KEY_USER } from "../helpers/userAuth";
-import { ReqType, ResType } from "../interfaces/IGetServerProps";
-import { IResponse } from "../interfaces/IResponse";
+import { ReqType, ResType } from "../types/IGetServerProps";
+import { IResponse } from "../types/IResponse";
 
 const fitCalcApi = async <Data, ErrorsKeys extends string = string>(
   url: string,

@@ -1,6 +1,6 @@
-import { FoodProductKeyType } from "../interfaces/IFoodProductData";
-import { ISelectedProductResponse } from "../interfaces/ISelectedProduct";
-import { ISummaryCalorieMacroData } from "../interfaces/ISummaryCalorieMacroData";
+import { FoodProductKeyType } from "../types/IFoodProductData";
+import { ISelectedProductResponse } from "../types/ISelectedProduct";
+import { ISummaryCalorieMacroData } from "../types/ISummaryCalorieMacroData";
 
 const reduce = (arr: ISelectedProductResponse[], key: FoodProductKeyType) => {
   return arr.reduce(

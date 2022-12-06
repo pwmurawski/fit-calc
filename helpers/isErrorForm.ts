@@ -1,4 +1,4 @@
-import { ValuesType } from "../interfaces/FormTypes";
+import { ValuesType } from "../types/FormTypes";
 
 const isErrorForm = (formVal: { [s: string]: ValuesType }) => {
   let status = false;

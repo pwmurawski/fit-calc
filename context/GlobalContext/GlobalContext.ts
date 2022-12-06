@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext } from "react";
-import { ActionType, IState } from "../../interfaces/IGlobalReducer";
+import { ActionType, IState } from "../../types/IGlobalReducer";
 
 interface IGlobalContext {
   state: IState;

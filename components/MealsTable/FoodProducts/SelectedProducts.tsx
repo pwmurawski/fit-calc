@@ -1,5 +1,5 @@
 import uuid from "react-uuid";
-import { ISelectedProduct } from "../../../interfaces/ISelectedProduct";
+import { ISelectedProduct } from "../../../types/ISelectedProduct";
 import SelectedProduct from "./FoodProduct/SelectedProduct";
 
 interface IFoodProductsProps {

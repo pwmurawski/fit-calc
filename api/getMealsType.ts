@@ -1,4 +1,4 @@
-import { IMealResponse } from "../interfaces/IMealResponse";
+import { IMealResponse } from "../types/IMealResponse";
 import fitCalcApi from "./fitCalcApi";
 
 const getMealsType = async () => {

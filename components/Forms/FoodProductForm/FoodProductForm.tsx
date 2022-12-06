@@ -1,4 +1,4 @@
-import { FormInitType } from "../../../interfaces/FormTypes";
+import { FormInitType } from "../../../types/FormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
 import { AddBtn, Form } from "./styles/styles";
 import Loading from "../../Loading/Loading";
@@ -7,7 +7,7 @@ import {
   DefaultValueType,
   KeysType,
   SubmitType,
-} from "../../../interfaces/FoodProductFormTypes";
+} from "../../../types/FoodProductFormTypes";
 
 interface IFoodProductFormProps {
   submit: SubmitType;

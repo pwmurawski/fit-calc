@@ -1,5 +1,5 @@
 import { toPercent } from "../../helpers/toPercent";
-import { ISummaryCalorieMacroData } from "../../interfaces/ISummaryCalorieMacroData";
+import { ISummaryCalorieMacroData } from "../../types/ISummaryCalorieMacroData";
 import {
   Container,
   Macro,

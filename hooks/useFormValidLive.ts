@@ -1,15 +1,15 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { validate } from "../helpers/validations";
+import { FormType } from "../types/FormTypes";
 
 const useFormValidLive = <State>(
-  initForm: State
+  initForm: FormType<State>
 ): [
-  formData: State,
+  formData: FormType<State>,
   changeHandler: typeof changeHandler,
   setFormData: typeof setFormData
 ] => {
-  const [formData, setFormData] = useState<any>(initForm);
+  const [formData, setFormData] = useState<FormType<State>>(initForm);
 
   const changeHandler = (value: string, fieldName: keyof State) => {
     const error = validate(formData[fieldName].rules, value);

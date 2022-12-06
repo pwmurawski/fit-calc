@@ -1,4 +1,4 @@
-import { ISelectedProductResponse } from "../interfaces/ISelectedProduct";
+import { ISelectedProductResponse } from "../types/ISelectedProduct";
 import fitCalcApi from "./fitCalcApi";
 
 const getSelectedProductDay = async (date?: string) => {

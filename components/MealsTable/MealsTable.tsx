@@ -1,4 +1,4 @@
-import { IMealsData } from "../../interfaces/IMealsData";
+import { IMealsData } from "../../types/IMealsData";
 import Loading from "../Loading/Loading";
 import SelectedProducts from "./FoodProducts/SelectedProducts";
 import Meal from "./Meal/Meal";

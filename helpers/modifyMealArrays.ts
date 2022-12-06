@@ -1,8 +1,8 @@
-import { FoodProductKeyType } from "../interfaces/IFoodProductData";
+import { FoodProductKeyType } from "../types/IFoodProductData";
 
-import { IMealResponse } from "../interfaces/IMealResponse";
-import { IMealsData } from "../interfaces/IMealsData";
-import { ISelectedProductResponse } from "../interfaces/ISelectedProduct";
+import { IMealResponse } from "../types/IMealResponse";
+import { IMealsData } from "../types/IMealsData";
+import { ISelectedProductResponse } from "../types/ISelectedProduct";
 
 const filterMap = (mealId: string, arr: ISelectedProductResponse[]) => {
   return arr

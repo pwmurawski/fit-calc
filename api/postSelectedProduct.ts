@@ -1,4 +1,4 @@
-import { IBodySelectedProduct } from "../interfaces/IBodySelectedProduct";
+import { IBodySelectedProduct } from "../types/IBodySelectedProduct";
 import fitCalcApi from "./fitCalcApi";
 
 const postSelectedProduct = async (body: IBodySelectedProduct) => {

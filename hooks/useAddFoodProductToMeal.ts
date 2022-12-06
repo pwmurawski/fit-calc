@@ -4,7 +4,7 @@ import { useSWRConfig } from "swr";
 import getSelectedProductDay from "../api/getSelectedProduct";
 import postSelectedProduct from "../api/postSelectedProduct";
 import GlobalContext from "../context/GlobalContext/GlobalContext";
-import { IBodySelectedProduct } from "../interfaces/IBodySelectedProduct";
+import { IBodySelectedProduct } from "../types/IBodySelectedProduct";
 
 const useAddFoodProductToMeal = () => {
   const { state } = useContext(GlobalContext);

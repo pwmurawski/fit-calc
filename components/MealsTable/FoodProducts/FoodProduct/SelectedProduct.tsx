@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import GlobalContext from "../../../../context/GlobalContext/GlobalContext";
 import useDeleteSelectedProduct from "../../../../hooks/useDeleteSelectedProduct";
-import { ISelectedProduct } from "../../../../interfaces/ISelectedProduct";
+import { ISelectedProduct } from "../../../../types/ISelectedProduct";
 import {
   Container,
   FoodContainer,

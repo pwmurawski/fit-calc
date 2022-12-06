@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import postFoodProduct from "../api/postFoodProduct";
 import revalidate from "../helpers/revalidate";
-import { IFoodProductFormValue } from "../interfaces/FoodProductFormTypes";
+import { IFoodProductFormValue } from "../types/FoodProductFormTypes";
 
 const useAddFoodProduct = () => {
   const { back, prefetch } = useRouter();

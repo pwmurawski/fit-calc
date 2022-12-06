@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { ValuesResBackendErrorsType } from "../interfaces/IResponse";
+import { ValuesResBackendErrorsType } from "../types/IResponse";
 
 const getBackendErrors = <T>(
   errors: Record<string, ValuesResBackendErrorsType>,

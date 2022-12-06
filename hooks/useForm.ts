@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IResponse } from "../interfaces/IResponse";
+import { IResponse } from "../types/IResponse";
 import useFormValidLive from "./useFormValidLive";
 import getBackendErrors from "../helpers/getBackendErrors";
 import isErrorForm from "../helpers/isErrorForm";
@@ -9,10 +9,10 @@ import {
   SubmitType,
   FormRespValueType,
   BackendErrorsValuesType,
-} from "../interfaces/FormTypes";
+} from "../types/FormTypes";
 
 const useForm = <InitFormValue>(
-  initFormValue: InitFormValue,
+  initFormValue: FormType<InitFormValue>,
   defaultValue?: FormDefaultValueType<InitFormValue>
 ) => {
   const [formVal, onChange, setFormData] = useFormValidLive(initFormValue);
@@ -56,7 +56,7 @@ const useForm = <InitFormValue>(
     if (defaultValue) {
       Object.entries(defaultValue).forEach((entries) => {
         const [keys, values] = entries as [keyof InitFormValue, string];
-        setFormData((state: FormType<InitFormValue>) => ({
+        setFormData((state) => ({
           ...state,
           [keys]: {
             ...state[keys],

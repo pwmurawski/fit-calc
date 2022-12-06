@@ -1,6 +1,6 @@
 import useForm from "../../../hooks/useForm";
-import { FormInitType } from "../../../interfaces/FormTypes";
-import { KeysType, SubmitType } from "../../../interfaces/AuthFormTypes";
+import { FormInitType } from "../../../types/FormTypes";
+import { KeysType, SubmitType } from "../../../types/AuthFormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
 import Loading from "../../Loading/Loading";
 import { Form, SubmitBtn } from "./styles/styles";

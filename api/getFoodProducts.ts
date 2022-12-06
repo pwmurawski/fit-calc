@@ -1,4 +1,4 @@
-import { IFoodProductData } from "../interfaces/IFoodProductData";
+import { IFoodProductData } from "../types/IFoodProductData";
 import fitCalcApi from "./fitCalcApi";
 
 const getFoodProducts = async () => {

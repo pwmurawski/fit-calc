@@ -6,7 +6,7 @@ import revalidate from "../helpers/revalidate";
 import {
   IFoodProductFormValue,
   DefaultValueType,
-} from "../interfaces/FoodProductFormTypes";
+} from "../types/FoodProductFormTypes";
 
 const useEditFoodProduct = (id: string) => {
   const { back, prefetch } = useRouter();

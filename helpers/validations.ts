@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable default-param-last */
-import { IRule, Rules } from "../interfaces/IRules";
+import { IRule, Rules } from "../types/IRules";
 
 function validateEmail(text: string) {
   const re =
@@ -20,7 +19,7 @@ const availableRules = {
   },
 };
 
-export function validate(rules: Rules = [], value: string) {
+export function validate(rules: Rules, value: string) {
   let error = "";
 
   rules.forEach((rule) => {

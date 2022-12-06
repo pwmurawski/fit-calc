@@ -4,7 +4,7 @@ import WeekSlider from "../components/WeekSlider/WeekSlider";
 import SummaryCaloriesAndMacros from "../components/SummaryCaloriesAndMacros/SummaryCaloriesAndMacros";
 import GlobalContext from "../context/GlobalContext/GlobalContext";
 import userAuth from "../helpers/userAuth";
-import { IGetServerProps } from "../interfaces/IGetServerProps";
+import { IGetServerProps } from "../types/IGetServerProps";
 import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {

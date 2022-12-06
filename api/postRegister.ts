@@ -1,4 +1,4 @@
-import { ILoginFormValue } from "../interfaces/ILoginFormValue";
+import { ILoginFormValue } from "../types/ILoginFormValue";
 import fitCalcApi from "./fitCalcApi";
 
 const postRegister = async (body: ILoginFormValue) => {

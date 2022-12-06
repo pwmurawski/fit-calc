@@ -1,7 +1,7 @@
 import AuthForm from "../../components/Forms/AuthForm/AuthForm";
 import userAuth from "../../helpers/userAuth";
 import useAuth from "../../hooks/useAuth";
-import { IGetServerProps } from "../../interfaces/IGetServerProps";
+import { IGetServerProps } from "../../types/IGetServerProps";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);

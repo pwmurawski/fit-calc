@@ -4,7 +4,7 @@ import getUserId from "../api/getUserId";
 import postLogin from "../api/postLogin";
 import postRegister from "../api/postRegister";
 import userAuth from "../helpers/userAuth";
-import { ILoginFormValue } from "../interfaces/ILoginFormValue";
+import { ILoginFormValue } from "../types/ILoginFormValue";
 
 const useAuth = () => {
   const { isUser, login, logout } = userAuth();

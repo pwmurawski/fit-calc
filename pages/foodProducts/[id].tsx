@@ -4,7 +4,7 @@ import getFoodProduct from "../../api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
 import WeightInput from "../../components/Forms/WeightForm/WeightForm";
-import { IFoodProductData } from "../../interfaces/IFoodProductData";
+import { IFoodProductData } from "../../types/IFoodProductData";
 import useAddFoodProductToMeal from "../../hooks/useAddFoodProductToMeal";
 import getFoodProducts from "../../api/getFoodProducts";
 import Loading from "../../components/Loading/Loading";

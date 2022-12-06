@@ -1,7 +1,7 @@
 import FoodProductForm from "../../../components/Forms/FoodProductForm/FoodProductForm";
 import useAddFoodProduct from "../../../hooks/useAddFoodProduct";
 import userAuth from "../../../helpers/userAuth";
-import { IGetServerProps } from "../../../interfaces/IGetServerProps";
+import { IGetServerProps } from "../../../types/IGetServerProps";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);

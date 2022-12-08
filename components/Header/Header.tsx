@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import useAuth from "../../hooks/useAuth";
 import {
   Calendar,
@@ -8,10 +7,10 @@ import {
   LogoutImg,
 } from "./styles/styles";
 import logout from "../../assets/logout.png";
-import GlobalContext from "../../context/GlobalContext";
+import useDate from "../../hooks/useDate";
 
 export default function Header() {
-  const { state, dispatch } = useContext(GlobalContext);
+  const { date, setDate } = useDate();
   const { isUser, logoutHandler } = useAuth();
 
   return (
@@ -21,10 +20,8 @@ export default function Header() {
         <>
           <Calendar
             type="date"
-            value={state.date?.toLocaleDateString("fr-CA")}
-            onChange={(e) =>
-              dispatch({ type: "setDate", date: new Date(e.target.value) })
-            }
+            value={date.toLocaleDateString("fr-CA")}
+            onChange={(e) => setDate(new Date(e.target.value))}
           />
           <LogoutBtn
             onClick={() => {

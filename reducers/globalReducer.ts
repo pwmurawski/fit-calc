@@ -2,6 +2,9 @@ import { ActionType, IState } from "../types/GlobalReducerTypes";
 
 export const globalReducer = (state: IState, action: ActionType) => {
   switch (action.type) {
+    case "setLoading":
+      return { ...state, isLoading: action.isLoading };
+
     case "setMealId":
       return { ...state, mealId: action.mealId };
 
@@ -14,6 +17,7 @@ export const globalReducer = (state: IState, action: ActionType) => {
 };
 
 export const initialState: IState = {
+  isLoading: false,
   mealId: undefined,
   date: new Date(),
 };

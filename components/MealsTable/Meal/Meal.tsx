@@ -1,5 +1,5 @@
-import { ReactNode, useContext, useState } from "react";
-import GlobalContext from "../../../context/GlobalContext";
+import { ReactNode, useState } from "react";
+import useMealId from "../../../hooks/useMealId";
 import { IMealData } from "../../../types/MealsDataTypes";
 import {
   Container,
@@ -21,8 +21,8 @@ export default function Meal({
   mealData: { carbs, fat, id, kcal, name, protein },
   children,
 }: IMealProps) {
-  const { dispatch } = useContext(GlobalContext);
   const [showFoodProducts, setShowFoodProducts] = useState(false);
+  const { setMealId } = useMealId();
 
   return (
     <>
@@ -40,7 +40,7 @@ export default function Meal({
             href="/foodProducts"
             onClick={(e) => {
               e.stopPropagation();
-              dispatch({ type: "setMealId", mealId: id });
+              setMealId(id);
             }}
           />
         </Top>

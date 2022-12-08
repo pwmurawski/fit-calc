@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import MealsTable from "../components/MealsTable/MealsTable";
 import WeekSlider from "../components/WeekSlider/WeekSlider";
 import SummaryCaloriesAndMacros from "../components/SummaryCaloriesAndMacros/SummaryCaloriesAndMacros";
-import GlobalContext from "../context/GlobalContext";
 import userAuth from "../helpers/userAuth";
 import { IGetServerProps } from "../types/GetServerPropsTypes";
 import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
+import useDate from "../hooks/useDate";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);
@@ -20,12 +19,12 @@ export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
 };
 
 export default function Home() {
-  const { dispatch } = useContext(GlobalContext);
   const { mealsData, summaryData } = useGetMealsSummaryMacroData();
+  const { setDate } = useDate();
 
   return (
     <>
-      <WeekSlider onClickDay={(date) => dispatch({ type: "setDate", date })} />
+      <WeekSlider onClickDay={(date) => setDate(date)} />
       <MealsTable mealsData={mealsData} />
       <SummaryCaloriesAndMacros summaryCalorieMacroData={summaryData} />
     </>

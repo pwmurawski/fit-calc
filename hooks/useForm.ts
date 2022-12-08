@@ -10,6 +10,7 @@ import {
   BackendErrorsType,
   ValuesType,
 } from "../types/FormTypes";
+import useLoading from "./useLoading";
 
 const useForm = <InitFormValue>(
   initFormValue: FormType<InitFormValue>,
@@ -18,7 +19,7 @@ const useForm = <InitFormValue>(
   const { formValue, onChange, setFormData } = useFormValidLive(initFormValue);
   const [backendErrors, setBackendErrors] =
     useState<BackendErrorsType<InitFormValue>>();
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useLoading();
 
   const onSubmitHandler = async (submit: SubmitType<InitFormValue>) => {
     setLoading(true);
@@ -63,7 +64,6 @@ const useForm = <InitFormValue>(
     formValue,
     onChange,
     onSubmitHandler,
-    loading,
     backendErrors,
     isErrorForm,
   };

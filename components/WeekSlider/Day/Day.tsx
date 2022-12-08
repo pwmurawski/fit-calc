@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { format } from "date-fns";
-import { RefObject, useContext } from "react";
-import GlobalContext from "../../../context/GlobalContext";
+import { RefObject } from "react";
 import { checkDayCurrentDate } from "../../../helpers/checkDayCurrentDate";
+import useDate from "../../../hooks/useDate";
 import { Container, Name, Number } from "./styles/styles";
 
 interface IDayProps {
@@ -12,15 +12,13 @@ interface IDayProps {
 }
 
 export default function Day({ day, currentDayRef, onClick }: IDayProps) {
-  const { state } = useContext(GlobalContext);
+  const { date } = useDate();
 
   return (
     <Container
       onClick={() => onClick(day)}
       currentDay={checkDayCurrentDate(day.getDate(), day.getMonth())}
-      selectedDay={
-        state.date?.toLocaleDateString() === day.toLocaleDateString()
-      }
+      selectedDay={date.toLocaleDateString() === day.toLocaleDateString()}
       ref={
         checkDayCurrentDate(day.getDate(), day.getMonth())
           ? currentDayRef

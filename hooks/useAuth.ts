@@ -5,10 +5,12 @@ import postLogin from "../api/postLogin";
 import postRegister from "../api/postRegister";
 import userAuth from "../helpers/userAuth";
 import { ILoginFormValue } from "../types/ILoginFormValue";
+import useLoading from "./useLoading";
 
 const useAuth = () => {
   const { isUser, login, logout } = userAuth();
   const { push } = useRouter();
+  const { setLoading } = useLoading();
 
   const loginHandler = async (formValue: ILoginFormValue) => {
     const res = await postLogin(formValue);
@@ -21,11 +23,13 @@ const useAuth = () => {
   };
 
   const logoutHandler = async () => {
+    setLoading(true);
     const res = await getLogout();
     if (res?.status === 204) {
       logout();
       push("/login");
     }
+    setLoading(false);
   };
 
   const registerHandler = async (formValue: ILoginFormValue) => {

@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import Header from "../Header/Header";
 import HeaderFoodProducts from "../HeaderFoodProducts/HeaderFoodProducts";
 import SearchBar from "../SearchBar/SearchBar";
-import { Main, Wrapper } from "./styles/styles";
+import { Container, Wrapper, Main } from "./styles/styles";
 
 export default function Layouts({ children }: { children: ReactNode }) {
   const { pathname } = useRouter();
@@ -20,19 +20,19 @@ export default function Layouts({ children }: { children: ReactNode }) {
   if (layoutSearch.includes(pathname))
     return (
       <Wrapper>
-        <Main>
+        <Container>
           <HeaderFoodProducts />
           <SearchBar />
-          {children}
-        </Main>
+          <Main>{children}</Main>
+        </Container>
       </Wrapper>
     );
   return (
     <Wrapper>
-      <Main>
+      <Container>
         {header}
-        {children}
-      </Main>
+        <Main>{children}</Main>
+      </Container>
     </Wrapper>
   );
 }

@@ -14,7 +14,7 @@ interface IWeekSliderProps {
 export default function WeekSlider({ onClickDay }: IWeekSliderProps) {
   const currentDayRef = useRef<HTMLDivElement>(null);
   const [currentWeekPosition, setCurrentWeekPosition] = useState(0);
-  const [containerRef, containerWidth, scrollWidth, animation] = useSlider();
+  const { containerRef, containerWidth, scrollWidth, animation } = useSlider();
 
   useEffect(() => {
     if (currentDayRef.current?.parentElement)

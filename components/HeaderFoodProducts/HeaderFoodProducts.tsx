@@ -7,6 +7,7 @@ export default function HeaderFoodProducts() {
 
   const href = (): string => {
     if (pathname.includes("edit")) return `/foodProducts/${query.id}`;
+    if (pathname.includes("selectedProduct")) return `/`;
     return "./";
   };
 

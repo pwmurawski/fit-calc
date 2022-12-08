@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { IResponse } from "./IResponse";
+import { ValuesResBackendErrorsType } from "./ResponseTypes";
 
 export interface IFoodProductFormValue {
   code?: string;
@@ -14,12 +14,6 @@ export type KeysType = "name" | "kcal" | "protein" | "fat" | "carbs" | "code";
 
 export type DefaultValueType = Partial<Record<KeysType, string>>;
 
-export type SubmitType = (data: IFoodProductFormValue) => Promise<
-  | IResponse<
-      {
-        id: string;
-      } | null,
-      KeysType
-    >
-  | undefined
->;
+export type SubmitType = (
+  data: IFoodProductFormValue
+) => Promise<Record<KeysType, ValuesResBackendErrorsType> | undefined>;

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext } from "react";
-import { ActionType, IState } from "../../types/IGlobalReducer";
+import { initialState } from "../reducers/globalReducer";
+import { ActionType, IState } from "../types/GlobalReducerTypes";
 
 interface IGlobalContext {
   state: IState;
@@ -8,10 +9,7 @@ interface IGlobalContext {
 }
 
 const GlobalContext = createContext<IGlobalContext>({
-  state: {
-    mealId: undefined,
-    date: undefined,
-  },
+  state: initialState,
   dispatch: () => {},
 });
 

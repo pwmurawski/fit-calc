@@ -5,12 +5,12 @@ interface ISetMealId {
 
 interface ISetDate {
   type: "setDate";
-  date: Date | undefined;
+  date: Date;
 }
 
 export interface IState {
   mealId: string | undefined;
-  date: Date | undefined;
+  date: Date;
 }
 
 export type ActionType = ISetMealId | ISetDate;

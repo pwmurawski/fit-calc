@@ -15,6 +15,7 @@ export const Container = styled.div`
   ${({ stopClick }: { stopClick?: boolean }) =>
     stopClick &&
     css`
+      position: fixed;
       width: 100%;
       height: 100%;
     `}

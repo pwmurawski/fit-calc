@@ -1,27 +1,30 @@
-import { FoodProductKeyType } from "../types/IFoodProductData";
-
+import { FoodProductKeyType } from "../types/IFoodProductDataTypes";
 import { IMealResponse } from "../types/IMealResponse";
-import { IMealsData } from "../types/IMealsData";
-import { ISelectedProductResponse } from "../types/ISelectedProduct";
+import { IMealsData } from "../types/MealsDataTypes";
+import { ISelectedProductResponse } from "../types/SelectedProductTypes";
 
-const filterMap = (mealId: string, arr: ISelectedProductResponse[]) => {
-  return arr
+const modifyData = (
+  mealId: string,
+  selectedProducts: ISelectedProductResponse[]
+) => {
+  return selectedProducts
     .filter(({ meal }) => meal.id === mealId)
-    .map(({ foodProduct, weight, meal, id, dateTime }) => ({
+    .map(({ foodProduct, weight, meal, id, userId, dateTime }) => ({
       ...foodProduct,
+      id,
+      userId,
       weight,
       mealId: meal.id,
-      selectedId: id,
       dateTime,
     }));
 };
 
-const filterMapReduce = (
+const sumInMeal = (
   mealId: string,
-  arr: ISelectedProductResponse[],
+  selectedProducts: ISelectedProductResponse[],
   key: FoodProductKeyType
 ) => {
-  return filterMap(mealId, arr).reduce(
+  return modifyData(mealId, selectedProducts).reduce(
     (sum, curr) => sum + (curr[key] * curr.weight) / 100,
     0
   );
@@ -29,16 +32,16 @@ const filterMapReduce = (
 
 const modifyMealArrays = (
   mealsType: IMealResponse[],
-  selectedProduct: ISelectedProductResponse[]
+  selectedProducts: ISelectedProductResponse[]
 ): IMealsData[] => {
   return mealsType.map(({ id, name }) => ({
     id,
     name,
-    kcal: filterMapReduce(id, selectedProduct, "kcal"),
-    protein: filterMapReduce(id, selectedProduct, "protein"),
-    fat: filterMapReduce(id, selectedProduct, "fat"),
-    carbs: filterMapReduce(id, selectedProduct, "carbs"),
-    selectedProduct: filterMap(id, selectedProduct),
+    kcal: sumInMeal(id, selectedProducts, "kcal"),
+    protein: sumInMeal(id, selectedProducts, "protein"),
+    fat: sumInMeal(id, selectedProducts, "fat"),
+    carbs: sumInMeal(id, selectedProducts, "carbs"),
+    selectedProduct: modifyData(id, selectedProducts),
   }));
 };
 

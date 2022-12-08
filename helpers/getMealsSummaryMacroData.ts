@@ -1,5 +1,5 @@
 import getMealsType from "../api/getMealsType";
-import getSelectedProductDay from "../api/getSelectedProduct";
+import getSelectedProductDay from "../api/getSelectedProductDay";
 import modifyMealArrays from "./modifyMealArrays";
 import modifySummaryCalorieMacroData from "./modifySummaryCalorieMacroData";
 

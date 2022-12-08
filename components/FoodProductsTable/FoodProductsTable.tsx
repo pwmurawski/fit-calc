@@ -1,4 +1,4 @@
-import { IFoodProductData } from "../../types/IFoodProductData";
+import { IFoodProductData } from "../../types/IFoodProductDataTypes";
 import Loading from "../Loading/Loading";
 import FoodProducts from "./FoodProducts/FoodProducts";
 import { Container } from "./styles/styles";

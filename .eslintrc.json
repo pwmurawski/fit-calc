@@ -30,6 +30,7 @@
         "react/function-component-definition": [2, { "namedComponents": "function-declaration" }],
         "react/forbid-prop-types": [2, { "forbid": [], "checkContextTypes": false, "checkChildContextTypes": false }],
         "import/extensions": [2, "never"],
-        "import/no-unresolved": 0
+        "import/no-unresolved": 0,
+        "no-restricted-syntax": ["error", "WithStatement", "BinaryExpression[operator='in']"]
     }
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const Container = styled.section`
   position: absolute;
   right: 0;
-  top: 130px;
+  top: 80px;
   display: flex;
   padding: 10px 5px;
 `;

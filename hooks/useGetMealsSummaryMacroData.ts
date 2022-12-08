@@ -1,8 +1,8 @@
 import { useContext, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import getMealsType from "../api/getMealsType";
-import getSelectedProductDay from "../api/getSelectedProduct";
-import GlobalContext from "../context/GlobalContext/GlobalContext";
+import getSelectedProductDay from "../api/getSelectedProductDay";
+import GlobalContext from "../context/GlobalContext";
 import modifyMealArrays from "../helpers/modifyMealArrays";
 import modifySummaryCalorieMacroData from "../helpers/modifySummaryCalorieMacroData";
 
@@ -14,16 +14,18 @@ const useGetMealsSummaryMacroData = () => {
     () => getSelectedProductDay(state.date?.toLocaleDateString())
   );
 
-  const memoizedValue = useMemo(() => {
+  const mealsSummaryMacroData = useMemo(() => {
     if (mealsType?.data && selectedProduct?.data) {
       const mealsData = modifyMealArrays(mealsType.data, selectedProduct.data);
       const summaryData = modifySummaryCalorieMacroData(selectedProduct.data);
+
       return { mealsData, summaryData };
     }
+
     return { mealsData: undefined, summaryData: undefined };
   }, [mealsType, selectedProduct]);
 
-  return memoizedValue;
+  return mealsSummaryMacroData;
 };
 
 export default useGetMealsSummaryMacroData;

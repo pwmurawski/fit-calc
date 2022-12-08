@@ -2,7 +2,7 @@
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import LoadingSSR from "../components/LoadingSSR/LoadingSSR";
-import GlobalContextProvider from "../context/GlobalContext/provider/GlobalContextProvider";
+import GlobalContextProvider from "../provider/GlobalContextProvider";
 import GlobalStyles from "../styles/GlobalStyles";
 
 const Layouts = dynamic(() => import("../components/Layouts/Layouts"), {

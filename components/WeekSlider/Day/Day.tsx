@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { format } from "date-fns";
 import { RefObject, useContext } from "react";
-import GlobalContext from "../../../context/GlobalContext/GlobalContext";
+import GlobalContext from "../../../context/GlobalContext";
 import { checkDayCurrentDate } from "../../../helpers/checkDayCurrentDate";
 import { Container, Name, Number } from "./styles/styles";
 

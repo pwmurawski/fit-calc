@@ -1,6 +1,6 @@
 import { ReactNode, useMemo, useReducer } from "react";
-import GlobalContext from "../GlobalContext";
-import { globalReducer, initialState } from "../../../reducers/globalReducer";
+import GlobalContext from "../context/GlobalContext";
+import { globalReducer, initialState } from "../reducers/globalReducer";
 
 interface IGlobalContextProviderProps {
   children: ReactNode;

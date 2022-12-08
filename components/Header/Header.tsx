@@ -8,7 +8,7 @@ import {
   LogoutImg,
 } from "./styles/styles";
 import logout from "../../assets/logout.png";
-import GlobalContext from "../../context/GlobalContext/GlobalContext";
+import GlobalContext from "../../context/GlobalContext";
 
 export default function Header() {
   const { state, dispatch } = useContext(GlobalContext);

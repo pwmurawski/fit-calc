@@ -17,7 +17,7 @@ const useAuth = () => {
       login(resp.data.userId);
       push("/");
     }
-    return res;
+    return res?.errors?.children;
   };
 
   const logoutHandler = async () => {
@@ -33,7 +33,7 @@ const useAuth = () => {
     if (res?.status === 204) {
       push("/login");
     }
-    return res;
+    return res?.errors?.children;
   };
 
   return { isUser, loginHandler, logoutHandler, registerHandler };

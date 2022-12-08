@@ -4,7 +4,7 @@ import getFoodProduct from "../../api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
 import WeightInput from "../../components/Forms/WeightForm/WeightForm";
-import { IFoodProductData } from "../../types/IFoodProductData";
+import { IFoodProductData } from "../../types/IFoodProductDataTypes";
 import useAddFoodProductToMeal from "../../hooks/useAddFoodProductToMeal";
 import getFoodProducts from "../../api/getFoodProducts";
 import Loading from "../../components/Loading/Loading";
@@ -60,16 +60,16 @@ export default function FoodProductPage({
     <>
       <WeightInput
         kcal={foodProductData.kcal}
-        submit={(weight) => addFoodProductToMeal(foodProductData.id, weight)}
+        submit={(weight) => addFoodProductToMeal(foodProductData.id, +weight)}
       />
       <Options
         ids={{
-          foodProductId: foodProductData.id,
-          foodProductUserId: foodProductData.userId,
+          productId: foodProductData.id,
+          productUserId: foodProductData.userId,
           userAuthId: isUser,
         }}
       />
-      <NutritionalValues foodProductData={foodProductData} />
+      <NutritionalValues productData={foodProductData} />
       {foodProductData.code ? <BarCode value={foodProductData.code} /> : null}
     </>
   );

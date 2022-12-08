@@ -2,29 +2,23 @@ import { useState } from "react";
 import { validate } from "../helpers/validations";
 import { FormType } from "../types/FormTypes";
 
-const useFormValidLive = <State>(
-  initForm: FormType<State>
-): [
-  formData: FormType<State>,
-  changeHandler: typeof changeHandler,
-  setFormData: typeof setFormData
-] => {
-  const [formData, setFormData] = useState<FormType<State>>(initForm);
+const useFormValidLive = <State>(initForm: FormType<State>) => {
+  const [formValue, setFormData] = useState<FormType<State>>(initForm);
 
-  const changeHandler = (value: string, fieldName: keyof State) => {
-    const error = validate(formData[fieldName].rules, value);
+  const onChange = (value: string, fieldName: keyof State) => {
+    const error = validate(formValue[fieldName].rules, value);
 
     setFormData({
-      ...formData,
+      ...formValue,
       [fieldName]: {
-        ...formData[fieldName],
+        ...formValue[fieldName],
         value,
         error,
       },
     });
   };
 
-  return [formData, changeHandler, setFormData];
+  return { formValue, onChange, setFormData };
 };
 
 export default useFormValidLive;

@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import AddNewFoodProduct from "../../components/AddNewFoodProduct/AddNewFoodProduct";
 import FoodProductsTable from "../../components/FoodProductsTable/FoodProductsTable";
 import getFoodProducts from "../../api/getFoodProducts";
-import { IFoodProductData } from "../../types/IFoodProductData";
+import { IFoodProductData } from "../../types/IFoodProductDataTypes";
 import useAuth from "../../hooks/useAuth";
 
 export const getStaticProps: GetStaticProps = async () => {

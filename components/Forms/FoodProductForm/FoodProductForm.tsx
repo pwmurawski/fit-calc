@@ -21,7 +21,7 @@ const defaultProps = {
 const initForm: FormInitType<KeysType> = {
   name: {
     value: "",
-    rules: [{ rule: "min", length: 3 }, "required"],
+    rules: ["required", { rule: "min", length: 3 }],
   },
   kcal: {
     value: "",
@@ -50,7 +50,7 @@ export default function FoodProductForm({
   defaultValue = undefined,
 }: IFoodProductFormProps) {
   const {
-    formVal,
+    formValue,
     onChange,
     backendErrors,
     isErrorForm,
@@ -70,51 +70,51 @@ export default function FoodProductForm({
         <InputCustom
           type="text"
           placeholder="Name"
-          value={formVal.name.value}
+          value={formValue.name.value}
           onChange={(e) => onChange(e.target.value, "name")}
-          error={backendErrors?.name?.error ?? formVal.name.error}
+          error={formValue.name.error ?? backendErrors?.name?.error}
         />
         <InputCustom
           type="number"
           min={0}
           placeholder="Kcal"
-          value={formVal.kcal.value}
+          value={formValue.kcal.value}
           onChange={(e) => onChange(e.target.value, "kcal")}
-          error={backendErrors?.kcal?.error ?? formVal.kcal.error}
+          error={formValue.kcal.error ?? backendErrors?.kcal?.error}
         />
         <InputCustom
           type="number"
           min={0}
           placeholder="Protein"
-          value={formVal.protein.value}
+          value={formValue.protein.value}
           onChange={(e) => onChange(e.target.value, "protein")}
-          error={backendErrors?.protein?.error ?? formVal.protein.error}
+          error={formValue.protein.error ?? backendErrors?.protein?.error}
         />
         <InputCustom
           type="number"
           min={0}
           placeholder="Fat"
-          value={formVal.fat.value}
+          value={formValue.fat.value}
           onChange={(e) => onChange(e.target.value, "fat")}
-          error={backendErrors?.fat?.error ?? formVal.fat.error}
+          error={formValue.fat.error ?? backendErrors?.fat?.error}
         />
         <InputCustom
           type="number"
           min={0}
           placeholder="Carbs"
-          value={formVal.carbs.value}
+          value={formValue.carbs.value}
           onChange={(e) => onChange(e.target.value, "carbs")}
-          error={backendErrors?.carbs?.error ?? formVal.carbs.error}
+          error={formValue.carbs.error ?? backendErrors?.carbs?.error}
         />
         <InputCustom
           type="number"
           min={0}
           placeholder="Code"
-          value={formVal.code.value}
+          value={formValue.code.value}
           onChange={(e) => onChange(e.target.value, "code")}
-          error={backendErrors?.code?.error ?? formVal.code.error}
+          error={formValue.code.error ?? backendErrors?.code?.error}
         />
-        {!isErrorForm(formVal) ? (
+        {!isErrorForm(formValue) ? (
           <AddBtn type="submit">Dodaj</AddBtn>
         ) : (
           <AddBtn isError type="button">

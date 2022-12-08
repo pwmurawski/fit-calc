@@ -1,6 +1,6 @@
-import { IMealsData } from "../../types/IMealsData";
+import { IMealsData } from "../../types/MealsDataTypes";
 import Loading from "../Loading/Loading";
-import SelectedProducts from "./FoodProducts/SelectedProducts";
+import SelectedProducts from "./SelectedProducts/SelectedProducts";
 import Meal from "./Meal/Meal";
 import { Container } from "./styles/styles";
 

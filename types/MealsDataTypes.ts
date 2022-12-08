@@ -1,4 +1,4 @@
-import { ISelectedProduct } from "./ISelectedProduct";
+import { ISelectedProduct } from "./SelectedProductTypes";
 
 export interface IMealData {
   id: string;

@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
-import { ISelectedProduct } from "../../../types/ISelectedProduct";
-import SelectedProduct from "./FoodProduct/SelectedProduct";
+import { ISelectedProduct } from "../../../types/SelectedProductTypes";
+import SelectedProduct from "./SelectedProduct/SelectedProduct";
 
 interface IFoodProductsProps {
   selectedProductData: ISelectedProduct[];

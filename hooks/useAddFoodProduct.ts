@@ -13,7 +13,8 @@ const useAddFoodProduct = () => {
       await prefetch("/foodProducts", undefined, { priority: true });
       back();
     }
-    return res;
+
+    return res?.errors?.children;
   };
 
   return addFoodProduct;

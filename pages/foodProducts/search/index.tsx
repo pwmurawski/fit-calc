@@ -4,8 +4,8 @@ import AddNewFoodProduct from "../../../components/AddNewFoodProduct/AddNewFoodP
 import FoodProductsTable from "../../../components/FoodProductsTable/FoodProductsTable";
 import getFoodProducts from "../../../api/getFoodProducts";
 import userAuth from "../../../helpers/userAuth";
-import { IGetServerProps } from "../../../types/IGetServerProps";
-import { IFoodProductData } from "../../../types/IFoodProductData";
+import { IGetServerProps } from "../../../types/GetServerPropsTypes";
+import { IFoodProductData } from "../../../types/IFoodProductDataTypes";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);

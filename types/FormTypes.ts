@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { IResponse } from "./IResponse";
-import { Rules } from "./IRules";
+import { ValuesResBackendErrorsType } from "./ResponseTypes";
+import { Rules } from "./RulesTypes";
 
 export type ValuesType = {
   value: string;
@@ -18,8 +18,11 @@ export type FormRespValueType<T> = Record<keyof T, string>;
 
 export type SubmitType<T> = (
   data: FormRespValueType<T>
-) => Promise<IResponse<any, string> | undefined>;
+) => Promise<Record<keyof T, ValuesResBackendErrorsType> | undefined>;
 
-export type BackendErrorsValuesType = {
-  error?: string;
-};
+export type BackendErrorsType<T> = Record<
+  keyof T,
+  {
+    error?: string;
+  }
+>;

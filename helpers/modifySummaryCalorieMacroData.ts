@@ -1,25 +1,28 @@
-import { FoodProductKeyType } from "../types/IFoodProductData";
-import { ISelectedProductResponse } from "../types/ISelectedProduct";
+import { FoodProductKeyType } from "../types/IFoodProductDataTypes";
+import { ISelectedProductResponse } from "../types/SelectedProductTypes";
 import { ISummaryCalorieMacroData } from "../types/ISummaryCalorieMacroData";
 
-const reduce = (arr: ISelectedProductResponse[], key: FoodProductKeyType) => {
-  return arr.reduce(
+const reduce = (
+  selectedProducts: ISelectedProductResponse[],
+  key: FoodProductKeyType
+) => {
+  return selectedProducts.reduce(
     (sum, curr) => sum + (curr.foodProduct[key] * curr.weight) / 100,
     0
   );
 };
 
 const modifySummaryCalorieMacroData = (
-  arr: ISelectedProductResponse[]
+  selectedProducts: ISelectedProductResponse[]
 ): ISummaryCalorieMacroData => {
   return {
-    kcal: reduce(arr, "kcal"),
+    kcal: reduce(selectedProducts, "kcal"),
     limitKcal: 2600,
-    protein: reduce(arr, "protein"),
+    protein: reduce(selectedProducts, "protein"),
     limitProtein: 160,
-    fat: reduce(arr, "fat"),
+    fat: reduce(selectedProducts, "fat"),
     limitFat: 80,
-    carbs: reduce(arr, "carbs"),
+    carbs: reduce(selectedProducts, "carbs"),
     limitCarbs: 400,
   };
 };

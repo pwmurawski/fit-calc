@@ -1,4 +1,3 @@
-import { IFoodProductData } from "../../types/IFoodProductData";
 import {
   Container,
   Name,
@@ -9,11 +8,17 @@ import {
 } from "./styles/styles";
 
 interface INutritionalValuesProps {
-  foodProductData: IFoodProductData;
+  productData: {
+    name: string;
+    kcal: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+  };
 }
 
 export default function NutritionalValues({
-  foodProductData: { carbs, fat, kcal, name, protein },
+  productData: { carbs, fat, kcal, name, protein },
 }: INutritionalValuesProps) {
   return (
     <Container>

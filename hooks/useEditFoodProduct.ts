@@ -36,7 +36,7 @@ const useEditFoodProduct = (id: string) => {
       await prefetch("/foodProducts", undefined, { priority: true });
       back();
     }
-    return res;
+    return res?.errors?.children;
   };
 
   useEffect(() => {

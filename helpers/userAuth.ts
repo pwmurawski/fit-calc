@@ -1,5 +1,5 @@
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
-import { ReqType, ResType } from "../types/IGetServerProps";
+import { ReqType, ResType } from "../types/GetServerPropsTypes";
 
 export const COOKIE_KEY_USER = "isUserLogin";
 

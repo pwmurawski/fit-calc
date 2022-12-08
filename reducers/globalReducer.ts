@@ -1,4 +1,4 @@
-import { ActionType, IState } from "../types/IGlobalReducer";
+import { ActionType, IState } from "../types/GlobalReducerTypes";
 
 export const globalReducer = (state: IState, action: ActionType) => {
   switch (action.type) {

@@ -3,19 +3,19 @@ import editIcon from "../../assets/edit.png";
 
 interface IEditBtnProps {
   ids: {
-    foodProductId: string;
-    foodProductUserId: string;
+    productId: string;
+    productUserId: string;
     userAuthId?: string;
   };
 }
 
 export default function Options({
-  ids: { foodProductId, foodProductUserId, userAuthId },
+  ids: { productId, productUserId, userAuthId },
 }: IEditBtnProps) {
-  if (foodProductUserId === userAuthId)
+  if (productUserId === userAuthId)
     return (
       <Container>
-        <EditLink href={`/foodProducts/edit/${foodProductId}`}>
+        <EditLink href={`/foodProducts/edit/${productId}`}>
           <Icon src={editIcon.src} alt="edit" />
         </EditLink>
       </Container>

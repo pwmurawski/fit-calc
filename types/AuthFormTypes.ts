@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { ILoginFormValue } from "./ILoginFormValue";
-import { IResponse } from "./IResponse";
+import { ValuesResBackendErrorsType } from "./ResponseTypes";
 
 export type KeysType = "username" | "password";
 
 export type SubmitType = (
   data: ILoginFormValue
-) => Promise<IResponse<undefined, keyof ILoginFormValue> | undefined>;
+) => Promise<Record<KeysType, ValuesResBackendErrorsType> | undefined>;

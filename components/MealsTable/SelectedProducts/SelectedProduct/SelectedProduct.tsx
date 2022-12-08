@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import GlobalContext from "../../../../context/GlobalContext/GlobalContext";
+import GlobalContext from "../../../../context/GlobalContext";
 import useDeleteSelectedProduct from "../../../../hooks/useDeleteSelectedProduct";
-import { ISelectedProduct } from "../../../../types/ISelectedProduct";
+import { ISelectedProduct } from "../../../../types/SelectedProductTypes";
 import {
   Container,
   FoodContainer,
@@ -26,7 +26,6 @@ export default function SelectedProduct({
     protein,
     weight,
     mealId,
-    selectedId,
     dateTime,
   },
 }: ISelectedProductProps) {
@@ -35,7 +34,7 @@ export default function SelectedProduct({
 
   return (
     <Container
-      href={`/foodProducts/${id}`}
+      href={`/selectedProduct/${id}`}
       onClick={() => {
         dispatch({ type: "setMealId", mealId });
       }}
@@ -45,7 +44,7 @@ export default function SelectedProduct({
         <DeleteBtn
           onClick={(e) => {
             e.preventDefault();
-            deleteHandler(selectedId, dateTime);
+            deleteHandler(id, dateTime);
           }}
         />
       </Top>

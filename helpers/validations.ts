@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { IRule, Rules } from "../types/IRules";
+import { IRule, Rules } from "../types/RulesTypes";
 
 function validateEmail(text: string) {
   const re =
@@ -9,32 +9,29 @@ function validateEmail(text: string) {
 
 const availableRules = {
   required(value: string) {
-    return value ? "" : "Pole wymagane";
+    return value ? undefined : "Pole wymagane";
   },
   min(value: string, rule: IRule) {
-    return value.length >= rule.length ? "" : `Min. znaków: ${rule.length}`;
+    return value.length >= rule.length
+      ? undefined
+      : `Min. znaków: ${rule.length}`;
   },
   email(value: string) {
-    return validateEmail(value) ? "" : "Niepoprawny email";
+    return validateEmail(value) ? undefined : "Niepoprawny email";
   },
 };
 
 export function validate(rules: Rules, value: string) {
-  let error = "";
-
-  rules.forEach((rule) => {
+  for (const rule of rules) {
+    let errorMessage: string | undefined;
     if (rule instanceof Object) {
-      const errorMessage = availableRules[rule.rule](value, rule);
-      if (errorMessage) {
-        error = errorMessage;
-      }
+      errorMessage = availableRules[rule.rule](value, rule);
     } else {
-      const errorMessage = availableRules[rule](value);
-      if (errorMessage) {
-        error = errorMessage;
-      }
+      errorMessage = availableRules[rule](value);
     }
-  });
-
-  return error;
+    if (errorMessage) {
+      return errorMessage;
+    }
+  }
+  return undefined;
 }

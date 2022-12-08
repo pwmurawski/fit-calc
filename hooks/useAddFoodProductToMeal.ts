@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { useSWRConfig } from "swr";
-import getSelectedProductDay from "../api/getSelectedProduct";
+import getSelectedProductDay from "../api/getSelectedProductDay";
 import postSelectedProduct from "../api/postSelectedProduct";
-import GlobalContext from "../context/GlobalContext/GlobalContext";
-import { IBodySelectedProduct } from "../types/IBodySelectedProduct";
+import GlobalContext from "../context/GlobalContext";
+import { IBodySelectedProduct } from "../types/SelectedProductTypes";
 
 const useAddFoodProductToMeal = () => {
   const { state } = useContext(GlobalContext);
@@ -13,7 +13,7 @@ const useAddFoodProductToMeal = () => {
 
   const addFoodProductToMeal = async (
     foodProductId: string,
-    weight: string
+    weight: number
   ) => {
     if (state.mealId && state.date) {
       const data: IBodySelectedProduct = {

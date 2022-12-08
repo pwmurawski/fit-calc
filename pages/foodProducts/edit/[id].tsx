@@ -2,7 +2,7 @@ import FoodProductForm from "../../../components/Forms/FoodProductForm/FoodProdu
 import Loading from "../../../components/Loading/Loading";
 import userAuth from "../../../helpers/userAuth";
 import useEditFoodProduct from "../../../hooks/useEditFoodProduct";
-import { IGetServerProps } from "../../../types/IGetServerProps";
+import { IGetServerProps } from "../../../types/GetServerPropsTypes";
 
 interface IParams {
   id: string;

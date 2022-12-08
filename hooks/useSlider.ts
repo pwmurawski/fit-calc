@@ -1,12 +1,7 @@
 import { useAnimation } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-const useSlider = (): [
-  containerRef: typeof containerRef,
-  containerWidth: typeof containerWidth,
-  scrollWidth: typeof scrollWidth,
-  animation: typeof animation
-] => {
+const useSlider = () => {
   const containerRef = useRef<HTMLElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [scrollWidth, setScrollWidth] = useState(0);
@@ -29,7 +24,7 @@ const useSlider = (): [
     };
   }, []);
 
-  return [containerRef, containerWidth, scrollWidth, animation];
+  return { containerRef, containerWidth, scrollWidth, animation };
 };
 
 export default useSlider;

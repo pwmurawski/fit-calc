@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "barcode-react-scanner": "^1.2.0",
+    "@zxing/library": "^0.19.1",
     "cookies-next": "^2.1.1",
     "date-fns": "^2.29.3",
     "framer-motion": "^7.5.2",

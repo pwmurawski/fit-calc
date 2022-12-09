@@ -8,13 +8,13 @@ import useLoading from "./useLoading";
 import useDate from "./useDate";
 
 const useEditSelectedProduct = (id: string) => {
-  const { date } = useDate();
-  const { back } = useRouter();
-  const { mutate } = useSWRConfig();
-  const { setLoading } = useLoading();
   const { data } = useSWRImmutable(`/selectedProduct/${id}`, () =>
     getSelectedProduct(id)
   );
+  const { mutate } = useSWRConfig();
+  const { setLoading } = useLoading();
+  const { back } = useRouter();
+  const { date } = useDate();
 
   const editSelectedProduct = async (
     selectedProductId: string,

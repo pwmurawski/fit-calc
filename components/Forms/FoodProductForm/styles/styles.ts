@@ -8,6 +8,13 @@ export const Form = styled.form`
   padding: 20px;
 `;
 
+export const ScannerContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
 export const AddBtn = styled.button`
   display: flex;
   justify-content: center;

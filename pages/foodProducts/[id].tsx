@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import dynamic from "next/dynamic";
 import getFoodProduct from "../../api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
@@ -9,7 +10,10 @@ import useAddFoodProductToMeal from "../../hooks/useAddFoodProductToMeal";
 import getFoodProducts from "../../api/getFoodProducts";
 import Loading from "../../components/Loading/Loading";
 import useAuth from "../../hooks/useAuth";
-import Options from "../../components/Options/Options";
+
+const Options = dynamic(() => import("../../components/Options/Options"), {
+  ssr: false,
+});
 
 interface IParams extends ParsedUrlQuery {
   id: string;

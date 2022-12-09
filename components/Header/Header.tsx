@@ -1,37 +1,41 @@
-import useAuth from "../../hooks/useAuth";
+import { useRouter } from "next/router";
 import {
-  Calendar,
   Container,
   Logo,
+  Calendar,
   LogoutBtn,
   LogoutImg,
 } from "./styles/styles";
 import logout from "../../assets/logout.png";
 import useDate from "../../hooks/useDate";
+import useAuth from "../../hooks/useAuth";
 
 export default function Header() {
+  const { logoutHandler } = useAuth();
   const { date, setDate } = useDate();
-  const { isUser, logoutHandler } = useAuth();
+  const { pathname } = useRouter();
 
   return (
     <Container>
       <Logo>FitCALC</Logo>
-      {isUser ? (
+      {pathname.includes("login") ? null : (
         <>
           <Calendar
             type="date"
             value={date.toLocaleDateString("fr-CA")}
             onChange={(e) => setDate(new Date(e.target.value))}
           />
-          <LogoutBtn
-            onClick={() => {
-              logoutHandler();
-            }}
-          >
-            <LogoutImg src={logout.src} alt="logout" />
+          <LogoutBtn>
+            <LogoutImg
+              onClick={() => {
+                logoutHandler();
+              }}
+              src={logout.src}
+              alt="logout"
+            />
           </LogoutBtn>
         </>
-      ) : null}
+      )}
     </Container>
   );
 }

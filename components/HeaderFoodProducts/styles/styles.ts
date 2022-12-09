@@ -7,7 +7,7 @@ export const Container = styled.header`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 50px;
+  padding: 10px 20px;
 `;
 export const BackLink = styled(Link)`
   position: absolute;

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -15,7 +15,6 @@ export const Container = styled.div`
   ${({ stopClick }: { stopClick?: boolean }) =>
     stopClick &&
     css`
-      position: fixed;
       width: 100%;
       height: 100%;
     `}

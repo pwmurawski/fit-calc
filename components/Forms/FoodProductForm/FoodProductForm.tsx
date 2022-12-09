@@ -1,12 +1,13 @@
 import { FormInitType } from "../../../types/FormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
-import { AddBtn, Form } from "./styles/styles";
+import { AddBtn, Form, ScannerContainer } from "./styles/styles";
 import useForm from "../../../hooks/useForm";
 import {
   DefaultValueType,
   KeysType,
   SubmitType,
 } from "../../../types/FoodProductFormTypes";
+import Scanner from "../../Scanner/Scanner";
 
 interface IFoodProductFormProps {
   submit: SubmitType;
@@ -97,14 +98,17 @@ export default function FoodProductForm({
         onChange={(e) => onChange(e.target.value, "carbs")}
         error={formValue.carbs.error ?? backendErrors?.carbs?.error}
       />
-      <InputCustom
-        type="number"
-        min={0}
-        placeholder="Code"
-        value={formValue.code.value}
-        onChange={(e) => onChange(e.target.value, "code")}
-        error={formValue.code.error ?? backendErrors?.code?.error}
-      />
+      <ScannerContainer>
+        <InputCustom
+          type="number"
+          min={0}
+          placeholder="Code"
+          value={formValue.code.value}
+          onChange={(e) => onChange(e.target.value, "code")}
+          error={formValue.code.error ?? backendErrors?.code?.error}
+        />
+        <Scanner onScanned={(data) => onChange(data, "code")} />
+      </ScannerContainer>
       {!isErrorForm(formValue) ? (
         <AddBtn type="submit">Dodaj</AddBtn>
       ) : (

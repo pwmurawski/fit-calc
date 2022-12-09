@@ -15,6 +15,10 @@ export const Container = styled.div`
   height: 100%;
   margin: 0 5px;
 
+  @media (max-width: 425px) {
+    margin: 0 1.5px;
+  }
+
   ${({ currentDay }: IContainer) =>
     currentDay &&
     css`

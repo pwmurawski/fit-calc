@@ -11,8 +11,8 @@ const useAddFoodProductToMeal = () => {
   const { back, push } = useRouter();
   const { mutate } = useSWRConfig();
   const { setLoading } = useLoading();
-  const { date } = useDate();
   const { mealId } = useMealId();
+  const { date } = useDate();
 
   const addFoodProductToMeal = async (
     foodProductId: string,

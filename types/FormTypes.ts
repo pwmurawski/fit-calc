@@ -18,7 +18,10 @@ export type FormRespValueType<T> = Record<keyof T, string>;
 
 export type SubmitType<T> = (
   data: FormRespValueType<T>
-) => Promise<Record<keyof T, ValuesResBackendErrorsType> | undefined>;
+) =>
+  | Promise<Record<keyof T, ValuesResBackendErrorsType> | undefined>
+  | Promise<void>
+  | void;
 
 export type BackendErrorsType<T> = Record<
   keyof T,

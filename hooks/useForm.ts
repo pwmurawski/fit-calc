@@ -62,6 +62,7 @@ const useForm = <InitFormValue>(
 
   return {
     formValue,
+    setFormData,
     onChange,
     onSubmitHandler,
     backendErrors,

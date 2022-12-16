@@ -1,4 +1,5 @@
 import { toPercent } from "../../helpers/toPercent";
+import { IDailyGoals } from "../../types/DailyGoalsTypes";
 import { ISummaryCalorieMacroData } from "../../types/ISummaryCalorieMacroData";
 import {
   Container,
@@ -12,69 +13,59 @@ import {
 
 interface ISummaryCaloriesAndMacrosProps {
   summaryCalorieMacroData: ISummaryCalorieMacroData | undefined;
+  limitMacro: IDailyGoals | undefined;
 }
 
 export default function SummaryCaloriesAndMacros({
   summaryCalorieMacroData,
+  limitMacro,
 }: ISummaryCaloriesAndMacrosProps) {
-  if (!summaryCalorieMacroData) return null;
+  if (!summaryCalorieMacroData || !limitMacro) return null;
   return (
-    <Container>
+    <Container href="dailyGoals">
       <Macro>
         <ValueSlider
-          value={toPercent(
-            summaryCalorieMacroData.kcal,
-            summaryCalorieMacroData.limitKcal
-          )}
+          value={toPercent(summaryCalorieMacroData.kcal, limitMacro.kcal)}
         />
         <CurrentValue>
           <Name>Kcal</Name> {Number(summaryCalorieMacroData.kcal.toFixed(1))}
         </CurrentValue>
         <LimitValue>
-          /{summaryCalorieMacroData.limitKcal} <Unit>kcal</Unit>
+          /{limitMacro.kcal} <Unit>kcal</Unit>
         </LimitValue>
       </Macro>
       <Macro>
         <ValueSlider
-          value={toPercent(
-            summaryCalorieMacroData.protein,
-            summaryCalorieMacroData.limitProtein
-          )}
+          value={toPercent(summaryCalorieMacroData.protein, limitMacro.protein)}
         />
         <CurrentValue>
           <Name>Białko</Name>{" "}
           {Number(summaryCalorieMacroData.protein.toFixed(1))}
         </CurrentValue>
         <LimitValue>
-          /{summaryCalorieMacroData.limitProtein} <Unit>g</Unit>
+          /{limitMacro.protein} <Unit>g</Unit>
         </LimitValue>
       </Macro>
       <Macro>
         <ValueSlider
-          value={toPercent(
-            summaryCalorieMacroData.fat,
-            summaryCalorieMacroData.limitFat
-          )}
+          value={toPercent(summaryCalorieMacroData.fat, limitMacro.fat)}
         />
         <CurrentValue>
           <Name>Tłuszcz</Name> {Number(summaryCalorieMacroData.fat.toFixed(1))}
         </CurrentValue>
         <LimitValue>
-          /{summaryCalorieMacroData.limitFat} <Unit>g</Unit>
+          /{limitMacro.fat} <Unit>g</Unit>
         </LimitValue>
       </Macro>
       <Macro>
         <ValueSlider
-          value={toPercent(
-            summaryCalorieMacroData.carbs,
-            summaryCalorieMacroData.limitCarbs
-          )}
+          value={toPercent(summaryCalorieMacroData.carbs, limitMacro.carbs)}
         />
         <CurrentValue>
           <Name>Węgl.</Name> {Number(summaryCalorieMacroData.carbs.toFixed(1))}
         </CurrentValue>
         <LimitValue>
-          /{summaryCalorieMacroData.limitCarbs} <Unit>g</Unit>
+          /{limitMacro.carbs} <Unit>g</Unit>
         </LimitValue>
       </Macro>
     </Container>

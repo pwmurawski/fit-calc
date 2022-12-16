@@ -1,22 +1,12 @@
-import { FormInitType } from "../../../types/FormTypes";
+import { FormInitType, SubmitType } from "../../../types/FormTypes";
 import InputCustom from "../../InputCustom/InputCustom";
 import { AddBtn, Form, ScannerContainer } from "./styles/styles";
 import useForm from "../../../hooks/useForm";
 import {
   DefaultValueType,
   KeysType,
-  SubmitType,
 } from "../../../types/FoodProductFormTypes";
 import Scanner from "../../Scanner/Scanner";
-
-interface IFoodProductFormProps {
-  submit: SubmitType;
-  defaultValue?: DefaultValueType;
-}
-
-const defaultProps = {
-  defaultValue: undefined,
-};
 
 const initForm: FormInitType<KeysType> = {
   name: {
@@ -43,6 +33,15 @@ const initForm: FormInitType<KeysType> = {
     value: "",
     rules: [],
   },
+};
+
+interface IFoodProductFormProps {
+  submit: SubmitType<typeof initForm>;
+  defaultValue?: DefaultValueType;
+}
+
+const defaultProps = {
+  defaultValue: undefined,
 };
 
 export default function FoodProductForm({

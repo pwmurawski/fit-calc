@@ -2,7 +2,7 @@ import { FoodProductKeyType } from "../types/IFoodProductDataTypes";
 import { ISelectedProductResponse } from "../types/SelectedProductTypes";
 import { ISummaryCalorieMacroData } from "../types/ISummaryCalorieMacroData";
 
-const reduce = (
+const sumMacro = (
   selectedProducts: ISelectedProductResponse[],
   key: FoodProductKeyType
 ) => {
@@ -16,14 +16,10 @@ const modifySummaryCalorieMacroData = (
   selectedProducts: ISelectedProductResponse[]
 ): ISummaryCalorieMacroData => {
   return {
-    kcal: reduce(selectedProducts, "kcal"),
-    limitKcal: 2600,
-    protein: reduce(selectedProducts, "protein"),
-    limitProtein: 160,
-    fat: reduce(selectedProducts, "fat"),
-    limitFat: 80,
-    carbs: reduce(selectedProducts, "carbs"),
-    limitCarbs: 400,
+    kcal: sumMacro(selectedProducts, "kcal"),
+    protein: sumMacro(selectedProducts, "protein"),
+    fat: sumMacro(selectedProducts, "fat"),
+    carbs: sumMacro(selectedProducts, "carbs"),
   };
 };
 

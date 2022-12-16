@@ -44,6 +44,12 @@ export const Input = styled.input`
     font-weight: 400;
     color: black;
   }
+
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+  }
 `;
 
 export const Error = styled.div`

@@ -9,18 +9,6 @@ import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
 import useDate from "../hooks/useDate";
 import getDailyGoals from "../api/getDailyGoals";
 
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (!isUser)
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-
-  return { props: {} };
-};
-
 export default function Home() {
   const { date, setDate } = useDate();
   const localeDate = format(date, "yyyy-MM-dd");

@@ -16,18 +16,6 @@ const initFormValue: FormInitType<KeysType> = {
   },
 };
 
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (isUser)
-    return {
-      redirect: {
-        destination: "/",
-      },
-    };
-
-  return { props: {} };
-};
-
 export default function Register() {
   const { registerHandler } = useAuth();
 

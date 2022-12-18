@@ -29,7 +29,7 @@ export default function WeightForm({ submit, kcal }: IWeightInputProps) {
         <Unit>g</Unit>
       </Container>
       <Kcal>{Number(((kcal * +weight) / 100).toFixed(1))} kcal</Kcal>
-      <SubmitBtn type="submit" />
+      <SubmitBtn type="submit" aria-label="Submit" />
     </Form>
   );
 }

@@ -42,6 +42,7 @@ export default function Meal({
               e.stopPropagation();
               setMealId(id);
             }}
+            aria-label="Open food product list"
           />
         </Top>
         <Bottom>

@@ -25,7 +25,6 @@ export const NutritionalVal = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: whitesmoke;
   border-radius: 13px;
   padding: 40px;
   border: 3px solid rgb(77, 216, 158);
@@ -35,7 +34,6 @@ export const Kcal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(77, 216, 158);
   font-weight: 600;
 `;
 

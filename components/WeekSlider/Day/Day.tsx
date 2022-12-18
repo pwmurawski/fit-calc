@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { format } from "date-fns";
 import { RefObject } from "react";
-import { checkDayCurrentDate } from "../../../helpers/checkDayCurrentDate";
+import { checkDateIsCurrentDate } from "../../../helpers/checkDateIsCurrentDate";
 import useDate from "../../../hooks/useDate";
 import { Container, Name, Number } from "./styles/styles";
 
@@ -17,13 +17,9 @@ export default function Day({ day, currentDayRef, onClick }: IDayProps) {
   return (
     <Container
       onClick={() => onClick(day)}
-      currentDay={checkDayCurrentDate(day.getDate(), day.getMonth())}
-      selectedDay={date.toLocaleDateString() === day.toLocaleDateString()}
-      ref={
-        checkDayCurrentDate(day.getDate(), day.getMonth())
-          ? currentDayRef
-          : undefined
-      }
+      currentDay={checkDateIsCurrentDate(day)}
+      selectedDay={date === day}
+      ref={checkDateIsCurrentDate(day) ? currentDayRef : undefined}
     >
       <Number>{day.getDate()}</Number>
       <Name>{format(day, "E")}</Name>

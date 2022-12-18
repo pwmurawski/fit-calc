@@ -34,12 +34,13 @@ export const Container = styled.div`
     `}
 `;
 
-export const Number = styled.h3`
+export const Number = styled.h2`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
   height: 35%;
+  margin: 0;
+  font-size: 19px;
 `;
 
 export const Name = styled.p`

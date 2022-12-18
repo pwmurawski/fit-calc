@@ -1,7 +1,20 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const runtimeCaching = require("next-pwa/cache");
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  runtimeCaching,
+  buildExcludes: [/middleware-manifest.json$/],
+});
+
+const nextConfig = withPWA({
   reactStrictMode: true,
   swcMinify: true,
+  compiler: {
+    styledComponents: true,
+  },
   async headers() {
     return [
       {
@@ -22,9 +35,6 @@ const nextConfig = {
       },
     ];
   },
-  compiler: {
-    styledComponents: true,
-  },
-};
+});
 
 module.exports = nextConfig;

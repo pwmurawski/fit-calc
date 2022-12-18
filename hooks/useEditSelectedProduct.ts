@@ -1,6 +1,7 @@
 import useSWRImmutable from "swr/immutable";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
+import { format } from "date-fns";
 import getSelectedProduct from "../api/getSelectedProduct";
 import getSelectedProductDay from "../api/getSelectedProductDay";
 import putSelectedProduct from "../api/putSelectedProduct";
@@ -15,6 +16,7 @@ const useEditSelectedProduct = (id: string) => {
   const { setLoading } = useLoading();
   const { back } = useRouter();
   const { date } = useDate();
+  const formatDate = format(date, "yyyy-MM-dd");
 
   const editSelectedProduct = async (
     selectedProductId: string,
@@ -25,8 +27,8 @@ const useEditSelectedProduct = (id: string) => {
 
     if (res?.status === 204) {
       mutate(
-        `/selectedProduct/day/${date.toLocaleDateString()}`,
-        getSelectedProductDay(date.toLocaleDateString())
+        `/selectedProduct/day/${formatDate}`,
+        getSelectedProductDay(formatDate)
       );
       back();
     }

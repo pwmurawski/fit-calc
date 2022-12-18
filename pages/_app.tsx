@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import Layouts from "../components/Layouts/Layouts";
 import GlobalContextProvider from "../provider/GlobalContextProvider";
 import LoadingProvider from "../provider/LoadingProvider";
@@ -11,6 +12,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <LoadingProvider>
         <Layouts>
+          <Head>
+            <title>FitCalc</title>
+          </Head>
           <Component {...pageProps} />
         </Layouts>
       </LoadingProvider>

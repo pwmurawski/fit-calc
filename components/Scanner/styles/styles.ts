@@ -28,11 +28,6 @@ export const ScannBtn = styled.button`
   cursor: pointer;
 `;
 
-export const Icon = styled.img`
-  width: 100%;
-  height: auto;
-`;
-
 export const RedLine = styled.div`
   position: absolute;
   width: 100%;

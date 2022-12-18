@@ -12,7 +12,7 @@ export const Container = styled(Link)`
 `;
 
 export const Macro = styled.div`
-  color: gray;
+  color: black;
 `;
 
 export const ValueSlider = styled.div`
@@ -37,13 +37,9 @@ export const ValueSlider = styled.div`
   }
 `;
 
-export const CurrentValue = styled.div`
-  color: black;
-`;
+export const CurrentValue = styled.div``;
 
-export const Name = styled.span`
-  color: black;
-`;
+export const Name = styled.span``;
 
 export const LimitValue = styled.div``;
 

@@ -110,6 +110,7 @@ export default function DailyGoalsForm({
             onFocus={() => {
               setIsUpdating({ formValue: false, percentMacro: true });
             }}
+            aria-label="Protein percent"
           />
           <Unit>%</Unit>
         </Container>
@@ -138,6 +139,7 @@ export default function DailyGoalsForm({
             onFocus={() => {
               setIsUpdating({ formValue: false, percentMacro: true });
             }}
+            aria-label="Fat percent"
           />
           <Unit>%</Unit>
         </Container>
@@ -166,6 +168,7 @@ export default function DailyGoalsForm({
             onFocus={() => {
               setIsUpdating({ formValue: false, percentMacro: true });
             }}
+            aria-label="Carbs percent"
           />
           <Unit>%</Unit>
         </Container>

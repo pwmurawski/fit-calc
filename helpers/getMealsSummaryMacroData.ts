@@ -1,12 +1,13 @@
+import { format } from "date-fns";
 import getMealsType from "../api/getMealsType";
 import getSelectedProductDay from "../api/getSelectedProductDay";
 import modifyMealArrays from "./modifyMealArrays";
 import modifySummaryCalorieMacroData from "./modifySummaryCalorieMacroData";
 
-const getMealsSummaryMacroData = async (date?: Date) => {
+const getMealsSummaryMacroData = async (date: Date) => {
   const mealsType = await getMealsType();
   const selectedProduct = await getSelectedProductDay(
-    date?.toLocaleDateString()
+    format(date, "yyyy-MM-dd")
   );
 
   if (mealsType?.data && selectedProduct?.data) {

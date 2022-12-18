@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -25,7 +25,7 @@ export const Bottom = styled.div`
   display: flex;
 `;
 
-export const Name = styled.h2`
+export const Name = styled.h3`
   display: flex;
   justify-content: flex-start;
   align-items: center;

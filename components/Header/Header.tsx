@@ -1,14 +1,9 @@
 import { useRouter } from "next/router";
-import {
-  Container,
-  Logo,
-  Calendar,
-  LogoutBtn,
-  LogoutImg,
-} from "./styles/styles";
-import logout from "../../assets/logout.png";
+import { format } from "date-fns";
+import { Container, Logo, Calendar, Logout, LogoutBtn } from "./styles/styles";
 import useDate from "../../hooks/useDate";
 import useAuth from "../../hooks/useAuth";
+import LogoutSvg from "../Svg/LogoutSvg";
 
 export default function Header() {
   const { logoutHandler } = useAuth();
@@ -22,18 +17,21 @@ export default function Header() {
         <>
           <Calendar
             type="date"
-            value={date.toLocaleDateString("fr-CA")}
-            onChange={(e) => setDate(new Date(e.target.value))}
+            aria-label="Calendar"
+            value={format(date, "yyyy-MM-dd")}
+            onChange={(e) =>
+              e.target.valueAsDate && setDate(e.target.valueAsDate)
+            }
           />
-          <LogoutBtn>
-            <LogoutImg
+          <Logout>
+            <LogoutBtn
               onClick={() => {
                 logoutHandler();
               }}
-              src={logout.src}
-              alt="logout"
-            />
-          </LogoutBtn>
+            >
+              <LogoutSvg />
+            </LogoutBtn>
+          </Logout>
         </>
       )}
     </Container>

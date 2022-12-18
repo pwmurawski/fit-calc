@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import getSelectedProductDay from "../api/getSelectedProductDay";
@@ -13,25 +14,26 @@ const useAddFoodProductToMeal = () => {
   const { setLoading } = useLoading();
   const { mealId } = useMealId();
   const { date } = useDate();
+  const formatDate = format(date, "yyyy-MM-dd");
 
   const addFoodProductToMeal = async (
     foodProductId: string,
     weight: number
   ) => {
     setLoading(true);
-    if (mealId && date) {
+    if (mealId) {
       const data: IBodySelectedProduct = {
         foodProductId,
         mealId,
         weight,
-        dateTime: date.toLocaleDateString(),
+        dateTime: formatDate,
       };
 
       const res = await postSelectedProduct(data);
       if (res?.status === 200) {
         mutate(
-          `/selectedProduct/day/${date.toLocaleDateString()}`,
-          getSelectedProductDay(date.toLocaleDateString())
+          `/selectedProduct/day/${formatDate}`,
+          getSelectedProductDay(formatDate)
         );
         back();
       }

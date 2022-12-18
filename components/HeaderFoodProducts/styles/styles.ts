@@ -15,17 +15,12 @@ export const BackLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
 `;
 
 export const Logo = styled.h1`
   margin: 0;
   font-size: 22px;
-`;
-
-export const Icon = styled.img`
-  width: 100%;
-  height: auto;
 `;

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
@@ -7,10 +8,9 @@ import { IBodyDailyGoals } from "../types/DailyGoalsTypes";
 
 const useEditDailyGoals = () => {
   const { push } = useRouter();
-  const currentDate = new Date().toLocaleDateString();
   const { data: dailyGoals, mutate } = useSWRImmutable(
-    `/dailyGoals/${currentDate}`,
-    () => getDailyGoals(currentDate)
+    "/dailyGoals/current",
+    () => getDailyGoals(format(new Date(), "yyyy-MM-dd"))
   );
 
   const addDailyGoals = async (data: IBodyDailyGoals) => {

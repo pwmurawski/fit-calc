@@ -1,5 +1,5 @@
-import { Container, EditLink, Icon } from "./styles/styles";
-import editIcon from "../../assets/edit.png";
+import { Container, EditLink } from "./styles/styles";
+import EditSvg from "../Svg/EditSvg";
 
 interface IEditBtnProps {
   ids: {
@@ -16,7 +16,7 @@ export default function Options({
     return (
       <Container>
         <EditLink href={`/foodProducts/edit/${productId}`}>
-          <Icon src={editIcon.src} alt="edit" />
+          <EditSvg />
         </EditLink>
       </Container>
     );

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useId } from "react";
 import { InputCustomContainer, Input, Label, Error } from "./styles/styles";
 
 interface IInputCustomProps {
@@ -27,20 +27,20 @@ export default function InputCustom({
   placeholder,
   error,
 }: IInputCustomProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const id = useId();
 
   return (
     <InputCustomContainer error={error ? true : undefined}>
       <Input
+        id={`input_${id}`}
         type={type}
         min={min}
-        ref={inputRef}
         value={value}
         onChange={onChange}
         step="0.1"
         placeholder=" "
       />
-      <Label onClick={() => inputRef.current?.focus()}>{placeholder}</Label>
+      <Label htmlFor={`input_${id}`}>{placeholder}</Label>
       {error ? <Error>{error}</Error> : null}
     </InputCustomContainer>
   );

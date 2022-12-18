@@ -12,8 +12,3 @@ export const Container = styled.section`
 export const EditLink = styled(Link)`
   margin: 0 5px;
 `;
-
-export const Icon = styled.img`
-  width: 25px;
-  height: auto;
-`;

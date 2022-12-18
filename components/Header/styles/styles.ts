@@ -18,19 +18,18 @@ export const Logo = styled.h1`
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 `;
 
-export const LogoutBtn = styled.button`
+export const Logout = styled.div`
   display: flex;
   flex: 1.3 1 25px;
   justify-content: flex-end;
+`;
+
+export const LogoutBtn = styled.button`
   background-color: transparent;
+  width: 25px;
   height: 25px;
   border: 0;
   padding: 0;
-`;
-
-export const LogoutImg = styled.img`
-  width: inherit;
-  height: inherit;
   cursor: pointer;
 `;
 

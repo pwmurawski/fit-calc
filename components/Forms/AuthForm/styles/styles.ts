@@ -10,19 +10,19 @@ export const Form = styled.form`
   padding: 50px;
 `;
 
-export const SubmitBtn = styled.button`
+export const SubmitBtn = styled.button<{ isError?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  max-width: 180px;
+  width: 50%;
   height: 30px;
   margin: 10px 0;
-  border: 0;
   border-radius: 10px;
   font-weight: 600;
-  color: white;
-  background-color: ${({ isError }: { isError?: boolean }) =>
-    isError ? "lightgray" : "rgb(77, 216, 158)"};
-  cursor: ${({ isError }: { isError?: boolean }) =>
-    isError ? "default" : "pointer"};
+  color: ${({ isError }) => (isError ? "black" : "white")};
+  border: ${({ isError }) => (isError ? "1px solid lightgray" : "0")};
+  background-color: ${({ isError }) =>
+    isError ? "white" : "rgb(77, 216, 158)"};
+  cursor: ${({ isError }) => (isError ? "default" : "pointer")};
 `;

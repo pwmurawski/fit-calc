@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Icon, RedLine, ScannBtn, ScannerContainer } from "./styles/styles";
-import scannerIcon from "../../assets/barcode.png";
+import { RedLine, ScannBtn, ScannerContainer } from "./styles/styles";
 import BarCodeScanner from "../BarCodeScanner/BarCodeScanner";
+import BarCodeSvg from "../Svg/BarCodeSvg";
 
 interface IBarCodeScanProps {
   onScanned: (data: string) => void;
@@ -14,7 +14,7 @@ export default function Scanner({ onScanned }: IBarCodeScanProps) {
   return (
     <>
       <ScannBtn type="button" onClick={() => setShowScanner(!showScanner)}>
-        <Icon src={scannerIcon.src} alt="scanner-bar" />
+        <BarCodeSvg />
       </ScannBtn>
       {showScanner ? (
         <ScannerContainer>

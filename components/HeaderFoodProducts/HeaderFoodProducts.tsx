@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { BackLink, Container, Icon, Logo } from "./styles/styles";
-import arrowIcon from "../../assets/arrow.png";
+import { BackLink, Container, Logo } from "./styles/styles";
+import BackArrowSvg from "../Svg/BackArrowSvg";
 
 export default function HeaderFoodProducts() {
   const { pathname, query } = useRouter();
@@ -14,7 +14,7 @@ export default function HeaderFoodProducts() {
   return (
     <Container>
       <BackLink href={href()}>
-        <Icon src={arrowIcon.src} alt="back" />
+        <BackArrowSvg />
       </BackLink>
       <Logo>FitCALC</Logo>
     </Container>

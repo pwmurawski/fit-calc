@@ -1,4 +1,5 @@
 import useSWRImmutable from "swr/immutable";
+import { format } from "date-fns";
 import MealsTable from "../components/MealsTable/MealsTable";
 import WeekSlider from "../components/WeekSlider/WeekSlider";
 import SummaryCaloriesAndMacros from "../components/SummaryCaloriesAndMacros/SummaryCaloriesAndMacros";
@@ -22,10 +23,14 @@ export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
 
 export default function Home() {
   const { date, setDate } = useDate();
-  const localeDate = date.toLocaleDateString();
+  const localeDate = format(date, "yyyy-MM-dd");
   const { mealsData, summaryData } = useGetMealsSummaryMacroData();
   const { data: dailyGoals } = useSWRImmutable(
-    `/dailyGoals/${localeDate}`,
+    `/dailyGoals/${
+      new Date(date.toDateString()) >= new Date(new Date().toDateString())
+        ? "current"
+        : localeDate
+    }`,
     () => getDailyGoals(localeDate)
   );
 

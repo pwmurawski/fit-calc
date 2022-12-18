@@ -8,6 +8,18 @@ import userAuth from "../../helpers/userAuth";
 import { IGetServerProps } from "../../types/GetServerPropsTypes";
 import useEditSelectedProduct from "../../hooks/useEditSelectedProduct";
 
+export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
+  const { isUser } = userAuth(req, res);
+  if (!isUser)
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+
+  return { props: {} };
+};
+
 interface IQuery extends ParsedUrlQuery {
   id: string;
 }

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import postFoodProduct from "../api/postFoodProduct";
+import postFoodProduct from "../_api/postFoodProduct";
 import revalidate from "../helpers/revalidate";
 import { IFoodProductFormValue } from "../types/FoodProductFormTypes";
 

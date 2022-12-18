@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import getFoodProduct from "../api/getFoodProduct";
-import putFoodProduct from "../api/putFoodProduct";
+import getFoodProduct from "../_api/getFoodProduct";
+import putFoodProduct from "../_api/putFoodProduct";
 import revalidate from "../helpers/revalidate";
 import {
   IFoodProductFormValue,

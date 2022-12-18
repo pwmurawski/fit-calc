@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
-import getSelectedProductDay from "../api/getSelectedProductDay";
-import postSelectedProduct from "../api/postSelectedProduct";
+import getSelectedProductDay from "../_api/getSelectedProductDay";
+import postSelectedProduct from "../_api/postSelectedProduct";
 import { IBodySelectedProduct } from "../types/SelectedProductTypes";
 import useDate from "./useDate";
 import useLoading from "./useLoading";

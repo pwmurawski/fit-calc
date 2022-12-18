@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import AddNewFoodProduct from "../../../components/AddNewFoodProduct/AddNewFoodProduct";
 import FoodProductsTable from "../../../components/FoodProductsTable/FoodProductsTable";
-import getFoodProducts from "../../../api/getFoodProducts";
+import getFoodProducts from "../../../_api/getFoodProducts";
 import userAuth from "../../../helpers/userAuth";
 import { IGetServerProps } from "../../../types/GetServerPropsTypes";
 import { IFoodProductData } from "../../../types/IFoodProductDataTypes";

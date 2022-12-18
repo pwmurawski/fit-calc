@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import { useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
-import getMealsType from "../api/getMealsType";
-import getSelectedProductDay from "../api/getSelectedProductDay";
+import getMealsType from "../_api/getMealsType";
+import getSelectedProductDay from "../_api/getSelectedProductDay";
 import modifyMealArrays from "../helpers/modifyMealArrays";
 import modifySummaryCalorieMacroData from "../helpers/modifySummaryCalorieMacroData";
 import useDate from "./useDate";

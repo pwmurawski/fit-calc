@@ -2,9 +2,9 @@ import useSWRImmutable from "swr/immutable";
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { format } from "date-fns";
-import getSelectedProduct from "../api/getSelectedProduct";
-import getSelectedProductDay from "../api/getSelectedProductDay";
-import putSelectedProduct from "../api/putSelectedProduct";
+import getSelectedProduct from "../_api/getSelectedProduct";
+import getSelectedProductDay from "../_api/getSelectedProductDay";
+import putSelectedProduct from "../_api/putSelectedProduct";
 import useLoading from "./useLoading";
 import useDate from "./useDate";
 

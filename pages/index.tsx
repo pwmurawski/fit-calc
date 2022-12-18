@@ -7,7 +7,7 @@ import userAuth from "../helpers/userAuth";
 import { IGetServerProps } from "../types/GetServerPropsTypes";
 import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
 import useDate from "../hooks/useDate";
-import getDailyGoals from "../api/getDailyGoals";
+import getDailyGoals from "../_api/getDailyGoals";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);

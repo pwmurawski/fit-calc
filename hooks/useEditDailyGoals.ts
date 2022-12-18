@@ -2,8 +2,8 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
-import getDailyGoals from "../api/getDailyGoals";
-import postDailyGoals from "../api/postDailyGoals";
+import getDailyGoals from "../_api/getDailyGoals";
+import postDailyGoals from "../_api/postDailyGoals";
 import { IBodyDailyGoals } from "../types/DailyGoalsTypes";
 
 const useEditDailyGoals = () => {

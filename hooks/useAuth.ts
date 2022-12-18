@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import getLogout from "../api/getLogout";
-import getUserId from "../api/getUserId";
-import postLogin from "../api/postLogin";
-import postRegister from "../api/postRegister";
+import getLogout from "../_api/getLogout";
+import getUserId from "../_api/getUserId";
+import postLogin from "../_api/postLogin";
+import postRegister from "../_api/postRegister";
 import userAuth from "../helpers/userAuth";
 import { ILoginFormValue } from "../types/ILoginFormValue";
 import useLoading from "./useLoading";

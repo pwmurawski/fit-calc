@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { useSWRConfig } from "swr";
-import deleteSelectedProduct from "../api/deleteSelectedProduct";
+import deleteSelectedProduct from "../_api/deleteSelectedProduct";
 import useLoading from "./useLoading";
 
 const useDeleteSelectedProduct = () => {

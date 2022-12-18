@@ -24,23 +24,23 @@ export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
 export default function Home() {
   const { date, setDate } = useDate();
   const localeDate = format(date, "yyyy-MM-dd");
-  // const { mealsData, summaryData } = useGetMealsSummaryMacroData();
-  // const { data: dailyGoals } = useSWRImmutable(
-  //   `/dailyGoals/${
-  //     new Date(date.toDateString()) >= new Date(new Date().toDateString())
-  //       ? "current"
-  //       : localeDate
-  //   }`,
-  //   () => getDailyGoals(localeDate)
-  // );
+  const { mealsData, summaryData } = useGetMealsSummaryMacroData();
+  const { data: dailyGoals } = useSWRImmutable(
+    `/dailyGoals/${
+      new Date(date.toDateString()) >= new Date(new Date().toDateString())
+        ? "current"
+        : localeDate
+    }`,
+    () => getDailyGoals(localeDate)
+  );
 
   return (
     <>
       <WeekSlider onClickDay={(value) => setDate(value)} />
-      <MealsTable mealsData={undefined} />
+      <MealsTable mealsData={mealsData} />
       <SummaryCaloriesAndMacros
-        summaryCalorieMacroData={undefined}
-        limitMacro={undefined}
+        summaryCalorieMacroData={summaryData}
+        limitMacro={dailyGoals?.data}
       />
     </>
   );

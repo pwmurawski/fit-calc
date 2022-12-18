@@ -19,34 +19,34 @@ interface IParams extends ParsedUrlQuery {
   id: string;
 }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const response = await getFoodProducts();
-//   if (!response?.data)
-//     throw new Error(
-//       `Failed to fetch data, received status ${response?.status}`
-//     );
+export const getStaticPaths: GetStaticPaths = async () => {
+  const response = await getFoodProducts();
+  if (!response?.data)
+    throw new Error(
+      `Failed to fetch data, received status ${response?.status}`
+    );
 
-//   const paths = response.data.map(({ id }) => ({ params: { id } }));
-//   return {
-//     paths,
-//     fallback: true,
-//   };
-// };
+  const paths = response.data.map(({ id }) => ({ params: { id } }));
+  return {
+    paths,
+    fallback: true,
+  };
+};
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const { id } = params as IParams;
-//   const response = await getFoodProduct(id);
-//   if (!response?.data)
-//     throw new Error(
-//       `Failed to fetch data, received status ${response?.status}`
-//     );
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { id } = params as IParams;
+  const response = await getFoodProduct(id);
+  if (!response?.data)
+    throw new Error(
+      `Failed to fetch data, received status ${response?.status}`
+    );
 
-//   return {
-//     props: {
-//       foodProductData: response.data,
-//     },
-//   };
-// };
+  return {
+    props: {
+      foodProductData: response.data,
+    },
+  };
+};
 
 interface IFoodProductPageProps {
   foodProductData: IFoodProductData | undefined;

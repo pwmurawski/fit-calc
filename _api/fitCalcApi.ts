@@ -19,10 +19,10 @@ const fitCalcApi = async <Data, ErrorsKeys extends string = string>(
       status: response.status,
     };
 
-    // if (data.status === 401) {
-    //   deleteCookie(COOKIE_KEY_USER, { req, res });
-    //   window.location.pathname = "/login";
-    // }
+    if (data.status === 401) {
+      deleteCookie(COOKIE_KEY_USER, { req, res });
+      window.location.pathname = "/login";
+    }
 
     return data;
   } catch {}

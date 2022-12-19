@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
 import getFoodProduct from "../../_api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
@@ -19,34 +20,34 @@ interface IParams extends ParsedUrlQuery {
   id: string;
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await getFoodProducts();
-  if (!response?.data)
-    throw new Error(
-      `Failed to fetch data, received status ${response?.status}`
-    );
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const response = await getFoodProducts();
+//   if (!response?.data)
+//     throw new Error(
+//       `Failed to fetch data, received status ${response?.status}`
+//     );
 
-  const paths = response.data.map(({ id }) => ({ params: { id } }));
-  return {
-    paths,
-    fallback: true,
-  };
-};
+//   const paths = response.data.map(({ id }) => ({ params: { id } }));
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params as IParams;
-  const response = await getFoodProduct(id);
-  if (!response?.data)
-    throw new Error(
-      `Failed to fetch data, received status ${response?.status}`
-    );
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const { id } = params as IParams;
+//   const response = await getFoodProduct(id);
+//   if (!response?.data)
+//     throw new Error(
+//       `Failed to fetch data, received status ${response?.status}`
+//     );
 
-  return {
-    props: {
-      foodProductData: response.data,
-    },
-  };
-};
+//   return {
+//     props: {
+//       foodProductData: response.data,
+//     },
+//   };
+// };
 
 interface IFoodProductPageProps {
   foodProductData: IFoodProductData | undefined;
@@ -56,8 +57,11 @@ export default function FoodProductPage({
   foodProductData,
 }: IFoodProductPageProps) {
   const { isUser, logoutHandler } = useAuth();
-  if (!isUser) logoutHandler();
   const addFoodProductToMeal = useAddFoodProductToMeal();
+
+  useEffect(() => {
+    if (!isUser) logoutHandler(false);
+  }, []);
 
   if (!foodProductData) return <Loading />;
   return (

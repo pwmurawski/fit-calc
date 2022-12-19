@@ -4,14 +4,15 @@ import revalidate from "../helpers/revalidate";
 import { IFoodProductFormValue } from "../types/FoodProductFormTypes";
 
 const useAddFoodProduct = () => {
-  const { back, prefetch } = useRouter();
+  const { prefetch } = useRouter();
 
   const addFoodProduct = async (data: IFoodProductFormValue) => {
     const res = await postFoodProduct(data);
     if (res?.status === 200) {
       await revalidate("/foodProducts");
-      await prefetch("/foodProducts", undefined, { priority: true });
-      back();
+      await prefetch("/foodProducts", undefined, {
+        priority: true,
+      });
     }
 
     return res?.errors?.children;

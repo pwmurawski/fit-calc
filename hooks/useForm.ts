@@ -37,6 +37,8 @@ const useForm = <InitFormValue>(
 
     if (errors) {
       setErrors(errors, setBackendErrors);
+    } else {
+      setFormData(initFormValue);
     }
     setLoading(false);
   };

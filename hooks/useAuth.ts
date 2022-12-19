@@ -22,10 +22,15 @@ const useAuth = () => {
     return res?.errors?.children;
   };
 
-  const logoutHandler = async () => {
+  const logoutHandler = async (isAuth = true) => {
     setLoading(true);
-    const res = await getLogout();
-    if (res?.status === 204) {
+    if (isAuth) {
+      const res = await getLogout();
+      if (res?.status === 204) {
+        logout();
+        push("/login");
+      }
+    } else {
       logout();
       push("/login");
     }

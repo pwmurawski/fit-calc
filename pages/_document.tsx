@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#fff" />
         <meta
           name="description"
           content="Meal planning and management app.

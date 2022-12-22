@@ -35,8 +35,9 @@ W celu zapewnienia wysokiej jakości obsługi, aplikacja została zaprojektowana
 ### Built With
 
 * [![React][React.js]][React-url]
+* [![Next][Next]][Next-url]
 * [![TypeScript][TypeScript.ts]][TypeScript-url]
-* [![React-Leaflet][React-Leaflet.js]][React-Leaflet-url]
+* [![Swr][Swr]][Swr-url]
 * [![Styled-Components][Styled-Components]][Styled-Components-url]
 
 <!-- GETTING STARTED -->
@@ -44,29 +45,29 @@ W celu zapewnienia wysokiej jakości obsługi, aplikacja została zaprojektowana
 
 ### Installation
 
-1. Get a free API Key at https://openweathermap.org
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/pwmurawski/weather-app.git
+   git clone https://github.com/pwmurawski/fit-calc.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `.env.local`
-   ```js
-   REACT_APP_API_APPID=your_API_Key
-   ```
-5. Runs the app in the development mode
+3. Runs the app in the development mode
    ```sh
-   npm start
+   npm run dev
    ```
-   Open http://localhost:3000 to view it in the browser.
+   Open http://127.0.0.1:3000 to view it in the browser.
    
-6. Builds the app for production to the build folder
+4. Builds the app for production to the .next folder
    ```sh
    npm run build
    ```
+5. Runs the app in the production mode
+   ```sh
+   npm run start
+   ```
+   Open http://127.0.0.1:3000 to view it in the browser.
 
 <!-- CONTACT -->
 ## Contact
@@ -84,3 +85,7 @@ pwmurawski123@gmail.com
 [React-Leaflet-url]: https://react-leaflet.js.org
 [Styled-Components]: https://img.shields.io/badge/Styled%20Components-20232A?style=for-the-badge&logo=Styled%20Components&logoColor=e9cd16
 [Styled-Components-url]: https://styled-components.com
+[Next]: https://img.shields.io/badge/next-20232A?style=for-the-badge&logo=next&logoColor=e9cd16
+[Next-url]: https://nextjs.org
+[Swr]: https://img.shields.io/badge/SWR-20232A?style=for-the-badge&logo=SWR&logoColor=e9cd16
+[Swr-url]: https://swr.vercel.app

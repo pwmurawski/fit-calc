@@ -7,7 +7,7 @@
     <img src="public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">weather-app</h3>
+  <h3 align="center">fit-calc</h3>
 
   <p align="center">
     <a href="https://fitcalc.online">View Demo</a>

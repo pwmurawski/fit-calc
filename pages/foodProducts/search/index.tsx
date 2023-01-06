@@ -5,7 +5,7 @@ import FoodProductsTable from "../../../components/FoodProductsTable/FoodProduct
 import getFoodProducts from "../../../_api/getFoodProducts";
 import userAuth from "../../../helpers/userAuth";
 import { IGetServerProps } from "../../../types/GetServerPropsTypes";
-import { IFoodProductData } from "../../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../../types/FoodProductTypes";
 
 export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
   const { isUser } = userAuth(req, res);
@@ -20,7 +20,7 @@ export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
 };
 
 export default function Search() {
-  const [foodProducts, setFoodProducts] = useState<IFoodProductData[]>();
+  const [foodProducts, setFoodProducts] = useState<FoodProductType[]>();
   const {
     query: { term },
   } = useRouter();

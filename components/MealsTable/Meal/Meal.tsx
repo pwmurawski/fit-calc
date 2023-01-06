@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import useMealId from "../../../hooks/useMealId";
-import { IMealData } from "../../../types/MealsDataTypes";
+import { IMealData } from "../../../types/MealTypes";
 import {
   Container,
   Name,

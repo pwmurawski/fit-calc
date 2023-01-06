@@ -1,7 +1,8 @@
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const putSelectedProduct = async (id: string, weight: number) => {
-  const data = await fitCalcApi<null>(`/selectedProduct/${id}`, {
+  const data = await fitCalcApi(`/selectedProduct/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +10,7 @@ const putSelectedProduct = async (id: string, weight: number) => {
     body: JSON.stringify({ weight }),
     credentials: "include",
   });
-  return data;
+  return ResponseSchema.parse(data);
 };
 
 export default putSelectedProduct;

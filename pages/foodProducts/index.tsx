@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import AddNewFoodProduct from "../../components/AddNewFoodProduct/AddNewFoodProduct";
 import FoodProductsTable from "../../components/FoodProductsTable/FoodProductsTable";
 import getFoodProducts from "../../_api/getFoodProducts";
-import { IFoodProductData } from "../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../types/FoodProductTypes";
 import useAuth from "../../hooks/useAuth";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function FoodProducts({
   foodProducts,
 }: {
-  foodProducts: IFoodProductData[];
+  foodProducts: FoodProductType[];
 }) {
   const { isUser, logoutHandler } = useAuth();
 

@@ -1,8 +1,9 @@
-import { IFoodProductFormValue, KeysType } from "../types/FoodProductFormTypes";
+import { IFoodProductFormValue } from "../types/FoodProductFormTypes";
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const putFoodProduct = async (id: string, body?: IFoodProductFormValue) => {
-  const data = await fitCalcApi<null, KeysType>(`/foodProduct/${id}`, {
+  const data = await fitCalcApi(`/foodProduct/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -10,7 +11,7 @@ const putFoodProduct = async (id: string, body?: IFoodProductFormValue) => {
     body: JSON.stringify(body),
     credentials: "include",
   });
-  return data;
+  return ResponseSchema.parse(data);
 };
 
 export default putFoodProduct;

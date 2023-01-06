@@ -1,11 +1,12 @@
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const getLogout = async () => {
-  const data = await fitCalcApi<null>("/logout", {
+  const data = await fitCalcApi("/logout", {
     credentials: "include",
   });
 
-  return data;
+  return ResponseSchema.parse(data);
 };
 
 export default getLogout;

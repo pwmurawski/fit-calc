@@ -1,9 +1,9 @@
-import { FoodProductKeyType } from "../types/IFoodProductDataTypes";
-import { ISelectedProductResponse } from "../types/SelectedProductTypes";
+import { FoodProductKeyType } from "../types/FoodProductTypes";
+import { SelectedProductType } from "../types/SelectedProductTypes";
 import { ISummaryCalorieMacroData } from "../types/ISummaryCalorieMacroData";
 
 const sumMacro = (
-  selectedProducts: ISelectedProductResponse[],
+  selectedProducts: SelectedProductType[],
   key: FoodProductKeyType
 ) => {
   return selectedProducts.reduce(
@@ -13,7 +13,7 @@ const sumMacro = (
 };
 
 const modifySummaryCalorieMacroData = (
-  selectedProducts: ISelectedProductResponse[]
+  selectedProducts: SelectedProductType[]
 ): ISummaryCalorieMacroData => {
   return {
     kcal: sumMacro(selectedProducts, "kcal"),

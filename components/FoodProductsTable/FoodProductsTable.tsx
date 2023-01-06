@@ -1,10 +1,10 @@
-import { IFoodProductData } from "../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../types/FoodProductTypes";
 import Loading from "../Loading/Loading";
 import FoodProducts from "./FoodProducts/FoodProducts";
 import { Container } from "./styles/styles";
 
 interface IFoodProductsTableProps {
-  foodProductsData: IFoodProductData[] | undefined;
+  foodProductsData: FoodProductType[] | undefined;
 }
 
 export default function FoodProductsTable({

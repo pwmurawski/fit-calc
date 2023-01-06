@@ -1,8 +1,9 @@
 import { ILoginFormValue } from "../types/ILoginFormValue";
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const postLogin = async (body: ILoginFormValue) => {
-  const data = await fitCalcApi<undefined, keyof ILoginFormValue>("/login", {
+  const data = await fitCalcApi("/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -11,7 +12,7 @@ const postLogin = async (body: ILoginFormValue) => {
     credentials: "include",
   });
 
-  return data;
+  return ResponseSchema.parse(data);
 };
 
 export default postLogin;

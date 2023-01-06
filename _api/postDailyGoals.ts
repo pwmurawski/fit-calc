@@ -1,8 +1,10 @@
-import { IBodyDailyGoals } from "../types/DailyGoalsTypes";
+import { z } from "zod";
+import { BodyDailyGoalsType } from "../types/DailyGoalsTypes";
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
-const postDailyGoals = async (body: IBodyDailyGoals) => {
-  const data = await fitCalcApi<{ id: string }>("/dailyGoals", {
+const postDailyGoals = async (body: BodyDailyGoalsType) => {
+  const data = await fitCalcApi("/dailyGoals", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -11,7 +13,9 @@ const postDailyGoals = async (body: IBodyDailyGoals) => {
     credentials: "include",
   });
 
-  return data;
+  return ResponseSchema.and(
+    z.object({ data: z.object({ id: z.string() }).optional() }).optional()
+  ).parse(data);
 };
 
 export default postDailyGoals;

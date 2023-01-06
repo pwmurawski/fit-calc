@@ -1,8 +1,8 @@
-import { IFoodProductData } from "../../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../../types/FoodProductTypes";
 import FoodProduct from "./FoodProduct/FoodProduct";
 
 interface IFoodProductsProps {
-  foodProductsData: IFoodProductData[];
+  foodProductsData: FoodProductType[];
 }
 
 export default function FoodProducts({ foodProductsData }: IFoodProductsProps) {

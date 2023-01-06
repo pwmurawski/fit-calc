@@ -1,5 +1,5 @@
 import { toPercent } from "../../helpers/toPercent";
-import { IDailyGoals } from "../../types/DailyGoalsTypes";
+import { DailyGoalsType } from "../../types/DailyGoalsTypes";
 import { ISummaryCalorieMacroData } from "../../types/ISummaryCalorieMacroData";
 import {
   Container,
@@ -13,7 +13,7 @@ import {
 
 interface ISummaryCaloriesAndMacrosProps {
   summaryCalorieMacroData: ISummaryCalorieMacroData | undefined;
-  limitMacro: IDailyGoals | undefined;
+  limitMacro: DailyGoalsType | undefined;
 }
 
 export default function SummaryCaloriesAndMacros({

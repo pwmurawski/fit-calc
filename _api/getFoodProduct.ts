@@ -1,9 +1,10 @@
-import { IFoodProductData } from "../types/IFoodProductDataTypes";
+import { ResponseFoodProductSchema } from "../types/FoodProductTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const getFoodProduct = async (id: string) => {
-  const data = await fitCalcApi<IFoodProductData>(`/foodProducts/${id}`);
-  return data;
+  const data = await fitCalcApi(`/foodProducts/${id}`);
+
+  return ResponseFoodProductSchema.parse(data);
 };
 
 export default getFoodProduct;

@@ -1,11 +1,12 @@
-import { IMealResponse } from "../types/IMealResponse";
+import { ResponseMealsSchema } from "../types/MealTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const getMealsType = async () => {
-  const data = await fitCalcApi<IMealResponse[]>("/meals", {
+  const data = await fitCalcApi("/meals", {
     credentials: "include",
   });
-  return data;
+
+  return ResponseMealsSchema.parse(data);
 };
 
 export default getMealsType;

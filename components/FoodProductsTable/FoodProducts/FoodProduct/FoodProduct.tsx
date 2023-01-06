@@ -1,4 +1,4 @@
-import { IFoodProductData } from "../../../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../../../types/FoodProductTypes";
 import {
   Container,
   FoodContainer,
@@ -10,7 +10,7 @@ import {
 } from "./styles/styles";
 
 interface IFoodProductProps {
-  foodProductData: IFoodProductData;
+  foodProductData: FoodProductType;
 }
 
 export default function FoodProduct({

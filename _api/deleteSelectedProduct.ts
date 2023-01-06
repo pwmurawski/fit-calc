@@ -1,7 +1,8 @@
+import { ResponseSchema } from "../types/ResponseTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const deleteSelectedProduct = async (id: string) => {
-  const data = await fitCalcApi<[]>(`/selectedProduct/${id}`, {
+  const data = await fitCalcApi(`/selectedProduct/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -9,7 +10,7 @@ const deleteSelectedProduct = async (id: string) => {
     credentials: "include",
   });
 
-  return data;
+  return ResponseSchema.parse(data);
 };
 
 export default deleteSelectedProduct;

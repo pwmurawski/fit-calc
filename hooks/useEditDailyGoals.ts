@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import getDailyGoals from "../_api/getDailyGoals";
 import postDailyGoals from "../_api/postDailyGoals";
-import { IBodyDailyGoals } from "../types/DailyGoalsTypes";
+import { BodyDailyGoalsType } from "../types/DailyGoalsTypes";
 
 const useEditDailyGoals = () => {
   const { push } = useRouter();
@@ -13,7 +13,7 @@ const useEditDailyGoals = () => {
     () => getDailyGoals(format(new Date(), "yyyy-MM-dd"))
   );
 
-  const addDailyGoals = async (data: IBodyDailyGoals) => {
+  const addDailyGoals = async (data: BodyDailyGoalsType) => {
     const res = await postDailyGoals(data);
     if (res?.data) {
       await mutate();

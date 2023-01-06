@@ -6,7 +6,7 @@ import getFoodProduct from "../../_api/getFoodProduct";
 import BarCode from "../../components/Barcode/BarCode";
 import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
 import WeightInput from "../../components/Forms/WeightForm/WeightForm";
-import { IFoodProductData } from "../../types/IFoodProductDataTypes";
+import { FoodProductType } from "../../types/FoodProductTypes";
 import useAddFoodProductToMeal from "../../hooks/useAddFoodProductToMeal";
 import getFoodProducts from "../../_api/getFoodProducts";
 import Loading from "../../components/Loading/Loading";
@@ -50,7 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 interface IFoodProductPageProps {
-  foodProductData: IFoodProductData | undefined;
+  foodProductData: FoodProductType | undefined;
 }
 
 export default function FoodProductPage({

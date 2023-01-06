@@ -1,11 +1,11 @@
-import { FoodProductKeyType } from "../types/IFoodProductDataTypes";
-import { IMealResponse } from "../types/IMealResponse";
-import { IMealsData } from "../types/MealsDataTypes";
-import { ISelectedProductResponse } from "../types/SelectedProductTypes";
+import { FoodProductKeyType } from "../types/FoodProductTypes";
+import { MealType, IMealsData } from "../types/MealTypes";
+
+import { SelectedProductType } from "../types/SelectedProductTypes";
 
 const modifyData = (
   mealId: string,
-  selectedProducts: ISelectedProductResponse[]
+  selectedProducts: SelectedProductType[]
 ) => {
   return selectedProducts
     .filter(({ meal }) => meal.id === mealId)
@@ -21,7 +21,7 @@ const modifyData = (
 
 const sumInMeal = (
   mealId: string,
-  selectedProducts: ISelectedProductResponse[],
+  selectedProducts: SelectedProductType[],
   key: FoodProductKeyType
 ) => {
   return modifyData(mealId, selectedProducts).reduce(
@@ -31,8 +31,8 @@ const sumInMeal = (
 };
 
 const modifyMealArrays = (
-  mealsType: IMealResponse[],
-  selectedProducts: ISelectedProductResponse[]
+  mealsType: MealType[],
+  selectedProducts: SelectedProductType[]
 ): IMealsData[] => {
   return mealsType.map(({ id, name }) => ({
     id,

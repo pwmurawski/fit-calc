@@ -1,11 +1,12 @@
-import { IDailyGoals } from "../types/DailyGoalsTypes";
+import { ResponseDailyGoalsSchema } from "../types/DailyGoalsTypes";
 import fitCalcApi from "./fitCalcApi";
 
 const getDailyGoals = async (date: string) => {
-  const data = await fitCalcApi<IDailyGoals>(`/dailyGoals/${date}`, {
+  const data = await fitCalcApi(`/dailyGoals/${date}`, {
     credentials: "include",
   });
-  return data;
+
+  return ResponseDailyGoalsSchema.parse(data);
 };
 
 export default getDailyGoals;

@@ -1,15 +1,27 @@
-export type ValuesResBackendErrorsType =
-  | {
-      errors: string[];
-    }
-  | [];
+import { z } from "zod";
 
-export interface IResponse<Data, ErrorsKeys extends string> {
-  status: number;
-  data?: Data;
-  code?: number;
-  message?: string;
-  errors?: {
-    children: Record<ErrorsKeys, ValuesResBackendErrorsType>;
-  };
-}
+export const ValuesResBackendErrorsSchema = z.union([
+  z.object({
+    errors: z.array(z.string()),
+  }),
+  z.array(z.never()),
+]);
+
+export const ResponseSchema = z
+  .object({
+    status: z.number(),
+    code: z.number().optional(),
+    message: z.string().optional(),
+    errors: z
+      .object({
+        children: z.record(z.string(), ValuesResBackendErrorsSchema),
+      })
+      .optional(),
+  })
+  .optional();
+
+export type ResponseType = z.infer<typeof ResponseSchema>;
+
+export type ValuesResBackendErrorsType = z.infer<
+  typeof ValuesResBackendErrorsSchema
+>;

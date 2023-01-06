@@ -11,8 +11,10 @@ const useDeleteSelectedProduct = () => {
     setLoading(true);
     const res = await deleteSelectedProduct(selectedId);
 
-    if (!res?.code)
-      mutate(`/selectedProduct/day/${format(new Date(date), "yyyy-MM-dd")}`);
+    if (res?.status === 204)
+      await mutate(
+        `/selectedProduct/day/${format(new Date(date), "yyyy-MM-dd")}`
+      );
     setLoading(false);
   };
 

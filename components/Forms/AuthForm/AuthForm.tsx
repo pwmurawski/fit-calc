@@ -1,57 +1,49 @@
-import useForm from "../../../hooks/useForm";
-import { FormInitType } from "../../../types/FormTypes";
-import { KeysType, SubmitType } from "../../../types/AuthFormTypes";
-import InputCustom from "../../InputCustom/InputCustom";
-import { Form, SubmitBtn } from "./styles/styles";
+import { Form, SubmitBtn } from './styles/styles';
+import { Field, Formik } from 'formik';
+import { User } from '@prisma/client';
+import { isString } from 'lodash';
+import { InputCustom } from 'components/InputCustom/InputCustom';
+import { ObjectShape, OptionalObjectSchema } from 'yup/lib/object';
 
-interface IAuthFormProps {
-  submitBtnText?: string;
-  onSubmit: SubmitType;
-  initFormValue: FormInitType<KeysType>;
+interface IAuthFormProps<T> {
+    initFormValue: T;
+    onSubmit: (formValue: T) => void;
+    submitBtnText?: string;
+    validationSchema?: OptionalObjectSchema<ObjectShape>;
 }
 
-const defaultProps = {
-  submitBtnText: "Zaloguj sie",
-};
-
-export default function AuthForm({
-  initFormValue,
-  onSubmit,
-  submitBtnText,
-}: IAuthFormProps) {
-  const { formValue, onChange, onSubmitHandler, backendErrors, isErrorForm } =
-    useForm(initFormValue);
-
-  return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmitHandler(onSubmit);
-      }}
-    >
-      <InputCustom
-        type="text"
-        placeholder="Email"
-        value={formValue.username.value}
-        onChange={(e) => onChange(e.target.value, "username")}
-        error={formValue.username.error ?? backendErrors?.username?.error}
-      />
-      <InputCustom
-        type="password"
-        placeholder="Hasło"
-        value={formValue.password.value}
-        onChange={(e) => onChange(e.target.value, "password")}
-        error={formValue.password.error ?? backendErrors?.password?.error}
-      />
-      {!isErrorForm(formValue) ? (
-        <SubmitBtn type="submit">{submitBtnText}</SubmitBtn>
-      ) : (
-        <SubmitBtn isError type="button">
-          {submitBtnText}
-        </SubmitBtn>
-      )}
-    </Form>
-  );
+export function AuthForm<T extends Partial<Omit<User, 'id' | 'userType'>>>({
+    initFormValue,
+    validationSchema,
+    onSubmit,
+    submitBtnText = 'Zaloguj sie',
+}: IAuthFormProps<T>) {
+    return (
+        <Formik initialValues={initFormValue} onSubmit={onSubmit} validationSchema={validationSchema}>
+            {({ submitForm, isValid }) => (
+                <Form>
+                    {isString(initFormValue.name) && <Field component={InputCustom} name="name" placeholder="Imie" />}
+                    {isString(initFormValue.surname) && (
+                        <Field component={InputCustom} name="surname" placeholder="Nazwisko" />
+                    )}
+                    <Field component={InputCustom} name="email" placeholder="Email" />
+                    <Field component={InputCustom} type="password" name="password" placeholder="Hasło" />
+                    {!!isValid ? (
+                        <SubmitBtn
+                            onClick={(e) => {
+                                e.preventDefault();
+                                submitForm();
+                            }}
+                        >
+                            {submitBtnText}
+                        </SubmitBtn>
+                    ) : (
+                        <SubmitBtn isError type="button">
+                            {submitBtnText}
+                        </SubmitBtn>
+                    )}
+                </Form>
+            )}
+        </Formik>
+    );
 }
-
-AuthForm.defaultProps = defaultProps;

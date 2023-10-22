@@ -8,8 +8,3 @@ export type ReqType = IncomingMessage & {
 
 export type ResType = ServerResponse<IncomingMessage>;
 
-export interface IGetServerProps<T = unknown> {
-  params: T;
-  req: ReqType;
-  res: ResType;
-}

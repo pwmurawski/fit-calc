@@ -1,47 +1,45 @@
-import useSWRImmutable from "swr/immutable";
-import { format } from "date-fns";
-import MealsTable from "../components/MealsTable/MealsTable";
-import WeekSlider from "../components/WeekSlider/WeekSlider";
-import SummaryCaloriesAndMacros from "../components/SummaryCaloriesAndMacros/SummaryCaloriesAndMacros";
-import userAuth from "../helpers/userAuth";
-import { IGetServerProps } from "../types/GetServerPropsTypes";
-import useGetMealsSummaryMacroData from "../hooks/useGetMealsSummaryMacroData";
-import useDate from "../hooks/useDate";
-import getDailyGoals from "../_api/getDailyGoals";
+import useSWRImmutable from 'swr/immutable';
+import { format } from 'date-fns';
+import MealsTable from '../components/MealsTable/MealsTable';
+import WeekSlider from '../components/WeekSlider/WeekSlider';
+import SummaryCaloriesAndMacros from '../components/SummaryCaloriesAndMacros/SummaryCaloriesAndMacros';
+import useGetMealsSummaryMacroData from '../hooks/useGetMealsSummaryMacroData';
+import useDate from '../hooks/useDate';
+import getDailyGoals from '../_api/getDailyGoals';
+import { Secured } from 'components/security/secured';
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { AccountType } from 'types/enum';
 
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (!isUser)
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-
-  return { props: {} };
+const Home: NextPage = () => {
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Home</title>
+            </Head>
+            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
+                <HomeView />
+            </Secured>
+        </>
+    );
 };
 
-export default function Home() {
-  const { date, setDate } = useDate();
-  const localeDate = format(date, "yyyy-MM-dd");
-  const { mealsData, summaryData } = useGetMealsSummaryMacroData();
-  const { data: dailyGoals } = useSWRImmutable(
-    `/dailyGoals/${
-      new Date(date.toDateString()) >= new Date(new Date().toDateString())
-        ? "current"
-        : localeDate
-    }`,
-    () => getDailyGoals(localeDate)
-  );
+export default Home;
 
-  return (
-    <>
-      <WeekSlider onClickDay={(value) => setDate(value)} />
-      <MealsTable mealsData={mealsData} />
-      <SummaryCaloriesAndMacros
-        summaryCalorieMacroData={summaryData}
-        limitMacro={dailyGoals?.data}
-      />
-    </>
-  );
+function HomeView() {
+    const { date, setDate } = useDate();
+    const localeDate = format(date, 'yyyy-MM-dd');
+    const { mealsData, summaryData } = useGetMealsSummaryMacroData();
+    const { data: dailyGoals } = useSWRImmutable(
+        `/dailyGoals/${new Date(date.toDateString()) >= new Date(new Date().toDateString()) ? 'current' : localeDate}`,
+        () => getDailyGoals(localeDate),
+    );
+
+    return (
+        <>
+            <WeekSlider onClickDay={(value) => setDate(value)} />
+            <MealsTable mealsData={mealsData} />
+            <SummaryCaloriesAndMacros summaryCalorieMacroData={summaryData} limitMacro={dailyGoals?.data} />
+        </>
+    );
 }

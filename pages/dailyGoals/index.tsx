@@ -1,23 +1,30 @@
 import { useState } from "react";
 import DailyGoalsForm from "../../components/Forms/DailyGoalsForm/DailyGoalsForm";
 import SummaryDailyGoals from "../../components/SummaryDailyGoals/SummaryDailyGoals";
-import userAuth from "../../helpers/userAuth";
 import useEditDailyGoals from "../../hooks/useEditDailyGoals";
-import { IGetServerProps } from "../../types/GetServerPropsTypes";
+import { NextPage } from "next";
+import { Secured } from "components/security/secured";
+import { AccountType } from "types/enum";
+import Head from "next/head";
 
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (!isUser)
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-
-  return { props: {} };
+const DailyGoals: NextPage = () => {
+  return (
+      <>
+          <Head>
+              <title>FitCalc | Daily goals</title>
+          </Head>
+          <Secured
+              authorities={[AccountType.Standard, AccountType.Admin,]}
+          >
+              <DailyGoalsView />
+          </Secured>
+      </>
+  );
 };
 
-export default function DailyGoals() {
+export default DailyGoals;
+
+function DailyGoalsView() {
   const [totalPercent, setTotalPercent] = useState(0);
   const { addDailyGoals, defaultValue } = useEditDailyGoals();
 

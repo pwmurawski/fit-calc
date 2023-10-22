@@ -1,19 +1,16 @@
-import uuid from "react-uuid";
-import { ISelectedProduct } from "../../../types/SelectedProductTypes";
-import SelectedProduct from "./SelectedProduct/SelectedProduct";
+import { ISelectedProduct } from '../../../types/SelectedProductTypes';
+import SelectedProduct from './SelectedProduct/SelectedProduct';
 
 interface IFoodProductsProps {
-  selectedProductData: ISelectedProduct[];
+    selectedProductData: ISelectedProduct[];
 }
 
-export default function SelectedProducts({
-  selectedProductData,
-}: IFoodProductsProps) {
-  return (
-    <>
-      {selectedProductData.map((selectedProduct) => (
-        <SelectedProduct key={uuid()} selectedProductData={selectedProduct} />
-      ))}
-    </>
-  );
+export default function SelectedProducts({ selectedProductData }: IFoodProductsProps) {
+    return (
+        <>
+            {selectedProductData.map((selectedProduct) => (
+                <SelectedProduct key={selectedProduct.id} selectedProductData={selectedProduct} />
+            ))}
+        </>
+    );
 }

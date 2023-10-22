@@ -1,12 +1,11 @@
-import { ResponseSelectedProductSchema } from "../types/SelectedProductTypes";
-import fitCalcApi from "./fitCalcApi";
+import fitCalcApi from './fitCalcApi';
 
 const getSelectedProduct = async (id: string) => {
-  const data = await fitCalcApi(`/selectedProduct/${id}`, {
-    credentials: "include",
-  });
+    const data = await fitCalcApi(`/selectedProduct/${id}`, {
+        credentials: 'include',
+    });
 
-  return ResponseSelectedProductSchema.parse(data);
+    return data;
 };
 
 export default getSelectedProduct;

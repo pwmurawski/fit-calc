@@ -1,49 +1,34 @@
-import { useId } from "react";
-import { InputCustomContainer, Input, Label, Error } from "./styles/styles";
+import { useId } from 'react';
+import { InputCustomContainer, Input, Label, Error } from './styles/styles';
 
 interface IInputCustomProps {
-  type?: string;
-  min?: number;
-  value?: string | number | readonly string[] | undefined;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  placeholder?: string;
-  error?: string;
+    type?: string;
+    min?: number;
+    value?: string | number | readonly string[] | undefined;
+    onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+    placeholder?: string;
+    error?: string;
+    field?: any;
+    form?: any;
 }
 
-const defaultProps = {
-  type: undefined,
-  min: undefined,
-  value: undefined,
-  onChange: undefined,
-  placeholder: null,
-  error: undefined,
-};
+export function InputCustom({ type, min, value, onChange, placeholder, error, field, form }: IInputCustomProps) {
+    const id = useId();
 
-export default function InputCustom({
-  type,
-  min,
-  value,
-  onChange,
-  placeholder,
-  error,
-}: IInputCustomProps) {
-  const id = useId();
-
-  return (
-    <InputCustomContainer error={error ? true : undefined}>
-      <Input
-        id={`input_${id}`}
-        type={type}
-        min={min}
-        value={value}
-        onChange={onChange}
-        step="0.1"
-        placeholder=" "
-      />
-      <Label htmlFor={`input_${id}`}>{placeholder}</Label>
-      {error ? <Error>{error}</Error> : null}
-    </InputCustomContainer>
-  );
+    return (
+        <InputCustomContainer error={error ? true : undefined}>
+            <Input
+                id={`input_${id}`}
+                type={type}
+                min={min}
+                value={value}
+                onChange={onChange}
+                step="0.1"
+                placeholder=" "
+                {...field}
+            />
+            <Label htmlFor={`input_${id}`}>{placeholder}</Label>
+            {form.errors ? <Error>{form.errors[field.name]}</Error> : null}
+        </InputCustomContainer>
+    );
 }
-
-InputCustom.defaultProps = defaultProps;

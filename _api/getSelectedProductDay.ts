@@ -1,12 +1,11 @@
-import { ResponseSelectedProductDaySchema } from "../types/SelectedProductTypes";
-import fitCalcApi from "./fitCalcApi";
+import fitCalcApi from './fitCalcApi';
 
 const getSelectedProductDay = async (date?: string) => {
-  const data = await fitCalcApi(`/selectedProduct/day/${date}`, {
-    credentials: "include",
-  });
+    const data = await fitCalcApi(`/selectedProduct/day/${date}`, {
+        credentials: 'include',
+    });
 
-  return ResponseSelectedProductDaySchema.parse(data);
+    return data;
 };
 
 export default getSelectedProductDay;

@@ -1,51 +1,49 @@
-import { useRouter } from "next/router";
-import getLogout from "../_api/getLogout";
-import getUserId from "../_api/getUserId";
-import postLogin from "../_api/postLogin";
-import postRegister from "../_api/postRegister";
-import userAuth from "../helpers/userAuth";
-import { ILoginFormValue } from "../types/ILoginFormValue";
-import useLoading from "./useLoading";
+import { useRouter } from 'next/router';
+import { LoginData, RegisterData } from '../types/Auth';
+import useLoading from './useLoading';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import register from '../_api/auth/register';
+import { toastError } from 'lib/custom-toasts/toast-error';
 
 const useAuth = () => {
-  const { isUser, login, logout } = userAuth();
-  const { push } = useRouter();
-  const { setLoading } = useLoading();
+    const session = useSession();
+    const { push } = useRouter();
+    const { isLoading, setLoading } = useLoading();
 
-  const loginHandler = async (formValue: ILoginFormValue) => {
-    const res = await postLogin(formValue);
-    const resp = await getUserId();
-    if (res?.status === 204 && resp?.data) {
-      login(resp.data.userId);
-      push("/");
-    }
-    return res?.errors?.children;
-  };
+    const loginHandler = async (formValue: LoginData) => {
+        setLoading(true);
+        const res = await signIn('credentials', {
+            ...formValue,
+            redirect: false,
+        });
+        setLoading(false);
+        if (res?.ok) {
+            push('/');
+        }
+        if (!res?.ok && res?.error) {
+            toastError(res.error);
+        }
+    };
 
-  const logoutHandler = async (isAuth = true) => {
-    setLoading(true);
-    if (isAuth) {
-      const res = await getLogout();
-      if (res?.status === 204) {
-        logout();
-        push("/login");
-      }
-    } else {
-      logout();
-      push("/login");
-    }
-    setLoading(false);
-  };
+    const logoutHandler = async () => {
+        setLoading(true);
+        await signOut({ callbackUrl: '/login' });
+        setLoading(false);
+    };
 
-  const registerHandler = async (formValue: ILoginFormValue) => {
-    const res = await postRegister(formValue);
-    if (res?.status === 204) {
-      push("/login");
-    }
-    return res?.errors?.children;
-  };
+    const registerHandler = async (formValue: RegisterData) => {
+        setLoading(true);
+        const { user, error } = await register(formValue);
+        if (user) {
+            return await loginHandler(formValue);
+        }
+        if (error) {
+            setLoading(false);
+            toastError(error);
+        }
+    };
 
-  return { isUser, loginHandler, logoutHandler, registerHandler };
+    return { session, isLoading, loginHandler, logoutHandler, registerHandler };
 };
 
 export default useAuth;

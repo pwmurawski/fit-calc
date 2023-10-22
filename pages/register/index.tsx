@@ -1,41 +1,23 @@
-import AuthForm from "../../components/Forms/AuthForm/AuthForm";
-import userAuth from "../../helpers/userAuth";
-import useAuth from "../../hooks/useAuth";
-import { KeysType } from "../../types/AuthFormTypes";
-import { FormInitType } from "../../types/FormTypes";
-import { IGetServerProps } from "../../types/GetServerPropsTypes";
+import { createUserValidationSchema } from 'lib/validation/createUserValidationSchema';
+import { AuthForm } from '../../components/Forms/AuthForm/AuthForm';
+import useAuth from '../../hooks/useAuth';
 
-const initFormValue: FormInitType<KeysType> = {
-  username: {
-    value: "",
-    rules: ["required", "email"],
-  },
-  password: {
-    value: "",
-    rules: ["required", { rule: "min", length: 5 }],
-  },
-};
-
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (isUser)
-    return {
-      redirect: {
-        destination: "/",
-      },
-    };
-
-  return { props: {} };
+const initFormValue = {
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
 };
 
 export default function Register() {
-  const { registerHandler } = useAuth();
+    const { registerHandler } = useAuth();
 
-  return (
-    <AuthForm
-      initFormValue={initFormValue}
-      onSubmit={registerHandler}
-      submitBtnText="Zarejestruj się"
-    />
-  );
+    return (
+        <AuthForm
+            initFormValue={initFormValue}
+            validationSchema={createUserValidationSchema}
+            onSubmit={registerHandler}
+            submitBtnText="Zarejestruj się"
+        />
+    );
 }

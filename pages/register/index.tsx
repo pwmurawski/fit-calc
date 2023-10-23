@@ -1,12 +1,25 @@
 import { createUserValidationSchema } from 'lib/validation/createUserValidationSchema';
-import { AuthForm } from '../../components/Forms/AuthForm/AuthForm';
+import { AuthForm, InitFormValue } from '../../components/Forms/AuthForm/AuthForm';
 import useAuth from '../../hooks/useAuth';
 
-const initFormValue = {
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
+const initFormValue: InitFormValue = {
+    name: {
+        value: '',
+        placeholder: 'Imie',
+    },
+    surname: {
+        value: '',
+        placeholder: 'Nazwisko',
+    },
+    email: {
+        value: '',
+        placeholder: 'Email',
+    },
+    password: {
+        value: '',
+        type: 'password',
+        placeholder: 'Hasło',
+    },
 };
 
 export default function Register() {

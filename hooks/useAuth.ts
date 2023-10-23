@@ -10,7 +10,7 @@ const useAuth = () => {
     const { push } = useRouter();
     const { isLoading, setLoading } = useLoading();
 
-    const loginHandler = async (formValue: LoginData) => {
+    const loginHandler = async (formValue: Partial<LoginData>) => {
         setLoading(true);
         const res = await signIn('credentials', {
             ...formValue,
@@ -31,15 +31,16 @@ const useAuth = () => {
         setLoading(false);
     };
 
-    const registerHandler = async (formValue: RegisterData) => {
+    const registerHandler = async (formValue: Partial<RegisterData>) => {
         setLoading(true);
-        const { user, error } = await register(formValue);
-        if (user) {
+        const userData = await register(formValue);
+
+        if (userData?.status === 'OK') {
             return await loginHandler(formValue);
         }
-        if (error) {
+        if (userData?.status === 'ERROR') {
             setLoading(false);
-            toastError(error);
+            toastError(userData.error);
         }
     };
 

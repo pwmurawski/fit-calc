@@ -1,10 +1,17 @@
 import { loginValidationSchema } from 'lib/validation/loginValidationSchema';
-import { AuthForm } from '../../components/Forms/AuthForm/AuthForm';
+import { AuthForm, InitFormValue } from '../../components/Forms/AuthForm/AuthForm';
 import useAuth from '../../hooks/useAuth';
 
-const initFormValue = {
-    email: '',
-    password: '',
+const initFormValue: InitFormValue = {
+    email: {
+        value: '',
+        placeholder: 'Email',
+    },
+    password: {
+        value: '',
+        type: 'password',
+        placeholder: 'Hasło',
+    },
 };
 
 export default function Login() {

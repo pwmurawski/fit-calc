@@ -13,7 +13,52 @@ model User {
   id           String        @id @default(cuid())
   name         String
   surname      String?
-  email        String       @unique
+  email        String        @unique
   password     String
   userType     String?       @default("STANDARD")
+
+  foodProducts  FoodProduct[]
+}
+
+model Meal {
+  id           String        @id @default(cuid())
+  name         String
+
+  selectedProducts  SelectedProduct[]
+}
+
+model FoodProduct {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  name         String
+  kcal         Float
+  protein      Float
+  fat          Float
+  carbs        Float
+  code         String?
+
+  selectedProducts  SelectedProduct[]
+}
+
+model SelectedProduct {
+  id            String        @id @default(cuid())
+  userId        String
+  mealId        String
+  meal          Meal          @relation(fields: [mealId], references: [id])
+  foodProductId String
+  foodProduct   FoodProduct   @relation(fields: [foodProductId], references: [id])
+  weight        Float
+  dateTime      DateTime      @default(now())
+}
+
+
+model DailyGoals {
+  id           String        @id @default(cuid())
+  userId       String
+  kcal         Float
+  protein      Float
+  fat          Float
+  carbs        Float
+  dateTime     DateTime @default(now())
 }

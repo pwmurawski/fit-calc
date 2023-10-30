@@ -1,11 +1,11 @@
-import { ISelectedProduct } from './SelectedProductTypes';
+import { SelectedProduct } from './SelectedProductTypes';
 
 export interface MealType {
     id: string;
     name: string;
 }
 
-export interface IMealData {
+export interface MealData {
     id: string;
     name: string;
     kcal: number;
@@ -14,6 +14,6 @@ export interface IMealData {
     carbs: number;
 }
 
-export interface IMealsData extends IMealData {
-    selectedProduct: ISelectedProduct[];
+export interface MealsData extends MealData {
+    selectedProduct: SelectedProduct[];
 }

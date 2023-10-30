@@ -1,7 +1,7 @@
 import { FoodProductKeyType } from '../types/FoodProductTypes';
-import { MealType, IMealsData } from '../types/MealTypes';
-
+import { MealType, MealsData } from '../types/MealTypes';
 import { SelectedProductType } from '../types/SelectedProductTypes';
+import { format } from 'date-fns';
 
 const modifyData = (mealId: string, selectedProducts: SelectedProductType[]) => {
     return selectedProducts
@@ -12,7 +12,7 @@ const modifyData = (mealId: string, selectedProducts: SelectedProductType[]) => 
             userId,
             weight,
             mealId: meal.id,
-            dateTime,
+            dateTime: format(dateTime, 'yyyy-MM-dd'),
         }));
 };
 
@@ -20,7 +20,7 @@ const sumInMeal = (mealId: string, selectedProducts: SelectedProductType[], key:
     return modifyData(mealId, selectedProducts).reduce((sum, curr) => sum + (curr[key] * curr.weight) / 100, 0);
 };
 
-const modifyMealArrays = (mealsType: MealType[], selectedProducts: SelectedProductType[]): IMealsData[] => {
+const modifyMealArrays = (mealsType: MealType[], selectedProducts: SelectedProductType[]): MealsData[] => {
     return mealsType.map(({ id, name }) => ({
         id,
         name,

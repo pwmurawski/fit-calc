@@ -1,12 +1,12 @@
 import { FoodProductKeyType } from '../types/FoodProductTypes';
 import { SelectedProductType } from '../types/SelectedProductTypes';
-import { ISummaryCalorieMacroData } from '../types/ISummaryCalorieMacroData';
+import { SummaryCalorieMacroData } from '../types/SummaryCalorieMacroData';
 
 const sumMacro = (selectedProducts: SelectedProductType[], key: FoodProductKeyType) => {
     return selectedProducts.reduce((sum, curr) => sum + (curr.foodProduct[key] * curr.weight) / 100, 0);
 };
 
-const modifySummaryCalorieMacroData = (selectedProducts: SelectedProductType[]): ISummaryCalorieMacroData => {
+const modifySummaryCalorieMacroData = (selectedProducts: SelectedProductType[]): SummaryCalorieMacroData => {
     return {
         kcal: sumMacro(selectedProducts, 'kcal'),
         protein: sumMacro(selectedProducts, 'protein'),

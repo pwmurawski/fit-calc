@@ -1,4 +1,4 @@
-import { IMealsData } from '../../types/MealTypes';
+import { MealsData } from '../../types/MealTypes';
 import Loading from '../Loading/Loading';
 import SelectedProducts from './SelectedProducts/SelectedProducts';
 import Meal from './Meal/Meal';
@@ -6,7 +6,7 @@ import { Container } from './styles/styles';
 import useLoading from '../../hooks/useLoading';
 
 interface ICaloriesTableCurrentDayProps {
-    mealsData: IMealsData[] | undefined;
+    mealsData: MealsData[] | undefined;
 }
 
 export default function MealsTable({ mealsData }: ICaloriesTableCurrentDayProps) {

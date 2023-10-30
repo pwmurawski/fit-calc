@@ -1,15 +1,15 @@
-import { ISelectedProduct } from '../../../types/SelectedProductTypes';
-import SelectedProduct from './SelectedProduct/SelectedProduct';
+import { SelectedProduct } from '../../../types/SelectedProductTypes';
+import { SelectedProductView } from './SelectedProduct/SelectedProduct';
 
-interface IFoodProductsProps {
-    selectedProductData: ISelectedProduct[];
+interface FoodProductsProps {
+    selectedProductData: SelectedProduct[];
 }
 
-export default function SelectedProducts({ selectedProductData }: IFoodProductsProps) {
+export default function SelectedProducts({ selectedProductData }: FoodProductsProps) {
     return (
         <>
             {selectedProductData.map((selectedProduct) => (
-                <SelectedProduct key={selectedProduct.id} selectedProductData={selectedProduct} />
+                <SelectedProductView key={selectedProduct.id} selectedProductData={selectedProduct} />
             ))}
         </>
     );

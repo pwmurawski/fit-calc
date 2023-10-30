@@ -1,6 +1,9 @@
 import { createUserValidationSchema } from 'lib/validation/createUserValidationSchema';
 import { AuthForm, InitFormValue } from '../../components/Forms/AuthForm/AuthForm';
 import useAuth from '../../hooks/useAuth';
+import { NextPageWithLayout } from 'pages/_app';
+import Head from 'next/head';
+import { RegisterLayout } from 'components/Layouts/RegisterLayout';
 
 const initFormValue: InitFormValue = {
     name: {
@@ -22,7 +25,24 @@ const initFormValue: InitFormValue = {
     },
 };
 
-export default function Register() {
+const Register: NextPageWithLayout = () => {
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Register</title>
+            </Head>
+            <RegisterView />
+        </>
+    );
+};
+
+Register.getLayout = function getLayout(page) {
+    return <RegisterLayout>{page}</RegisterLayout>;
+};
+
+export default Register;
+
+export function RegisterView() {
     const { registerHandler } = useAuth();
 
     return (

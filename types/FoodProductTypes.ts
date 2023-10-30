@@ -1,7 +1,7 @@
 export interface FoodProductType {
     id: string;
     userId: string;
-    code?: string;
+    code?: string | null;
     name: string;
     kcal: number;
     protein: number;

@@ -7,10 +7,10 @@ export interface SelectedProductType {
     weight: number;
     foodProduct: Omit<FoodProductType, 'id' | 'userId'>;
     meal: MealType;
-    dateTime: string;
+    dateTime: Date;
 }
 
-export interface ISelectedProduct extends FoodProductType {
+export interface SelectedProduct extends FoodProductType {
     mealId: string;
     weight: number;
     dateTime: string;

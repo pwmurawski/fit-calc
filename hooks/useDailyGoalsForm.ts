@@ -1,85 +1,73 @@
-import { useEffect, useState } from "react";
-import gramsToKcal from "../helpers/gramsToKcal";
-import kcalToGrams from "../helpers/kcalToGrams";
-import { toPercent } from "../helpers/toPercent";
-import { Keys, KeysPercentMacro } from "../types/DailyGoalsFormTypes";
-import { FormInitType } from "../types/FormTypes";
-import useForm from "./useForm";
+import { useEffect, useState } from 'react';
+import gramsToKcal from '../helpers/gramsToKcal';
+import kcalToGrams from '../helpers/kcalToGrams';
+import { toPercent } from '../helpers/toPercent';
+import { useFormik } from 'formik';
+import { BodyDailyGoals } from 'pages/api/dailyGoals';
+import { createDailyGoalsValidationSchema } from 'lib/validation/createDailyGoalsValidationSchema';
+
+export type KeysPercentMacro = 'protein' | 'fat' | 'carbs';
 
 const initPercentMacro = {
-  protein: "",
-  fat: "",
-  carbs: "",
+    protein: '',
+    fat: '',
+    carbs: '',
 };
 
-const useDailyGoalsForm = (
-  initValue: FormInitType<Keys>,
-  defaultValue?: Partial<Record<Keys, string>>
-) => {
-  const { formValue, onChange, onSubmitHandler, setFormData } = useForm(
-    initValue,
-    defaultValue
-  );
-  const [percentMacro, setPercentMacro] = useState(initPercentMacro);
-  const [totalPercent, setTotalPercent] = useState(0);
-  const [isUpdating, setIsUpdating] = useState({
-    formValue: true,
-    percentMacro: false,
-  });
+const useDailyGoalsForm = (initialValues: BodyDailyGoals, onSubmit: (data: BodyDailyGoals) => Promise<void>) => {
+    const { values, setFieldValue, isValid, errors, submitForm } = useFormik({
+        initialValues,
+        validationSchema: createDailyGoalsValidationSchema,
+        onSubmit,
+        enableReinitialize: true,
+    });
+    const [percentMacro, setPercentMacro] = useState(initPercentMacro);
+    const [totalPercent, setTotalPercent] = useState(0);
+    const [isUpdating, setIsUpdating] = useState({
+        values: true,
+        percentMacro: false,
+    });
 
-  useEffect(() => {
-    if (+formValue.kcal.value && isUpdating.formValue) {
-      Object.keys(percentMacro).forEach((key) => {
-        const keys = key as KeysPercentMacro;
-        setPercentMacro((state) => ({
-          ...state,
-          [keys]: Math.round(
-            toPercent(
-              gramsToKcal(+formValue[keys].value, keys),
-              +formValue.kcal.value
-            )
-          ).toString(),
-        }));
-      });
-    }
-  }, [formValue]);
+    useEffect(() => {
+        if (+values.kcal && isUpdating.values) {
+            Object.keys(percentMacro).forEach((key) => {
+                const keys = key as KeysPercentMacro;
+                setPercentMacro((state) => ({
+                    ...state,
+                    [keys]: Math.round(toPercent(gramsToKcal(+values[keys], keys), +values.kcal)).toString(),
+                }));
+            });
+        }
+    }, [values]);
 
-  useEffect(() => {
-    if (+formValue.kcal.value && isUpdating.percentMacro) {
-      Object.keys(percentMacro).forEach((key) => {
-        const keys = key as KeysPercentMacro;
-        setFormData((state) => ({
-          ...state,
-          [keys]: {
-            ...state[keys],
-            value: Math.round(
-              kcalToGrams(
-                (+formValue.kcal.value * +percentMacro[keys]) / 100,
-                keys
-              )
-            ).toString(),
-          },
-        }));
-      });
-    }
-  }, [formValue.kcal.value, percentMacro]);
+    useEffect(() => {
+        if (+values.kcal && isUpdating.percentMacro) {
+            Object.keys(percentMacro).forEach((key) => {
+                const keys = key as KeysPercentMacro;
+                setFieldValue(
+                    keys,
+                    Math.round(kcalToGrams((+values.kcal * +percentMacro[keys]) / 100, keys)).toString(),
+                );
+            });
+        }
+    }, [values.kcal, percentMacro]);
 
-  useEffect(() => {
-    setTotalPercent(
-      Object.values(percentMacro).reduce((sum, curr) => sum + +curr, 0)
-    );
-  }, [percentMacro]);
+    useEffect(() => {
+        setTotalPercent(Object.values(percentMacro).reduce((sum, curr) => sum + +curr, 0));
+    }, [percentMacro]);
 
-  return {
-    formValue,
-    onChange,
-    onSubmitHandler,
-    percentMacro,
-    setPercentMacro,
-    totalPercent,
-    isUpdating,
-    setIsUpdating,
-  };
+    return {
+        values,
+        setFieldValue,
+        errors,
+        submitForm,
+        isValid,
+        percentMacro,
+        setPercentMacro,
+        totalPercent,
+        isUpdating,
+        setIsUpdating,
+    };
 };
 
 export default useDailyGoalsForm;

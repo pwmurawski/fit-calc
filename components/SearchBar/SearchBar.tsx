@@ -1,28 +1,45 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Container, Input } from "./styles/styles";
-import BarCodeScan from "../Scanner/Scanner";
+import { useRouter } from 'next/router';
+import { Container, Input } from './styles/styles';
+import BarCodeScan from '../Scanner/Scanner';
+import { useEffect, useState } from 'react';
+import { isString } from 'lodash';
 
 export default function SearchBar() {
-  const { push, query } = useRouter();
-  const [searchTerm, setSearchTerm] = useState(query.term ?? "");
+    const { push, query, isReady } = useRouter();
+    const [searchTerm, setSearchTerm] = useState<string>();
 
-  useEffect(() => {
-    if (searchTerm.length > 0) {
-      push({ pathname: "/foodProducts/search", query: { term: searchTerm } });
-    } else {
-      push("/foodProducts");
-    }
-  }, [searchTerm]);
+    const search = (term: string) => {
+        push({ pathname: '/foodProducts/search', query: { term } });
+    };
 
-  return (
-    <Container>
-      <Input
-        placeholder="Szukaj ..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <BarCodeScan onScanned={(data) => setSearchTerm(data)} />
-    </Container>
-  );
+    useEffect(() => {
+        if (isReady) {
+            if (isString(query.term)) {
+                if (query.term.length > 0) {
+                    setSearchTerm(query.term);
+                } else {
+                    push('/foodProducts');
+                }
+            }
+        }
+    }, [query.term]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (isString(searchTerm)) {
+                search(searchTerm);
+            }
+        }, 550);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [searchTerm]);
+
+    return (
+        <Container>
+            <Input placeholder="Szukaj ..." value={searchTerm ?? ''} onChange={(e) => setSearchTerm(e.target.value)} />
+            <BarCodeScan onScanned={(data) => setSearchTerm(data)} />
+        </Container>
+    );
 }

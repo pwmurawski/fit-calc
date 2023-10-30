@@ -3,9 +3,9 @@ import { RegisterResponse } from 'pages/api/auth/register';
 import { RegisterData } from 'types/Auth';
 import { Response } from 'types/Response';
 
-const register = async (body: Partial<RegisterData>): Response<RegisterResponse> => {
+export const register = async (body: Partial<RegisterData>): Response<RegisterResponse> => {
     try {
-        const response = await axios.post<RegisterData, { data: RegisterResponse }>('/api/auth/register', body);
+        const response = await axios.post<RegisterResponse>('/api/auth/register', body);
         if (response.data.user) {
             return { user: response.data.user, status: 'OK' };
         }
@@ -13,5 +13,3 @@ const register = async (body: Partial<RegisterData>): Response<RegisterResponse>
         return { error: error.response.data.error, status: 'ERROR' };
     }
 };
-
-export default register;

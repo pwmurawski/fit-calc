@@ -49,7 +49,7 @@ model SelectedProduct {
   foodProductId String
   foodProduct   FoodProduct   @relation(fields: [foodProductId], references: [id])
   weight        Float
-  dateTime      DateTime      @default(now())
+  dateTime      DateTime      @default(now()) @db.Date
 }
 
 
@@ -60,5 +60,5 @@ model DailyGoals {
   protein      Float
   fat          Float
   carbs        Float
-  dateTime     DateTime @default(now())
+  dateTime     DateTime      @default(now()) @db.Date
 }

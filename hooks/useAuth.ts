@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { LoginData, RegisterData } from '../types/Auth';
 import useLoading from './useLoading';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import register from '../_api/auth/register';
+import { register } from '../_api/auth/register';
 import { toastError } from 'lib/custom-toasts/toast-error';
 
 const useAuth = () => {

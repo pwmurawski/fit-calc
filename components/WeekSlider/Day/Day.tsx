@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { RefObject } from 'react';
 import { checkDateIsCurrentDate } from '../../../helpers/checkDateIsCurrentDate';
-import useDate from '../../../hooks/useDate';
+import { useSelectedDate } from '../../../hooks/useSelectedDate';
 import { Container, Name, Number } from './styles/styles';
 
 interface IDayProps {
@@ -11,7 +11,7 @@ interface IDayProps {
 }
 
 export default function Day({ day, currentDayRef, onClick }: IDayProps) {
-    const { date } = useDate();
+    const { date } = useSelectedDate();
 
     return (
         <Container

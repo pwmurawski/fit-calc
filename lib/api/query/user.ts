@@ -9,7 +9,7 @@ export const createUser = async (userData: RegisterData) => {
         throw new ApiError(HttpStatusCode.Forbidden, 'Nie prawidłowe dane!');
     });
 
-    const user = await prismaClient.user.findUnique({ where: { email: userDataValid.email } });
+    const user = await prismaClient.user.count({ where: { email: userDataValid.email } });
     if (user) {
         throw new ApiError(HttpStatusCode.Forbidden, 'Użytkownik o podanym adresie e-mail już istnieje!');
     }

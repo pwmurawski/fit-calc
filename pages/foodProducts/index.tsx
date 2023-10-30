@@ -1,40 +1,38 @@
-import { GetStaticProps } from "next";
-import { useEffect } from "react";
-import AddNewFoodProduct from "../../components/AddNewFoodProduct/AddNewFoodProduct";
-import FoodProductsTable from "../../components/FoodProductsTable/FoodProductsTable";
-import getFoodProducts from "../../_api/getFoodProducts";
-import { FoodProductType } from "../../types/FoodProductTypes";
-import useAuth from "../../hooks/useAuth";
+import AddNewFoodProduct from '../../components/AddNewFoodProduct/AddNewFoodProduct';
+import FoodProductsTable from '../../components/FoodProductsTable/FoodProductsTable';
+import { NextPageWithLayout } from 'pages/_app';
+import Head from 'next/head';
+import { Secured } from 'components/security/secured';
+import { Layout } from 'components/Layouts/Layout';
+import { AccountType } from 'types/enum';
+import { useFoodProducts } from 'hooks/useFoodProducts';
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await getFoodProducts();
-  if (!response?.data)
-    throw new Error(
-      `Failed to fetch data, received status ${response?.status}`
+const FoodProducts: NextPageWithLayout = () => {
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Food Products</title>
+            </Head>
+            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
+                <FoodProductsView />
+            </Secured>
+        </>
     );
-
-  return {
-    props: {
-      foodProducts: response.data,
-    },
-  };
 };
 
-export default function FoodProducts({
-  foodProducts,
-}: {
-  foodProducts: FoodProductType[];
-}) {
-  const { isUser, logoutHandler } = useAuth();
+FoodProducts.getLayout = function getLayout(page) {
+    return <Layout>{page}</Layout>;
+};
 
-  useEffect(() => {
-    if (!isUser) logoutHandler(false);
-  }, []);
+export default FoodProducts;
 
-  return (
-    <>
-      <FoodProductsTable foodProductsData={foodProducts} />
-      <AddNewFoodProduct />
-    </>
-  );
+export function FoodProductsView() {
+    const foodProducts = useFoodProducts();
+
+    return (
+        <>
+            <FoodProductsTable foodProductsData={foodProducts} />
+            <AddNewFoodProduct />
+        </>
+    );
 }

@@ -3,6 +3,7 @@ import { userSeed } from './seed/user';
 import { foodProductSeed } from './seed/foodProduct';
 import { mealSeed } from './seed/meal';
 import { dailyGoalsSeed } from './seed/dailyGoals';
+import { selectedProductSeed } from './seed/selectedProduct';
 
 const prisma = new PrismaClient();
 
@@ -35,6 +36,14 @@ async function main() {
         await prisma.dailyGoals.create({
             data: {
                 ...dailyGoals,
+            },
+        });
+    }
+
+    for (let selectedProduct of selectedProductSeed) {
+        await prisma.selectedProduct.create({
+            data: {
+                ...selectedProduct,
             },
         });
     }

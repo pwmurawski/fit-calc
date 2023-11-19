@@ -11,8 +11,5 @@ export const useFoodProducts = () => {
         case 'ERROR':
             toastError(data.error);
             break;
-
-        default:
-            break;
     }
 };

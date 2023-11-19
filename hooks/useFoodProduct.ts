@@ -6,10 +6,13 @@ import { useMealId } from './useMealId';
 import { BodySelectedProduct, postSelectedProduct } from '_api/selectedProducts';
 import { getDayData } from '_api/dayData';
 import { toastError } from 'lib/custom-toasts/toast-error';
+import useSWRImmutable from 'swr/immutable';
+import { getFoodProduct } from '_api/foodProducts';
 
-export const useAddFoodProductToMeal = () => {
-    const { push } = useRouter();
+export const useFoodProduct = (id: string) => {
+    const { data } = useSWRImmutable(`/foodProduct/${id}`, () => getFoodProduct(id));
     const { mutate } = useSWRConfig();
+    const { push } = useRouter();
     const { setLoading } = useLoading();
     const { mealId } = useMealId();
     const { formatDate } = useSelectedDate();
@@ -41,5 +44,11 @@ export const useAddFoodProductToMeal = () => {
         setLoading(false);
     };
 
-    return addFoodProductToMeal;
+    switch (data?.status) {
+        case 'OK':
+            return { data: data.foodProduct, addFoodProductToMeal };
+        case 'ERROR':
+            toastError(data.error);
+            break;
+    }
 };

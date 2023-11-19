@@ -16,8 +16,5 @@ export const useDayData = () => {
         case 'ERROR':
             toastError(data.error);
             break;
-
-        default:
-            break;
     }
 };

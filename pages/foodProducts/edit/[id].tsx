@@ -35,8 +35,8 @@ interface EditFoodProductViewProps {
 }
 
 export function EditFoodProductView({ foodProductId }: EditFoodProductViewProps) {
-    const { editFoodProduct, defaultValue } = useEditFoodProduct(foodProductId);
+    const editFoodProduct = useEditFoodProduct(foodProductId);
 
-    if (!defaultValue) return <Loading stopClick />;
-    return <FoodProductForm submit={editFoodProduct} defaultValue={defaultValue} />;
+    if (!editFoodProduct?.defaultValue) return <Loading stopClick />;
+    return <FoodProductForm submit={editFoodProduct.edit} defaultValue={editFoodProduct.defaultValue} />;
 }

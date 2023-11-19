@@ -1,100 +1,65 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { ParsedUrlQuery } from 'querystring';
-import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
 import BarCode from '../../components/Barcode/BarCode';
 import NutritionalValues from '../../components/NutritionalValues/NutritionalValues';
 import { WeightForm } from '../../components/Forms/WeightForm/WeightForm';
-import { FoodProductType } from '../../types/FoodProduct';
-import { useAddFoodProductToMeal } from '../../hooks/useAddFoodProductToMeal';
+import { useFoodProduct } from '../../hooks/useFoodProduct';
 import Loading from '../../components/Loading/Loading';
-import { useAuth } from '../../hooks/useAuth';
-import { getFoodProduct } from '_api/foodProducts';
 import { Layout } from 'components/Layouts/Layout';
-import { toastError } from 'lib/custom-toasts/toast-error';
+import Options from 'components/Options/Options';
+import { NextPageWithLayout } from 'pages/_app';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { Secured } from 'components/security/secured';
+import { AccountType } from 'types/enum';
+import { useAuth } from 'hooks/useAuth';
 
-const Options = dynamic(() => import('../../components/Options/Options'), {
-    ssr: false,
-});
+const FoodProduct: NextPageWithLayout = () => {
+    const router = useRouter();
+    const { id } = router.query;
 
-interface Params extends ParsedUrlQuery {
-    id: string;
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [],
-        fallback: true,
-    };
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Food Product</title>
+            </Head>
+            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
+                <FoodProductView foodProductId={String(id)} />
+            </Secured>
+        </>
+    );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { id } = params as Params;
-    const response = await getFoodProduct(id);
-
-    if (response?.status === 'OK') {
-        return {
-            props: {
-                foodProductData: response.foodProduct,
-            },
-        };
-    }
-
-    if (response?.status === 'ERROR') {
-        return {
-            props: {
-                error: response.error,
-            },
-        };
-    }
-
-    return {
-        props: {
-            foodProductData: null,
-        },
-    };
-};
-
-FoodProductView.getLayout = function getLayout(page: JSX.Element) {
+FoodProduct.getLayout = function getLayout(page) {
     return <Layout>{page}</Layout>;
 };
 
+export default FoodProduct;
+
 interface FoodProductPageProps {
-    foodProductData: FoodProductType | null;
-    error: string | null;
+    foodProductId: string;
 }
 
-export default function FoodProductView({ foodProductData, error }: FoodProductPageProps) {
-    const { session, logoutHandler } = useAuth();
-    const addFoodProductToMeal = useAddFoodProductToMeal();
+export function FoodProductView({ foodProductId }: FoodProductPageProps) {
+    const { session } = useAuth();
+    const foodProduct = useFoodProduct(foodProductId);
 
-    useEffect(() => {
-        if (error) {
-            toastError(error);
-        }
-        if (session.status === 'unauthenticated') {
-            logoutHandler();
-        }
-    }, []);
-
-    if (!foodProductData) return <Loading />;
+    if (!foodProduct?.data) return <Loading />;
     return (
         <>
             <WeightForm
-                kcal={foodProductData.kcal}
+                kcal={foodProduct.data.kcal}
                 submit={(weight) => {
-                    addFoodProductToMeal(foodProductData.id, weight);
+                    foodProduct.addFoodProductToMeal(foodProductId, weight);
                 }}
             />
             <Options
                 ids={{
-                    productId: foodProductData.id,
-                    productUserId: foodProductData.userId,
+                    productId: foodProduct?.data.id,
+                    productUserId: foodProduct?.data.userId,
                     userAuthId: session.data?.user.id,
                 }}
             />
-            <NutritionalValues productData={foodProductData} />
-            {foodProductData.code ? <BarCode value={foodProductData.code} /> : null}
+            <NutritionalValues productData={foodProduct?.data} />
+            {foodProduct?.data.code ? <BarCode value={foodProduct?.data.code} /> : null}
         </>
     );
 }

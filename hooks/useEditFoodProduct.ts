@@ -1,42 +1,24 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import revalidate from '../helpers/revalidate';
 import { getFoodProduct, getFoodProducts, putFoodProduct } from '_api/foodProducts';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { useSWRConfig } from 'swr';
 import { BodyFoodProducts } from 'types/FoodProduct';
+import useSWRImmutable from 'swr/immutable';
+import { useLoading } from './useLoading';
 
 const useEditFoodProduct = (id: string) => {
-    const { back, prefetch } = useRouter();
+    const { data, mutate: mutateFoodProduct } = useSWRImmutable(`/foodProduct/${id}`, () => getFoodProduct(id));
     const { mutate } = useSWRConfig();
-    const [defaultValue, setDefaultValue] = useState<BodyFoodProducts>();
-
-    const getData = async () => {
-        const res = await getFoodProduct(id);
-        switch (res?.status) {
-            case 'OK':
-                setDefaultValue({
-                    name: res.foodProduct?.name ?? '',
-                    kcal: res.foodProduct?.kcal.toString() ?? '',
-                    protein: res.foodProduct?.protein.toString() ?? '',
-                    fat: res.foodProduct?.fat.toString() ?? '',
-                    carbs: res.foodProduct?.carbs.toString() ?? '',
-                    code: res.foodProduct?.code ?? undefined,
-                });
-                break;
-            case 'ERROR':
-                toastError(res.error);
-                break;
-        }
-    };
+    const { setLoading } = useLoading();
+    const { back } = useRouter();
 
     const editFoodProduct = async (data: BodyFoodProducts) => {
+        setLoading(true);
         const res = await putFoodProduct(id, data);
 
         switch (res?.status) {
             case 'OK':
-                await revalidate(`/foodProducts/${id}`);
-                await prefetch(`/foodProducts/${id}`, undefined, { priority: true });
+                await mutateFoodProduct();
                 mutate('/foodProducts', () => getFoodProducts());
                 back();
                 break;
@@ -44,16 +26,26 @@ const useEditFoodProduct = (id: string) => {
                 toastError(res.error);
                 break;
         }
+        setLoading(false);
     };
 
-    useEffect(() => {
-        getData();
-    }, []);
-
-    return {
-        defaultValue,
-        editFoodProduct,
-    };
+    switch (data?.status) {
+        case 'OK':
+            return {
+                defaultValue: {
+                    name: data.foodProduct?.name ?? '',
+                    kcal: data.foodProduct?.kcal.toString() ?? '',
+                    protein: data.foodProduct?.protein.toString() ?? '',
+                    fat: data.foodProduct?.fat.toString() ?? '',
+                    carbs: data.foodProduct?.carbs.toString() ?? '',
+                    code: data.foodProduct?.code ?? undefined,
+                },
+                edit: editFoodProduct,
+            };
+        case 'ERROR':
+            toastError(data.error);
+            break;
+    }
 };
 
 export default useEditFoodProduct;

@@ -19,9 +19,8 @@ export const getFoodProducts = async (): Response<FoodProductsResponse> => {
 };
 
 export const getFoodProduct = async (id: string): Response<FoodProductResponse> => {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     try {
-        const response = await axios.get<FoodProductResponse>(`${baseUrl}/api/foodProducts/foodProduct`, {
+        const response = await axios.get<FoodProductResponse>('/api/foodProducts/foodProduct', {
             params: { id },
         });
         if (response.data.foodProduct) {

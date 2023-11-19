@@ -5,9 +5,11 @@ import { getDailyGoals, postDailyGoals } from '_api/dailyGoals';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import { BodyDailyGoals } from 'types/DailyGoals';
+import { useLoading } from './useLoading';
 
 export const useDailyGoals = (isCurrent = false) => {
     const { push } = useRouter();
+    const { setLoading } = useLoading();
     const { formatDate } = useSelectedDate();
     const currentDate = format(new Date(), 'yyyy-MM-dd');
     const cacheKey = `/dailyGoals/${formatDate >= currentDate ? 'current' : formatDate}`;
@@ -16,6 +18,7 @@ export const useDailyGoals = (isCurrent = false) => {
     );
 
     const changeDailyGoals = async (data: BodyDailyGoals) => {
+        setLoading(true);
         const res = await postDailyGoals(data);
         switch (res?.status) {
             case 'OK':
@@ -26,6 +29,7 @@ export const useDailyGoals = (isCurrent = false) => {
                 toastError(res.error);
                 break;
         }
+        setLoading(false);
     };
 
     switch (data?.status) {

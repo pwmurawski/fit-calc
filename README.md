@@ -15,6 +15,7 @@
 </div>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
  <div align="center">
@@ -34,42 +35,43 @@ W celu zapewnienia wysokiej jakości obsługi, aplikacja została zaprojektowana
 
 ### Built With
 
-* [![React][React.js]][React-url]
-* [![Next][Next]][Next-url]
-* [![TypeScript][TypeScript.ts]][TypeScript-url]
-* [![Swr][Swr]][Swr-url]
-* [![Styled-Components][Styled-Components]][Styled-Components-url]
+-   [![React][react.js]][react-url]
+-   [![Next][next]][next-url]
+-   [![TypeScript][typescript.ts]][typescript-url]
+-   [![Swr][swr]][swr-url]
+-   [![Styled-Components][styled-components]][styled-components-url]
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/pwmurawski/fit-calc.git
-   ```
+    ```sh
+    git clone https://github.com/pwmurawski/fit-calc.git
+    ```
 2. Install NPM packages
-   ```sh
-   npm install
-   ```
+    ```sh
+    npm install
+    ```
 3. Runs the app in the development mode
-   ```sh
-   npm run dev
-   ```
-   Open http://127.0.0.1:3000 to view it in the browser.
-   
+    ```sh
+    npm run dev
+    ```
+    Open http://127.0.0.1:3000 to view it in the browser.
 4. Builds the app for production to the .next folder
-   ```sh
-   npm run build
-   ```
+    ```sh
+    npm run build
+    ```
 5. Runs the app in the production mode
-   ```sh
-   npm run start
-   ```
-   Open http://127.0.0.1:3000 to view it in the browser.
+    ```sh
+    npm run start
+    ```
+    Open http://127.0.0.1:3000 to view it in the browser.
 
 <!-- CONTACT -->
+
 ## Contact
 
 pwmurawski123@gmail.com
@@ -77,15 +79,16 @@ pwmurawski123@gmail.com
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[TypeScript.ts]: https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=typescript&logoColor=3791d2
-[TypeScript-url]: https://www.typescriptlang.org
-[React-Leaflet.js]: https://img.shields.io/badge/React%20Leaflet-20232A?style=for-the-badge&logo=Leaflet&logoColor=4dcb9b
-[React-Leaflet-url]: https://react-leaflet.js.org
-[Styled-Components]: https://img.shields.io/badge/Styled%20Components-20232A?style=for-the-badge&logo=Styled%20Components&logoColor=e9cd16
-[Styled-Components-url]: https://styled-components.com
-[Next]: https://img.shields.io/badge/next-20232A?style=for-the-badge&logo=next&logoColor=e9cd16
-[Next-url]: https://nextjs.org
-[Swr]: https://img.shields.io/badge/SWR-20232A?style=for-the-badge&logo=SWR&logoColor=e9cd16
-[Swr-url]: https://swr.vercel.app
+
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[typescript.ts]: https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=typescript&logoColor=3791d2
+[typescript-url]: https://www.typescriptlang.org
+[react-leaflet.js]: https://img.shields.io/badge/React%20Leaflet-20232A?style=for-the-badge&logo=Leaflet&logoColor=4dcb9b
+[react-leaflet-url]: https://react-leaflet.js.org
+[styled-components]: https://img.shields.io/badge/Styled%20Components-20232A?style=for-the-badge&logo=Styled%20Components&logoColor=e9cd16
+[styled-components-url]: https://styled-components.com
+[next]: https://img.shields.io/badge/next-20232A?style=for-the-badge&logo=next&logoColor=e9cd16
+[next-url]: https://nextjs.org
+[swr]: https://img.shields.io/badge/SWR-20232A?style=for-the-badge&logo=SWR&logoColor=e9cd16
+[swr-url]: https://swr.vercel.app

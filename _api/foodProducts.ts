@@ -1,6 +1,10 @@
 import axios from 'axios';
-import { BodyFoodProducts, CreateFoodProductResponse, FoodProductsResponse } from 'pages/api/foodProducts';
-import { FoodProductResponse } from 'pages/api/foodProducts/foodProduct';
+import {
+    BodyFoodProducts,
+    CreateFoodProductResponse,
+    FoodProductResponse,
+    FoodProductsResponse,
+} from 'types/FoodProduct';
 import { Response } from 'types/Response';
 
 export const getFoodProducts = async (): Response<FoodProductsResponse> => {

@@ -4,7 +4,7 @@ import { toastError } from 'lib/custom-toasts/toast-error';
 import { getDailyGoals, postDailyGoals } from '_api/dailyGoals';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
-import { BodyDailyGoals } from 'pages/api/dailyGoals';
+import { BodyDailyGoals } from 'types/DailyGoals';
 
 export const useDailyGoals = (isCurrent = false) => {
     const { push } = useRouter();

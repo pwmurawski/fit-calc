@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
 import prismaClient from 'lib/app/prisma-client';
 import { createDailyGoalsValidationSchema } from 'lib/validation/dailyGoalsValidationSchema';
-import { BodyDailyGoals } from 'pages/api/dailyGoals';
 import { checkUserExist } from './user';
 import { validation } from '../validation';
+import { BodyDailyGoals } from 'types/DailyGoals';
 
 export const getDailyGoals = async (userId: string, date: string) => {
     await checkUserExist(userId);

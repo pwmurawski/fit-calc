@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { getFoodProducts, postFoodProduct } from '_api/foodProducts';
-import { BodyFoodProducts } from 'pages/api/foodProducts';
 import { useSWRConfig } from 'swr';
 import { toastError } from 'lib/custom-toasts/toast-error';
+import { BodyFoodProducts } from 'types/FoodProduct';
 
 export const useAddFoodProduct = () => {
     const { push } = useRouter();

@@ -1,18 +1,12 @@
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
-import { DailyGoals } from '@prisma/client';
 import { getDailyGoals, changeDailyGoals } from 'lib/api/query/dailyGoals';
+import { BodyDailyGoals, DailyGoalsResponse } from 'types/DailyGoals';
 
 interface Query {
     date: string;
 }
-
-export type BodyDailyGoals = Record<keyof Omit<DailyGoals, 'id' | 'userId' | 'dateTime'>, string>;
-
-export type DailyGoalsResponse = {
-    dailyGoals: DailyGoals | null;
-};
 
 const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<DailyGoalsResponse>) => {
     const userId = req.session.user.id;

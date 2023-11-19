@@ -2,8 +2,8 @@ import { InputCustom } from '../../InputCustom/InputCustom';
 import { AddBtn, Form, ScannerContainer } from './styles/styles';
 import Scanner from '../../Scanner/Scanner';
 import { Field, Formik } from 'formik';
-import { BodyFoodProducts } from 'pages/api/foodProducts';
 import { createFoodProductValidationSchema } from 'lib/validation/foodProductValidationSchema';
+import { BodyFoodProducts } from 'types/FoodProduct';
 
 const initialValues: BodyFoodProducts = {
     name: '',
@@ -44,7 +44,7 @@ export function FoodProductForm({ submit, defaultValue }: IFoodProductFormProps)
                     <Field component={InputCustom} name="carbs" placeholder="Carbs" type="number" min={0} />
                     <ScannerContainer>
                         <Field component={InputCustom} name="code" placeholder="Code" type="number" min={0} />
-                        <Scanner onScanned={(data) => setFieldValue(data, 'code')} />
+                        <Scanner onScanned={(data) => setFieldValue('code', data)} />
                     </ScannerContainer>
                     {!!isValid ? (
                         <AddBtn type="submit">Dodaj</AddBtn>

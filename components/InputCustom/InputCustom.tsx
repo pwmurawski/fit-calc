@@ -28,7 +28,7 @@ export function InputCustom({ type, min, value, onChange, placeholder, error, fi
                 {...field}
             />
             <Label htmlFor={`input_${id}`}>{placeholder}</Label>
-            {form.errors ? <Error>{form.errors[field.name]}</Error> : null}
+            {form?.errors ? <Error>{form.errors[field.name]}</Error> : null}
         </InputCustomContainer>
     );
 }

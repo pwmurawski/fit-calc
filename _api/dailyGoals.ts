@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BodyDailyGoals, DailyGoalsResponse } from 'pages/api/dailyGoals';
+import { BodyDailyGoals, DailyGoalsResponse } from 'types/DailyGoals';
 import { Response } from 'types/Response';
 
 export const getDailyGoals = async (date: string): Response<DailyGoalsResponse> => {

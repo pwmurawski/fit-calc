@@ -1,15 +1,12 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
-import { FoodProduct } from '@prisma/client';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
 import { createFoodProduct, getFoodProducts, updateFoodProduct } from 'lib/api/query/foodProducts';
+import { BodyFoodProducts, CreateFoodProductResponse, FoodProductsResponse } from 'types/FoodProduct';
 
 interface Query {
     id: string;
 }
-export type BodyFoodProducts = Record<keyof Omit<FoodProduct, 'id' | 'userId' | 'code'>, string> & { code?: string };
-export type CreateFoodProductResponse = { id: string };
-export type FoodProductsResponse = { foodProducts: FoodProduct[] };
 
 const GET = async (req: AuthenticatedApiRequest<void, void>, res: NextApiResponse<FoodProductsResponse>) => {
     const foodProducts = await getFoodProducts();

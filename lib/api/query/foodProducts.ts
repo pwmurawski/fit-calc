@@ -1,10 +1,10 @@
 import prismaClient from 'lib/app/prisma-client';
 import { createFoodProductValidationSchema } from 'lib/validation/foodProductValidationSchema';
-import { BodyFoodProducts } from 'pages/api/foodProducts';
 import { checkUserExist } from './user';
 import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
+import { BodyFoodProducts } from 'types/FoodProduct';
 
 export const getFoodProducts = async () => {
     const foodProducts = await prismaClient.foodProduct.findMany();

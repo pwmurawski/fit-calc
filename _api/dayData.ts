@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DayDataResponse } from 'pages/api/dayData';
+import { DayDataResponse } from 'types/DayData';
 import { Response } from 'types/Response';
 
 export const getDayData = async (date: string): Response<DayDataResponse> => {

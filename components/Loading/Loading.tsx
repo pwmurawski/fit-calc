@@ -1,19 +1,19 @@
-import { Container, Spinner } from "./styles/styles";
+import { Container, Spinner } from './styles/styles';
 
 interface ILoadingProps {
-  stopClick?: boolean;
+    stopClick?: boolean;
 }
 
 const defaultProps = {
-  stopClick: undefined,
+    stopClick: undefined,
 };
 
 export default function Loading({ stopClick }: ILoadingProps) {
-  return (
-    <Container stopClick={stopClick}>
-      <Spinner>Loading ...</Spinner>
-    </Container>
-  );
+    return (
+        <Container stopClick={stopClick}>
+            <Spinner>Loading ...</Spinner>
+        </Container>
+    );
 }
 
 Loading.defaultProps = defaultProps;

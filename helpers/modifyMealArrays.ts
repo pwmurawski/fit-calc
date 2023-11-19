@@ -1,9 +1,10 @@
-import { FoodProductKeyType } from '../types/FoodProductTypes';
-import { MealType, MealsData } from '../types/MealTypes';
-import { SelectedProductType } from '../types/SelectedProductTypes';
+import { Meal } from '@prisma/client';
+import { FoodProductKeyType } from '../types/FoodProduct';
+import { MealsData } from '../types/Meal';
+import { SelectedProductWithFoodProductAndMeal } from '../types/SelectedProduct';
 import { format } from 'date-fns';
 
-const modifyData = (mealId: string, selectedProducts: SelectedProductType[]) => {
+const modifyData = (mealId: string, selectedProducts: SelectedProductWithFoodProductAndMeal[]) => {
     return selectedProducts
         .filter(({ meal }) => meal.id === mealId)
         .map(({ foodProduct, weight, meal, id, userId, dateTime }) => ({
@@ -16,11 +17,18 @@ const modifyData = (mealId: string, selectedProducts: SelectedProductType[]) => 
         }));
 };
 
-const sumInMeal = (mealId: string, selectedProducts: SelectedProductType[], key: FoodProductKeyType) => {
+const sumInMeal = (
+    mealId: string,
+    selectedProducts: SelectedProductWithFoodProductAndMeal[],
+    key: FoodProductKeyType,
+) => {
     return modifyData(mealId, selectedProducts).reduce((sum, curr) => sum + (curr[key] * curr.weight) / 100, 0);
 };
 
-const modifyMealArrays = (mealsType: MealType[], selectedProducts: SelectedProductType[]): MealsData[] => {
+const modifyMealArrays = (
+    mealsType: Meal[],
+    selectedProducts: SelectedProductWithFoodProductAndMeal[],
+): MealsData[] => {
     return mealsType.map(({ id, name }) => ({
         id,
         name,

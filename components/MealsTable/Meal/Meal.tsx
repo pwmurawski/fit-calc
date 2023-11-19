@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { useMealId } from '../../../hooks/useMealId';
-import { MealData } from '../../../types/MealTypes';
+import { MealData } from '../../../types/Meal';
 import { Container, Name, Top, Bottom, Kcal, Macro, Value, AddLink } from './styles/styles';
 
 interface IMealProps {

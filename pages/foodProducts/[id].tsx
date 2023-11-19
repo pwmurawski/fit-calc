@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import BarCode from '../../components/Barcode/BarCode';
 import NutritionalValues from '../../components/NutritionalValues/NutritionalValues';
 import { WeightForm } from '../../components/Forms/WeightForm/WeightForm';
-import { FoodProductType } from '../../types/FoodProductTypes';
+import { FoodProductType } from '../../types/FoodProduct';
 import { useAddFoodProductToMeal } from '../../hooks/useAddFoodProductToMeal';
 import Loading from '../../components/Loading/Loading';
 import { useAuth } from '../../hooks/useAuth';

@@ -1,9 +1,4 @@
-import { SelectedProduct } from './SelectedProductTypes';
-
-export interface MealType {
-    id: string;
-    name: string;
-}
+import { SelectedProductType } from './SelectedProduct';
 
 export interface MealData {
     id: string;
@@ -15,5 +10,5 @@ export interface MealData {
 }
 
 export interface MealsData extends MealData {
-    selectedProduct: SelectedProduct[];
+    selectedProduct: SelectedProductType[];
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useDailyGoalsForm from '../../../hooks/useDailyGoalsForm';
 import { Form, Input, UnitKcal, Label, Container, Unit, SubmitBtn } from './styles/styles';
-import { BodyDailyGoals } from 'pages/api/dailyGoals';
+import { BodyDailyGoals } from 'types/DailyGoals';
 
 interface DailyGoalsFormProps {
     onSubmit: (data: BodyDailyGoals) => Promise<void>;

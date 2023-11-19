@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { RegisterResponse } from 'pages/api/auth/register';
-import { RegisterData } from 'types/Auth';
+import { BodyRegister, RegisterResponse } from 'types/Auth';
 import { Response } from 'types/Response';
 
-export const register = async (body: Partial<RegisterData>): Response<RegisterResponse> => {
+export const register = async (body: Partial<BodyRegister>): Response<RegisterResponse> => {
     try {
         const response = await axios.post<RegisterResponse>('/api/auth/register', body);
         if (response.data.user) {

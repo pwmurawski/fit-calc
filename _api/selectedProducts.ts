@@ -1,11 +1,11 @@
 import { SelectedProduct } from '@prisma/client';
 import axios from 'axios';
+import { Response } from 'types/Response';
 import {
     DeleteSelectedProductResponse,
     SelectedProductIdResponse,
     SelectedProductResponse,
-} from 'pages/api/selectedProducts';
-import { Response } from 'types/Response';
+} from 'types/SelectedProduct';
 
 export type BodySelectedProduct = Omit<SelectedProduct, 'id' | 'userId' | 'dateTime'> & { dateTime: string };
 

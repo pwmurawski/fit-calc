@@ -3,11 +3,11 @@ import {
     createSelectedProductsValidationSchema,
     updateSelectedProductsValidationSchema,
 } from 'lib/validation/selectedProductsValidationSchema';
-import { BodySelectedProduct } from 'pages/api/selectedProducts';
 import { checkUserExist } from './user';
 import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
+import { BodySelectedProduct } from 'types/SelectedProduct';
 
 export const checkSelectedProductExist = async (id: string, userId: string) => {
     const selectedProduct = await prismaClient.selectedProduct.count({

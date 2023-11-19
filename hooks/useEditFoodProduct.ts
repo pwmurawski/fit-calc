@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import revalidate from '../helpers/revalidate';
 import { getFoodProduct, getFoodProducts, putFoodProduct } from '_api/foodProducts';
 import { toastError } from 'lib/custom-toasts/toast-error';
-import { BodyFoodProducts } from 'pages/api/foodProducts';
 import { useSWRConfig } from 'swr';
+import { BodyFoodProducts } from 'types/FoodProduct';
 
 const useEditFoodProduct = (id: string) => {
     const { back, prefetch } = useRouter();

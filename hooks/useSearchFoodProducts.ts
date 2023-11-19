@@ -1,6 +1,6 @@
 import { searchFoodProducts } from '_api/foodProducts';
 import { useEffect, useState } from 'react';
-import { FoodProductType } from 'types/FoodProductTypes';
+import { FoodProductType } from 'types/FoodProduct';
 
 export const useSearchFoodProducts = (term?: string) => {
     const [foodProducts, setFoodProducts] = useState<FoodProductType[]>();

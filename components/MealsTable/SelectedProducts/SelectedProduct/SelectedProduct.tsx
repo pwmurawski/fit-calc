@@ -1,9 +1,9 @@
 import { useDeleteSelectedProduct } from '../../../../hooks/useDeleteSelectedProduct';
-import { SelectedProduct } from '../../../../types/SelectedProductTypes';
+import { SelectedProductType } from '../../../../types/SelectedProduct';
 import { Container, FoodContainer, FoodMacro, DeleteBtn, Name, Top, Value } from './styles/styles';
 
 interface SelectedProductProps {
-    selectedProductData: SelectedProduct;
+    selectedProductData: SelectedProductType;
 }
 
 export function SelectedProductView({

@@ -1,8 +1,8 @@
-import { SelectedProduct } from '../../../types/SelectedProductTypes';
+import { SelectedProductType } from '../../../types/SelectedProduct';
 import { SelectedProductView } from './SelectedProduct/SelectedProduct';
 
 interface FoodProductsProps {
-    selectedProductData: SelectedProduct[];
+    selectedProductData: SelectedProductType[];
 }
 
 export default function SelectedProducts({ selectedProductData }: FoodProductsProps) {

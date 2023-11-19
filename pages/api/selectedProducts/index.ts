@@ -1,6 +1,5 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
-import { FoodProduct, SelectedProduct } from '@prisma/client';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
 import {
     createSelectedProductsDay,
@@ -8,20 +7,16 @@ import {
     getSelectedProduct,
     updateSelectedProduct,
 } from 'lib/api/query/selectedProducts';
+import {
+    BodySelectedProduct,
+    DeleteSelectedProductResponse,
+    SelectedProductIdResponse,
+    SelectedProductResponse,
+} from 'types/SelectedProduct';
 
 interface Query {
     id: string;
 }
-export type BodySelectedProduct = Record<keyof Omit<SelectedProduct, 'id' | 'userId'>, string>;
-export type SelectedProductIdResponse = {
-    id: string;
-};
-export type SelectedProductResponse = {
-    selectedProduct: (SelectedProduct & { foodProduct: Omit<FoodProduct, 'id' | 'userId'> }) | null;
-};
-export type DeleteSelectedProductResponse = {
-    message: string;
-};
 
 const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<SelectedProductResponse>) => {
     const userId = req.session.user.id;

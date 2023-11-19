@@ -1,14 +1,12 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
-import { FoodProduct } from '@prisma/client';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
 import { searchFoodProducts } from 'lib/api/query/foodProducts';
+import { FoodProductsResponse } from 'types/FoodProduct';
 
 interface Query {
     term?: string;
 }
-
-export type FoodProductsResponse = { foodProducts: FoodProduct[] };
 
 export default withAuthMethodsAware({
     async GET(req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductsResponse>) {

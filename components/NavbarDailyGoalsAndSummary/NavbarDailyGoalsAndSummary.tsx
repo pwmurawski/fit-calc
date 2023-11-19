@@ -1,17 +1,17 @@
-import { useRouter } from "next/router";
-import { Container, LinkStyled } from "./styles/styles";
+import { useRouter } from 'next/router';
+import { Container, LinkStyled } from './styles/styles';
 
 export default function NavbarDailyGoalsAndSummary() {
-  const { pathname } = useRouter();
+    const { pathname } = useRouter();
 
-  return (
-    <Container>
-      <LinkStyled href="/dailyGoals" isActive={pathname.includes("dailyGoals")}>
-        Cele dnia
-      </LinkStyled>
-      <LinkStyled href="/summary" isActive={pathname.includes("summary")}>
-        Podsumowanie
-      </LinkStyled>
-    </Container>
-  );
+    return (
+        <Container>
+            <LinkStyled href="/dailyGoals" isActive={pathname.includes('dailyGoals')}>
+                Cele dnia
+            </LinkStyled>
+            <LinkStyled href="/summary" isActive={pathname.includes('summary')}>
+                Podsumowanie
+            </LinkStyled>
+        </Container>
+    );
 }

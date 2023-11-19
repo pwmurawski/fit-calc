@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { LoginData, RegisterData } from '../types/Auth';
+import { BodyLogin, BodyRegister } from '../types/Auth';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { register } from '../_api/auth/register';
 import { toastError } from 'lib/custom-toasts/toast-error';
@@ -10,7 +10,7 @@ export const useAuth = () => {
     const { push } = useRouter();
     const { isLoading, setLoading } = useLoading();
 
-    const loginHandler = async (formValue: Partial<LoginData>) => {
+    const loginHandler = async (formValue: Partial<BodyLogin>) => {
         setLoading(true);
         const res = await signIn('credentials', {
             ...formValue,
@@ -31,7 +31,7 @@ export const useAuth = () => {
         setLoading(false);
     };
 
-    const registerHandler = async (formValue: Partial<RegisterData>) => {
+    const registerHandler = async (formValue: Partial<BodyRegister>) => {
         setLoading(true);
         const userData = await register(formValue);
 

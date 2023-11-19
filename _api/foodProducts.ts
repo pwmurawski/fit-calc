@@ -15,7 +15,7 @@ export const getFoodProducts = async (): Response<FoodProductsResponse> => {
 };
 
 export const getFoodProduct = async (id: string): Response<FoodProductResponse> => {
-    const baseUrl = 'http://127.0.0.1:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     try {
         const response = await axios.get<FoodProductResponse>(`${baseUrl}/api/foodProducts/foodProduct`, {
             params: { id },

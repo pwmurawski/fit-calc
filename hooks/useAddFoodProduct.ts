@@ -1,25 +1,25 @@
-import { useRouter } from "next/router";
-import postFoodProduct from "../_api/postFoodProduct";
-import revalidate from "../helpers/revalidate";
-import { IFoodProductFormValue } from "../types/FoodProductFormTypes";
+import { useRouter } from 'next/router';
+import { getFoodProducts, postFoodProduct } from '_api/foodProducts';
+import { BodyFoodProducts } from 'pages/api/foodProducts';
+import { useSWRConfig } from 'swr';
+import { toastError } from 'lib/custom-toasts/toast-error';
 
-const useAddFoodProduct = () => {
-  const { back, prefetch } = useRouter();
+export const useAddFoodProduct = () => {
+    const { push } = useRouter();
+    const { mutate } = useSWRConfig();
 
-  const addFoodProduct = async (data: IFoodProductFormValue) => {
-    const res = await postFoodProduct(data);
-    if (res?.status === 200) {
-      await revalidate("/foodProducts");
-      await prefetch("/foodProducts", undefined, {
-        priority: true,
-      });
-      back();
-    }
+    const addFoodProduct = async (data: BodyFoodProducts) => {
+        const res = await postFoodProduct(data);
+        switch (res?.status) {
+            case 'OK':
+                await mutate('/foodProducts', () => getFoodProducts());
+                push('/foodProducts');
+                break;
+            case 'ERROR':
+                toastError(res.error);
+                break;
+        }
+    };
 
-    return res?.errors?.children;
-  };
-
-  return addFoodProduct;
+    return addFoodProduct;
 };
-
-export default useAddFoodProduct;

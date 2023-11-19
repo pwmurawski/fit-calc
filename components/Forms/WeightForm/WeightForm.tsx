@@ -1,35 +1,40 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { Form, SubmitBtn, Input, Kcal, Unit, Container } from "./styles/styles";
+import { Form, SubmitBtn, Input, Kcal, Unit, Container } from './styles/styles';
+import { Field, Formik } from 'formik';
 
-interface IWeightInputProps {
-  submit: (value: string) => void;
-  kcal: number;
+const initialValues: { weight: number | string } = {
+    weight: '',
+};
+
+interface WeightInputProps {
+    defaultValues?: { weight: number | string } | undefined;
+    kcal: number;
+    submit: (value: number) => void;
 }
 
-export default function WeightForm({ submit, kcal }: IWeightInputProps) {
-  const [weight, setWeight] = useState("");
+export function WeightForm({ submit, kcal, defaultValues }: WeightInputProps) {
+    const handleSubmit = (values: { weight: number | string }) => {
+        submit(Number(values.weight));
+    };
 
-  return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit(weight);
-      }}
-    >
-      <Container>
-        <Input
-          type="number"
-          step="0.1"
-          placeholder="0"
-          min="0"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-        <Unit>g</Unit>
-      </Container>
-      <Kcal>{Number(((kcal * +weight) / 100).toFixed(1))} kcal</Kcal>
-      <SubmitBtn type="submit" aria-label="Submit" />
-    </Form>
-  );
+    return (
+        <Formik initialValues={defaultValues ?? initialValues} onSubmit={handleSubmit}>
+            {({ values, submitForm }) => (
+                <Form>
+                    <Container>
+                        <Field as={Input} type="number" name="weight" step="0.1" placeholder="0" min="0" />
+                        <Unit>g</Unit>
+                    </Container>
+                    <Kcal>{Number(((kcal * +values.weight) / 100).toFixed(1))} kcal</Kcal>
+                    <SubmitBtn
+                        type="submit"
+                        aria-label="Submit"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            submitForm();
+                        }}
+                    />
+                </Form>
+            )}
+        </Formik>
+    );
 }

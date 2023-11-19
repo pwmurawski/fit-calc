@@ -1,48 +1,54 @@
-import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
-import BarCode from "../../components/Barcode/BarCode";
-import NutritionalValues from "../../components/NutritionalValues/NutritionalValues";
-import WeightInput from "../../components/Forms/WeightForm/WeightForm";
-import Loading from "../../components/Loading/Loading";
-import userAuth from "../../helpers/userAuth";
-import { IGetServerProps } from "../../types/GetServerPropsTypes";
-import useEditSelectedProduct from "../../hooks/useEditSelectedProduct";
+import { useRouter } from 'next/router';
+import BarCode from '../../components/Barcode/BarCode';
+import NutritionalValues from '../../components/NutritionalValues/NutritionalValues';
+import { WeightForm } from '../../components/Forms/WeightForm/WeightForm';
+import Loading from '../../components/Loading/Loading';
+import { useEditSelectedProduct } from '../../hooks/useEditSelectedProduct';
+import { NextPageWithLayout } from 'pages/_app';
+import Head from 'next/head';
+import { Secured } from 'components/security/secured';
+import { Layout } from 'components/Layouts/Layout';
+import { AccountType } from 'types/enum';
 
-export const getServerSideProps = async ({ req, res }: IGetServerProps) => {
-  const { isUser } = userAuth(req, res);
-  if (!isUser)
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
+const SelectedProduct: NextPageWithLayout = () => {
+    const router = useRouter();
+    const { id } = router.query;
 
-  return { props: {} };
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Edit Selected Product</title>
+            </Head>
+            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
+                <SelectedProductView selectedProductId={String(id)} />
+            </Secured>
+        </>
+    );
 };
 
-interface IQuery extends ParsedUrlQuery {
-  id: string;
+SelectedProduct.getLayout = function getLayout(page) {
+    return <Layout>{page}</Layout>;
+};
+
+export default SelectedProduct;
+
+interface SelectedProductViewProps {
+    selectedProductId: string;
 }
 
-export default function SelectedProductPage() {
-  const { query } = useRouter();
-  const { id } = query as IQuery;
-  const { selectedProductData, editSelectedProduct } =
-    useEditSelectedProduct(id);
+export function SelectedProductView({ selectedProductId }: SelectedProductViewProps) {
+    const selectedProduct = useEditSelectedProduct(selectedProductId);
 
-  if (!selectedProductData) return <Loading />;
-  return (
-    <>
-      <WeightInput
-        kcal={selectedProductData.foodProduct.kcal}
-        submit={(weight) =>
-          editSelectedProduct(selectedProductData.id, +weight)
-        }
-      />
-      <NutritionalValues productData={selectedProductData.foodProduct} />
-      {selectedProductData.foodProduct.code ? (
-        <BarCode value={selectedProductData.foodProduct.code} />
-      ) : null}
-    </>
-  );
+    if (!selectedProduct?.data) return <Loading />;
+    return (
+        <>
+            <WeightForm
+                defaultValues={{ weight: selectedProduct.data.weight }}
+                kcal={selectedProduct.data.foodProduct.kcal}
+                submit={(weight) => selectedProduct.edit(selectedProductId, +weight)}
+            />
+            <NutritionalValues productData={selectedProduct.data.foodProduct} />
+            {selectedProduct.data.foodProduct.code ? <BarCode value={selectedProduct.data.foodProduct.code} /> : null}
+        </>
+    );
 }

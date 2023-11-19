@@ -4,7 +4,7 @@ import kcalToGrams from '../helpers/kcalToGrams';
 import { toPercent } from '../helpers/toPercent';
 import { useFormik } from 'formik';
 import { BodyDailyGoals } from 'pages/api/dailyGoals';
-import { createDailyGoalsValidationSchema } from 'lib/validation/createDailyGoalsValidationSchema';
+import { createDailyGoalsValidationSchema } from 'lib/validation/dailyGoalsValidationSchema';
 
 export type KeysPercentMacro = 'protein' | 'fat' | 'carbs';
 

@@ -33,21 +33,19 @@ export function AuthForm({ initFormValue, validationSchema, onSubmit, submitBtnT
             validationSchema={validationSchema}
         >
             {({ submitForm, isValid }) => (
-                <Form>
+                <Form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        submitForm();
+                    }}
+                >
                     {Object.entries(initFormValue).map(([keys, values]) => (
                         <Field key={keys} component={InputCustom} name={keys} {...values} />
                     ))}
                     {!!isValid ? (
-                        <SubmitBtn
-                            onClick={(e) => {
-                                e.preventDefault();
-                                submitForm();
-                            }}
-                        >
-                            {submitBtnText}
-                        </SubmitBtn>
+                        <SubmitBtn type="submit">{submitBtnText}</SubmitBtn>
                     ) : (
-                        <SubmitBtn isError type="button">
+                        <SubmitBtn type="button" isError>
                             {submitBtnText}
                         </SubmitBtn>
                     )}

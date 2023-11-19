@@ -10,11 +10,13 @@ interface Query {
 
 export type FoodProductResponse = { foodProduct: FoodProduct | null };
 
-export default withMethodsAware({
-    async GET(req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductResponse>) {
-        const { id } = req.query;
+const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductResponse>) => {
+    const { id } = req.query;
 
-        const foodProduct = await getFoodProduct(id);
-        res.status(HttpStatusCode.OK).json({ foodProduct });
-    },
+    const foodProduct = await getFoodProduct(id);
+    res.status(HttpStatusCode.OK).json({ foodProduct });
+};
+
+export default withMethodsAware({
+    GET,
 });

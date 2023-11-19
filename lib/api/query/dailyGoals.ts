@@ -1,15 +1,12 @@
-import { HttpStatusCode } from 'axios';
 import { format } from 'date-fns';
 import prismaClient from 'lib/app/prisma-client';
-import { createDailyGoalsValidationSchema } from 'lib/validation/createDailyGoalsValidationSchema';
-import { ApiError } from 'next/dist/server/api-utils';
+import { createDailyGoalsValidationSchema } from 'lib/validation/dailyGoalsValidationSchema';
 import { BodyDailyGoals } from 'pages/api/dailyGoals';
+import { checkUserExist } from './user';
+import { validation } from '../validation';
 
 export const getDailyGoals = async (userId: string, date: string) => {
-    const user = await prismaClient.user.count({ where: { id: userId } });
-    if (!user) {
-        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono użytkownika');
-    }
+    await checkUserExist(userId);
 
     const dailyGoals = await prismaClient.dailyGoals.findFirst({
         where: { userId, dateTime: { lte: new Date(date) } },
@@ -33,13 +30,8 @@ export const getDailyGoals = async (userId: string, date: string) => {
 };
 
 export const changeDailyGoals = async (userId: string, body: BodyDailyGoals) => {
-    const user = await prismaClient.user.count({ where: { id: userId } });
-    if (!user) {
-        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono użytkownika');
-    }
-    const dataValid = await createDailyGoalsValidationSchema.validate(body).catch(() => {
-        throw new ApiError(HttpStatusCode.Forbidden, 'Nie prawidłowe dane!');
-    });
+    await checkUserExist(userId);
+    const dataValid = await validation(createDailyGoalsValidationSchema.validate(body));
 
     const currentDate = format(new Date(), 'yyyy-MM-dd');
     const dailyGoals = await prismaClient.dailyGoals.findFirst({ where: { userId, dateTime: new Date(currentDate) } });

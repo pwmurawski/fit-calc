@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { LoginData, RegisterData } from '../types/Auth';
-import useLoading from './useLoading';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { register } from '../_api/auth/register';
 import { toastError } from 'lib/custom-toasts/toast-error';
+import { useLoading } from './useLoading';
 
-const useAuth = () => {
+export const useAuth = () => {
     const session = useSession();
     const { push } = useRouter();
     const { isLoading, setLoading } = useLoading();
@@ -46,5 +46,3 @@ const useAuth = () => {
 
     return { session, isLoading, loginHandler, logoutHandler, registerHandler };
 };
-
-export default useAuth;

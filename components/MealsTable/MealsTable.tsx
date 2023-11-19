@@ -3,7 +3,7 @@ import Loading from '../Loading/Loading';
 import SelectedProducts from './SelectedProducts/SelectedProducts';
 import Meal from './Meal/Meal';
 import { Container } from './styles/styles';
-import useLoading from '../../hooks/useLoading';
+import { useLoading } from '../../hooks/useLoading';
 
 interface ICaloriesTableCurrentDayProps {
     mealsData: MealsData[] | undefined;

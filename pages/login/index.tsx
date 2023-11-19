@@ -1,6 +1,6 @@
-import { loginValidationSchema } from 'lib/validation/loginValidationSchema';
+import { loginValidationSchema } from 'lib/validation/authValidationSchema';
 import { AuthForm, InitFormValue } from '../../components/Forms/AuthForm/AuthForm';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { NextPageWithLayout } from 'pages/_app';
 import Head from 'next/head';
 import { RegisterLayout } from 'components/Layouts/RegisterLayout';

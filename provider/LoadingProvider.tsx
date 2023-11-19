@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Loading from '../components/Loading/Loading';
 import GlobalContext from '../context/GlobalContext';
-import useLoadingSSR from '../hooks/useLoadingSSR';
+import { useLoadingSSR } from '../hooks/useLoadingSSR';
 
 export default function LoadingProvider() {
     const loading = useLoadingSSR();

@@ -1,39 +1,42 @@
-import FoodProductForm from "../../../components/Forms/FoodProductForm/FoodProductForm";
-import Loading from "../../../components/Loading/Loading";
-import userAuth from "../../../helpers/userAuth";
-import useEditFoodProduct from "../../../hooks/useEditFoodProduct";
-import { IGetServerProps } from "../../../types/GetServerPropsTypes";
+import { NextPageWithLayout } from 'pages/_app';
+import { FoodProductForm } from '../../../components/Forms/FoodProductForm/FoodProductForm';
+import Loading from '../../../components/Loading/Loading';
+import useEditFoodProduct from '../../../hooks/useEditFoodProduct';
+import Head from 'next/head';
+import { Secured } from 'components/security/secured';
+import { AccountType } from 'types/enum';
+import { Layout } from 'components/Layouts/Layout';
+import { useRouter } from 'next/router';
 
-interface IParams {
-  id: string;
-}
+const EditFoodProduct: NextPageWithLayout = () => {
+    const router = useRouter();
+    const { id } = router.query;
 
-export const getServerSideProps = async ({
-  params,
-  req,
-  res,
-}: IGetServerProps<IParams>) => {
-  const { isUser } = userAuth(req, res);
-  if (!isUser)
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-
-  return { props: { params } };
+    return (
+        <>
+            <Head>
+                <title>FitCalc | Edit Food Product</title>
+            </Head>
+            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
+                <EditFoodProductView foodProductId={String(id)} />
+            </Secured>
+        </>
+    );
 };
 
-interface IEditProps {
-  params: IParams;
+EditFoodProduct.getLayout = function getLayout(page) {
+    return <Layout>{page}</Layout>;
+};
+
+export default EditFoodProduct;
+
+interface EditFoodProductViewProps {
+    foodProductId: string;
 }
 
-export default function Edit({ params }: IEditProps) {
-  const { id } = params;
-  const { editFoodProduct, defaultValue } = useEditFoodProduct(id);
+export function EditFoodProductView({ foodProductId }: EditFoodProductViewProps) {
+    const { editFoodProduct, defaultValue } = useEditFoodProduct(foodProductId);
 
-  if (!defaultValue) return <Loading stopClick />;
-  return (
-    <FoodProductForm submit={editFoodProduct} defaultValue={defaultValue} />
-  );
+    if (!defaultValue) return <Loading stopClick />;
+    return <FoodProductForm submit={editFoodProduct} defaultValue={defaultValue} />;
 }

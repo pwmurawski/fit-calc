@@ -1,7 +1,7 @@
 import uuid from 'react-uuid';
 import { useEffect, useRef, useState } from 'react';
 import { dates } from '../../helpers/dates';
-import useSlider from '../../hooks/useSlider';
+import { useSlider } from '../../hooks/useSlider';
 import Day from './Day/Day';
 import { Week, Container } from './styles/styles';
 

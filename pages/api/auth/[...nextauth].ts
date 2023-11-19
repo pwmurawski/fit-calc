@@ -9,7 +9,8 @@ import { omit } from 'lodash';
 import { AccountType } from '../../../types/enum';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'lib/api/types';
-import { loginValidationSchema } from 'lib/validation/loginValidationSchema';
+import { loginValidationSchema } from 'lib/validation/authValidationSchema';
+import { validation } from 'lib/api/validation';
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -32,9 +33,7 @@ export const nextAuthOptions: NextAuthOptions = {
 
             async authorize(credentials, req) {
                 debugger;
-                const credentialsValid = await loginValidationSchema.validate(credentials).catch(() => {
-                    throw new ApiError(HttpStatusCode.Forbidden, 'Nie prawidłowe dane!');
-                });
+                const credentialsValid = await validation(loginValidationSchema.validate(credentials));
                 if (credentialsValid) {
                     const user = await prismaClient.user.findUnique({
                         where: { email: credentialsValid.email },

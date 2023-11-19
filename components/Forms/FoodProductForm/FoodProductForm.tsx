@@ -1,122 +1,60 @@
-import { FormInitType, SubmitType } from "../../../types/FormTypes";
-import InputCustom from "../../InputCustom/InputCustom";
-import { AddBtn, Form, ScannerContainer } from "./styles/styles";
-import useForm from "../../../hooks/useForm";
-import {
-  DefaultValueType,
-  KeysType,
-} from "../../../types/FoodProductFormTypes";
-import Scanner from "../../Scanner/Scanner";
+import { InputCustom } from '../../InputCustom/InputCustom';
+import { AddBtn, Form, ScannerContainer } from './styles/styles';
+import Scanner from '../../Scanner/Scanner';
+import { Field, Formik } from 'formik';
+import { BodyFoodProducts } from 'pages/api/foodProducts';
+import { createFoodProductValidationSchema } from 'lib/validation/foodProductValidationSchema';
 
-const initForm: FormInitType<KeysType> = {
-  name: {
-    value: "",
-    rules: ["required", { rule: "min", length: 3 }],
-  },
-  kcal: {
-    value: "",
-    rules: ["required"],
-  },
-  protein: {
-    value: "",
-    rules: ["required"],
-  },
-  fat: {
-    value: "",
-    rules: ["required"],
-  },
-  carbs: {
-    value: "",
-    rules: ["required"],
-  },
-  code: {
-    value: "",
-    rules: [],
-  },
+const initialValues: BodyFoodProducts = {
+    name: '',
+    kcal: '',
+    protein: '',
+    fat: '',
+    carbs: '',
+    code: '',
 };
 
 interface IFoodProductFormProps {
-  submit: SubmitType<typeof initForm>;
-  defaultValue?: DefaultValueType;
+    submit: (data: BodyFoodProducts) => Promise<void>;
+    defaultValue?: BodyFoodProducts;
 }
 
-const defaultProps = {
-  defaultValue: undefined,
-};
+export function FoodProductForm({ submit, defaultValue }: IFoodProductFormProps) {
+    const handleSubmit = (values: BodyFoodProducts) => {
+        submit(values);
+    };
 
-export default function FoodProductForm({
-  submit,
-  defaultValue = undefined,
-}: IFoodProductFormProps) {
-  const { formValue, onChange, backendErrors, isErrorForm, onSubmitHandler } =
-    useForm(initForm, defaultValue);
-
-  return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmitHandler(submit);
-      }}
-    >
-      <InputCustom
-        type="text"
-        placeholder="Name"
-        value={formValue.name.value}
-        onChange={(e) => onChange(e.target.value, "name")}
-        error={formValue.name.error ?? backendErrors?.name?.error}
-      />
-      <InputCustom
-        type="number"
-        min={0}
-        placeholder="Kcal"
-        value={formValue.kcal.value}
-        onChange={(e) => onChange(e.target.value, "kcal")}
-        error={formValue.kcal.error ?? backendErrors?.kcal?.error}
-      />
-      <InputCustom
-        type="number"
-        min={0}
-        placeholder="Protein"
-        value={formValue.protein.value}
-        onChange={(e) => onChange(e.target.value, "protein")}
-        error={formValue.protein.error ?? backendErrors?.protein?.error}
-      />
-      <InputCustom
-        type="number"
-        min={0}
-        placeholder="Fat"
-        value={formValue.fat.value}
-        onChange={(e) => onChange(e.target.value, "fat")}
-        error={formValue.fat.error ?? backendErrors?.fat?.error}
-      />
-      <InputCustom
-        type="number"
-        min={0}
-        placeholder="Carbs"
-        value={formValue.carbs.value}
-        onChange={(e) => onChange(e.target.value, "carbs")}
-        error={formValue.carbs.error ?? backendErrors?.carbs?.error}
-      />
-      <ScannerContainer>
-        <InputCustom
-          type="number"
-          min={0}
-          placeholder="Code"
-          value={formValue.code.value}
-          onChange={(e) => onChange(e.target.value, "code")}
-          error={formValue.code.error ?? backendErrors?.code?.error}
-        />
-        <Scanner onScanned={(data) => onChange(data, "code")} />
-      </ScannerContainer>
-      {!isErrorForm(formValue) ? (
-        <AddBtn type="submit">Dodaj</AddBtn>
-      ) : (
-        <AddBtn isError type="button">
-          Dodaj
-        </AddBtn>
-      )}
-    </Form>
-  );
+    return (
+        <Formik
+            initialValues={defaultValue ?? initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={createFoodProductValidationSchema}
+        >
+            {({ submitForm, setFieldValue, isValid }) => (
+                <Form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        submitForm();
+                    }}
+                >
+                    <Field component={InputCustom} name="name" placeholder="Name" type="text" />
+                    <Field component={InputCustom} name="kcal" placeholder="Kcal" type="number" min={0} />
+                    <Field component={InputCustom} name="protein" placeholder="Protein" type="number" min={0} />
+                    <Field component={InputCustom} name="fat" placeholder="Fat" type="number" min={0} />
+                    <Field component={InputCustom} name="carbs" placeholder="Carbs" type="number" min={0} />
+                    <ScannerContainer>
+                        <Field component={InputCustom} name="code" placeholder="Code" type="number" min={0} />
+                        <Scanner onScanned={(data) => setFieldValue(data, 'code')} />
+                    </ScannerContainer>
+                    {!!isValid ? (
+                        <AddBtn type="submit">Dodaj</AddBtn>
+                    ) : (
+                        <AddBtn type="button" isError>
+                            Dodaj
+                        </AddBtn>
+                    )}
+                </Form>
+            )}
+        </Formik>
+    );
 }
-
-FoodProductForm.defaultProps = defaultProps;

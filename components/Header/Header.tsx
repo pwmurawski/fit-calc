@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import { Container, Logo, Calendar, Logout, LogoutBtn } from './styles/styles';
 import { useSelectedDate } from '../../hooks/useSelectedDate';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import LogoutSvg from '../Svg/LogoutSvg';
 
 export default function Header() {

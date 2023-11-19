@@ -1,21 +1,19 @@
-import { useContext, useEffect } from "react";
-import GlobalContext from "../context/GlobalContext";
+import { useContext, useEffect } from 'react';
+import GlobalContext from '../context/GlobalContext';
 
-const useMealId = (isMealId?: string) => {
-  const { state, dispatch } = useContext(GlobalContext);
+export const useMealId = (isMealId?: string) => {
+    const { state, dispatch } = useContext(GlobalContext);
 
-  const setMealId = (mealId: string) => {
-    dispatch({ type: "setMealId", mealId });
-  };
+    const setMealId = (mealId: string) => {
+        dispatch({ type: 'setMealId', mealId });
+    };
 
-  useEffect(() => {
-    if (isMealId !== undefined) setMealId(isMealId);
-  }, [isMealId]);
+    useEffect(() => {
+        if (isMealId !== undefined) setMealId(isMealId);
+    }, [isMealId]);
 
-  return {
-    mealId: state.mealId,
-    setMealId,
-  };
+    return {
+        mealId: state.mealId,
+        setMealId,
+    };
 };
-
-export default useMealId;

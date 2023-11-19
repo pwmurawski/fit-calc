@@ -1,4 +1,4 @@
-import useDeleteSelectedProduct from '../../../../hooks/useDeleteSelectedProduct';
+import { useDeleteSelectedProduct } from '../../../../hooks/useDeleteSelectedProduct';
 import { SelectedProduct } from '../../../../types/SelectedProductTypes';
 import { Container, FoodContainer, FoodMacro, DeleteBtn, Name, Top, Value } from './styles/styles';
 
@@ -7,7 +7,7 @@ interface SelectedProductProps {
 }
 
 export function SelectedProductView({
-    selectedProductData: { id, carbs, fat, kcal, name, protein, weight, dateTime },
+    selectedProductData: { id, carbs, fat, kcal, name, protein, weight },
 }: SelectedProductProps) {
     const deleteHandler = useDeleteSelectedProduct();
 
@@ -18,7 +18,7 @@ export function SelectedProductView({
                 <DeleteBtn
                     onClick={(e) => {
                         e.preventDefault();
-                        deleteHandler(id, dateTime);
+                        deleteHandler(id);
                     }}
                 />
             </Top>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FoodProductsResponse } from 'pages/api/foodProducts';
+import { BodyFoodProducts, CreateFoodProductResponse, FoodProductsResponse } from 'pages/api/foodProducts';
 import { FoodProductResponse } from 'pages/api/foodProducts/foodProduct';
 import { Response } from 'types/Response';
 
@@ -22,6 +22,30 @@ export const getFoodProduct = async (id: string): Response<FoodProductResponse> 
         });
         if (response.data.foodProduct) {
             return { foodProduct: response.data.foodProduct, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const postFoodProduct = async (body: BodyFoodProducts): Response<CreateFoodProductResponse> => {
+    try {
+        const response = await axios.post<CreateFoodProductResponse>('/api/foodProducts', body);
+        if (response.data.id) {
+            return { id: response.data.id, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const putFoodProduct = async (id: string, body: BodyFoodProducts): Response<CreateFoodProductResponse> => {
+    try {
+        const response = await axios.put<CreateFoodProductResponse>('/api/foodProducts', body, {
+            params: { id },
+        });
+        if (response.data.id) {
+            return { id: response.data.id, status: 'OK' };
         }
     } catch (error: any) {
         return { error: error.response?.data.error, status: 'ERROR' };

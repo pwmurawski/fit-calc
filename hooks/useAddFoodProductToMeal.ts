@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
-import getSelectedProductDay from '../_api/dayData';
-import postSelectedProduct from '../_api/postSelectedProduct';
-import { IBodySelectedProduct } from '../types/SelectedProductTypes';
 import { useSelectedDate } from './useSelectedDate';
-import useLoading from './useLoading';
-import useMealId from './useMealId';
+import { useLoading } from './useLoading';
+import { useMealId } from './useMealId';
+import { BodySelectedProduct, postSelectedProduct } from '_api/selectedProducts';
+import { getDayData } from '_api/dayData';
+import { toastError } from 'lib/custom-toasts/toast-error';
 
-const useAddFoodProductToMeal = () => {
-    const { back, push } = useRouter();
+export const useAddFoodProductToMeal = () => {
+    const { push } = useRouter();
     const { mutate } = useSWRConfig();
     const { setLoading } = useLoading();
     const { mealId } = useMealId();
@@ -17,7 +17,7 @@ const useAddFoodProductToMeal = () => {
     const addFoodProductToMeal = async (foodProductId: string, weight: number) => {
         setLoading(true);
         if (mealId) {
-            const data: IBodySelectedProduct = {
+            const data: BodySelectedProduct = {
                 foodProductId,
                 mealId,
                 weight,
@@ -25,15 +25,21 @@ const useAddFoodProductToMeal = () => {
             };
 
             const res = await postSelectedProduct(data);
-            if (res?.status === 200) {
-                mutate(`/selectedProduct/day/${formatDate}`, getSelectedProductDay(formatDate));
-                back();
+            switch (res?.status) {
+                case 'OK':
+                    mutate(`/dayData/${formatDate}`, () => getDayData(formatDate));
+                    push('/foodProducts');
+                    break;
+                case 'ERROR':
+                    toastError(res.error);
+                    break;
             }
-        } else push('/');
+        } else {
+            toastError('Brak wybranego posiłku');
+            push('/');
+        }
         setLoading(false);
     };
 
     return addFoodProductToMeal;
 };
-
-export default useAddFoodProductToMeal;

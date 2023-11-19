@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import FoodProductForm from '../../../components/Forms/FoodProductForm/FoodProductForm';
-import useAddFoodProduct from '../../../hooks/useAddFoodProduct';
+import { FoodProductForm } from '../../../components/Forms/FoodProductForm/FoodProductForm';
+import { useAddFoodProduct } from '../../../hooks/useAddFoodProduct';
 import { Secured } from 'components/security/secured';
 import { AccountType } from 'types/enum';
 import { NextPageWithLayout } from 'pages/_app';

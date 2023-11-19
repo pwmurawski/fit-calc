@@ -1,36 +1,45 @@
 import useSWRImmutable from 'swr/immutable';
 import { useRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
-import { format } from 'date-fns';
-import getSelectedProduct from '../_api/getSelectedProduct';
-import getSelectedProductDay from '../_api/dayData';
-import putSelectedProduct from '../_api/putSelectedProduct';
-import useLoading from './useLoading';
-import useSelectedDate from './useSelectedDate';
+import { useLoading } from './useLoading';
+import { useSelectedDate } from './useSelectedDate';
+import { getSelectedProduct, putSelectedProduct } from '_api/selectedProducts';
+import { toastError } from 'lib/custom-toasts/toast-error';
+import { getDayData } from '_api/dayData';
 
-const useEditSelectedProduct = (id: string) => {
-    const { data } = useSWRImmutable(`/selectedProduct/${id}`, () => getSelectedProduct(id));
+export const useEditSelectedProduct = (id: string) => {
+    const { data, mutate: mutateSelectedProducts } = useSWRImmutable(`/selectedProducts/${id}`, () =>
+        getSelectedProduct(id),
+    );
     const { mutate } = useSWRConfig();
     const { setLoading } = useLoading();
-    const { back } = useRouter();
-    const { date } = useSelectedDate();
-    const formatDate = format(date, 'yyyy-MM-dd');
+    const { push } = useRouter();
+    const { formatDate } = useSelectedDate();
 
     const editSelectedProduct = async (selectedProductId: string, weight: number) => {
         setLoading(true);
-        const res = await putSelectedProduct(selectedProductId, weight);
-
-        if (res?.status === 204) {
-            mutate(`/selectedProduct/day/${formatDate}`, getSelectedProductDay(formatDate));
-            back();
+        const res = await putSelectedProduct(selectedProductId, { weight });
+        switch (res?.status) {
+            case 'OK':
+                mutate(`/dayData/${formatDate}`, () => getDayData(formatDate));
+                mutateSelectedProducts();
+                push('/');
+                break;
+            case 'ERROR':
+                toastError(res.error);
+                break;
         }
         setLoading(false);
     };
 
-    return {
-        selectedProductData: data?.data,
-        editSelectedProduct,
-    };
+    switch (data?.status) {
+        case 'OK':
+            return {
+                data: data.selectedProduct,
+                edit: editSelectedProduct,
+            };
+        case 'ERROR':
+            toastError(data.error);
+            break;
+    }
 };
-
-export default useEditSelectedProduct;

@@ -1,4 +1,4 @@
-import useAuth from 'hooks/useAuth';
+import { useAuth } from 'hooks/useAuth';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';

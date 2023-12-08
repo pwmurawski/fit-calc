@@ -22,9 +22,9 @@ export const RegisterLayout: FC<RegisterLayoutProps> = ({ children }) => {
 
     return (
         <Wrapper>
-            <Container>
-                {active.headers && active.headers.component}
-                <Main>{children}</Main>
+            {active.headers && active.headers.component}
+            <Container style={{ maxWidth: '500px', padding: '20px' }}>
+                <Main style={{ justifyContent: 'center', gap: '30px', maxHeight: '90%' }}>{children}</Main>
             </Container>
         </Wrapper>
     );

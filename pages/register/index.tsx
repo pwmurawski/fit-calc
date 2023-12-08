@@ -50,6 +50,7 @@ export function RegisterView() {
             initFormValue={initFormValue}
             validationSchema={createUserValidationSchema}
             onSubmit={registerHandler}
+            title="Rejestracja"
             submitBtnText="Zarejestruj się"
         />
     );

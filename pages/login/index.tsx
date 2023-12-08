@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { NextPageWithLayout } from 'pages/_app';
 import Head from 'next/head';
 import { RegisterLayout } from 'components/Layouts/RegisterLayout';
+import { GoToRegister } from 'components/GoToRegister/GoToRegister';
 
 const initFormValue: InitFormValue = {
     email: {
@@ -37,5 +38,10 @@ export default Login;
 export function LoginView() {
     const { loginHandler } = useAuth();
 
-    return <AuthForm initFormValue={initFormValue} validationSchema={loginValidationSchema} onSubmit={loginHandler} />;
+    return (
+        <>
+            <AuthForm initFormValue={initFormValue} validationSchema={loginValidationSchema} onSubmit={loginHandler} />
+            <GoToRegister />
+        </>
+    );
 }

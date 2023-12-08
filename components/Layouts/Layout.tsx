@@ -32,8 +32,8 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
 
     return (
         <Wrapper>
+            {active.headers ? active.headers.component : <HeaderFoodProducts />}
             <Container>
-                {active.headers ? active.headers.component : <HeaderFoodProducts />}
                 {active.components ? active.components.component : null}
                 <Main>{children}</Main>
             </Container>

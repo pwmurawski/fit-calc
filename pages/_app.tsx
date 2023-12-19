@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import { FC, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { NextPage } from 'next';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
@@ -39,6 +40,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 <OnAppInit>{getLayout(<Component {...pageProps} />)}</OnAppInit>
             </SessionProvider>
             <Analytics />
+            <SpeedInsights />
         </>
     );
 }

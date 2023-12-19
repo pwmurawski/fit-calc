@@ -20,7 +20,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
             component: <SearchBar />,
         },
         {
-            path: ['/dailyGoals', '/summary'],
+            path: ['/dailyGoals', '/summary/day', '/summary/week', '/summary/month', '/summary/year'],
             component: <NavbarDailyGoalsAndSummary />,
         },
     ];

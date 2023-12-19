@@ -13,6 +13,12 @@ export const getDailyGoals = async (userId: string, date: string) => {
         orderBy: {
             dateTime: 'desc',
         },
+        select: {
+            kcal: true,
+            protein: true,
+            fat: true,
+            carbs: true,
+        },
     });
 
     if (!dailyGoals) {
@@ -20,6 +26,12 @@ export const getDailyGoals = async (userId: string, date: string) => {
             where: { userId },
             orderBy: {
                 dateTime: 'asc',
+            },
+            select: {
+                kcal: true,
+                protein: true,
+                fat: true,
+                carbs: true,
             },
         });
 

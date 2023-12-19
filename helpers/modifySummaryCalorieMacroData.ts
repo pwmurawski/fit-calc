@@ -1,6 +1,6 @@
 import { FoodProductKeyType } from '../types/FoodProduct';
 import { SelectedProductWithFoodProductAndMeal } from '../types/SelectedProduct';
-import { SummaryCalorieMacroData } from '../types/SummaryCalorieMacroData';
+import { SummaryCalorieMacroData } from '../types/Summary';
 
 const sumMacro = (selectedProducts: SelectedProductWithFoodProductAndMeal[], key: FoodProductKeyType) => {
     return selectedProducts.reduce((sum, curr) => sum + (curr.foodProduct[key] * curr.weight) / 100, 0);

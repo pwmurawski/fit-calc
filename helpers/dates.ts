@@ -2,8 +2,8 @@ import { subDays, eachWeekOfInterval, addDays, eachDayOfInterval } from 'date-fn
 
 export const dates = eachWeekOfInterval(
     {
-        start: subDays(new Date(), 14),
-        end: addDays(new Date(), 14),
+        start: subDays(new Date(), 30),
+        end: addDays(new Date(), 30),
     },
     {
         weekStartsOn: 1,

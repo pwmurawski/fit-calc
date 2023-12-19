@@ -8,6 +8,7 @@ import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
 import { BodySelectedProduct } from 'types/SelectedProduct';
+import { addDays, eachDayOfInterval, eachWeekOfInterval, subDays } from 'date-fns';
 
 export const checkSelectedProductExist = async (id: string, userId: string) => {
     const selectedProduct = await prismaClient.selectedProduct.count({
@@ -23,6 +24,29 @@ export const getSelectedProductsDay = async (userId: string, date: string) => {
 
     const selectedProducts = await prismaClient.selectedProduct.findMany({
         where: { dateTime: new Date(date), userId },
+        include: {
+            foodProduct: {
+                select: {
+                    code: true,
+                    name: true,
+                    kcal: true,
+                    protein: true,
+                    fat: true,
+                    carbs: true,
+                },
+            },
+            meal: true,
+        },
+    });
+
+    return selectedProducts;
+};
+
+export const getSelectedProductsByDateRange = async (userId: string, startDate: string, endDate: string) => {
+    await checkUserExist(userId);
+
+    const selectedProducts = await prismaClient.selectedProduct.findMany({
+        where: { dateTime: { gte: new Date(startDate), lte: new Date(endDate) }, userId },
         include: {
             foodProduct: {
                 select: {

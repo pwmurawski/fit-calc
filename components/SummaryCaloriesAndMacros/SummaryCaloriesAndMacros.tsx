@@ -1,11 +1,11 @@
 import { DailyGoals } from '@prisma/client';
 import { toPercent } from '../../helpers/toPercent';
-import { SummaryCalorieMacroData } from '../../types/SummaryCalorieMacroData';
+import { SummaryCalorieMacroData } from '../../types/Summary';
 import { Container, Macro, CurrentValue, LimitValue, Unit, ValueSlider, Name } from './styles/styles';
 
 interface ISummaryCaloriesAndMacrosProps {
     summaryCalorieMacroData: SummaryCalorieMacroData | undefined;
-    limitMacro?: DailyGoals | null;
+    limitMacro?: Pick<DailyGoals, 'kcal' | 'protein' | 'fat' | 'carbs'> | null;
 }
 
 export default function SummaryCaloriesAndMacros({

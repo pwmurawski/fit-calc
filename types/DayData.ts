@@ -1,5 +1,5 @@
 import { MealsData } from './Meal';
-import { SummaryCalorieMacroData } from './SummaryCalorieMacroData';
+import { SummaryCalorieMacroData } from './Summary';
 
 export type DayDataResponse = {
     mealsData: MealsData[];

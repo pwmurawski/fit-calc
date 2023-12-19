@@ -3,14 +3,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://fitcalc.online">
+  <a href="https://fitcalc.pl">
     <img src="public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">fit-calc</h3>
 
   <p align="center">
-    <a href="https://fitcalc.online">View Demo</a>
+    <a href="https://fitcalc.pl">View Demo</a>
   </p>
 </div>
 

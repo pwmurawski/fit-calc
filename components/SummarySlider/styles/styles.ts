@@ -44,7 +44,6 @@ export const DateSection = styled.section`
     width: 100%;
     background-color: whitesmoke;
     border-radius: 20px;
-    /* color: rgb(57, 196, 138); */
     h2 {
         margin: 0;
         font-size: 22px;

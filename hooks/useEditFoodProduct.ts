@@ -5,10 +5,11 @@ import { useSWRConfig } from 'swr';
 import { BodyFoodProducts } from 'types/FoodProduct';
 import useSWRImmutable from 'swr/immutable';
 import { useLoading } from './useLoading';
+import { clearCache } from 'helpers/clearCache';
 
 const useEditFoodProduct = (id: string) => {
     const { data, mutate: mutateFoodProduct } = useSWRImmutable(`/foodProduct/${id}`, () => getFoodProduct(id));
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
     const { back } = useRouter();
 
@@ -20,6 +21,8 @@ const useEditFoodProduct = (id: string) => {
             case 'OK':
                 await mutateFoodProduct();
                 mutate('/foodProducts', () => getFoodProducts());
+                clearCache(cache, '/selectedProducts');
+                clearCache(cache, '/dayData');
                 back();
                 break;
             case 'ERROR':

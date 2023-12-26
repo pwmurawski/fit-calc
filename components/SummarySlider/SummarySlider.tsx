@@ -2,7 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Ranges, getDateRange } from 'helpers/getDateRange';
 import { DateBtn, DateContainer, DateSection, RangesBtn, RangesContainer } from './styles/styles';
-import BackArrowSvg from 'components/Svg/BackArrowSvg';
+import { RightArrow } from 'components/Svg/RightArrow';
+import { LeftArrow } from 'components/Svg/LeftArrow';
 
 interface SummarySliderProps {
     getDate: (startDate: Date, endDate: Date) => void;
@@ -49,7 +50,7 @@ export const SummarySlider: FC<SummarySliderProps> = ({ getDate }) => {
             </RangesContainer>
             <DateContainer>
                 <DateBtn onClick={handlePrev}>
-                    <BackArrowSvg />
+                    <LeftArrow />
                 </DateBtn>
                 <DateSection>
                     {range === Ranges.Day ? (
@@ -60,7 +61,9 @@ export const SummarySlider: FC<SummarySliderProps> = ({ getDate }) => {
                         </h2>
                     )}
                 </DateSection>
-                <DateBtn onClick={handleNext}>Next</DateBtn>
+                <DateBtn onClick={handleNext}>
+                    <RightArrow />
+                </DateBtn>
             </DateContainer>
         </>
     );

@@ -8,10 +8,11 @@ import { getDayData } from '_api/dayData';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import useSWRImmutable from 'swr/immutable';
 import { getFoodProduct } from '_api/foodProducts';
+import { clearCache } from 'helpers/clearCache';
 
 export const useFoodProduct = (id: string) => {
     const { data } = useSWRImmutable(`/foodProduct/${id}`, () => getFoodProduct(id));
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { push } = useRouter();
     const { setLoading } = useLoading();
     const { mealId } = useMealId();
@@ -31,6 +32,7 @@ export const useFoodProduct = (id: string) => {
             switch (res?.status) {
                 case 'OK':
                     mutate(`/dayData/${formatDate}`, () => getDayData(formatDate));
+                    clearCache(cache, '/summary');
                     push('/foodProducts');
                     break;
                 case 'ERROR':

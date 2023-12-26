@@ -9,7 +9,7 @@ export default function NavbarDailyGoalsAndSummary() {
             <LinkStyled href="/dailyGoals" $isActive={pathname.includes('dailyGoals')}>
                 Cele dnia
             </LinkStyled>
-            <LinkStyled href="/summary/day" $isActive={pathname.includes('summary')}>
+            <LinkStyled href="/summary" $isActive={pathname.includes('summary')}>
                 Podsumowanie
             </LinkStyled>
         </Container>

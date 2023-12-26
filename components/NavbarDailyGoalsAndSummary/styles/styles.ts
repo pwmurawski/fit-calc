@@ -15,5 +15,5 @@ export const LinkStyled = styled(Link)<{ $isActive: boolean }>`
     align-items: flex-start;
     flex: 1;
     height: 100%;
-    border-bottom: ${({ $isActive }) => ($isActive ? '3px solid rgb(77, 216, 158)' : 'none')};
+    border-bottom: ${({ $isActive }) => $isActive && '3px solid rgb(77, 216, 158)'};
 `;

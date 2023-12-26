@@ -17,6 +17,6 @@ export const dailyGoalsSeed: DailyGoals[] = [
         protein: 263,
         fat: 92,
         carbs: 425,
-        dateTime: new Date(new Date().setDate(new Date().getDate() + 2)),
+        dateTime: new Date(new Date().setDate(new Date().getDate() - 2)),
     },
 ];

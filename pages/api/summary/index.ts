@@ -1,18 +1,19 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
-import { getSummaryYear } from 'lib/api/query/summary';
+import { getSummaryByDateRange } from 'lib/api/query/summary';
 import { SummaryResponse } from 'types/Summary';
 
 interface Query {
-    date: string;
+    startDate: string;
+    endDate: string;
 }
 
 const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<SummaryResponse>) => {
     const userId = req.session.user.id;
-    const { date } = req.query;
+    const { startDate, endDate } = req.query;
 
-    const summary = await getSummaryYear(userId, date);
+    const summary = await getSummaryByDateRange(userId, startDate, endDate);
     res.status(HttpStatusCode.OK).json(summary);
 };
 

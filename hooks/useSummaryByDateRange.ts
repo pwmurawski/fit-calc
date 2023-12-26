@@ -1,11 +1,9 @@
 import useSWRImmutable from 'swr/immutable';
-import { useSelectedDate } from './useSelectedDate';
 import { toastError } from 'lib/custom-toasts/toast-error';
-import { getSummaryMonth } from '_api/summary';
+import { getSummaryByDateRange } from '_api/summary';
 
-export const useSummaryMonth = () => {
-    const { formatDate } = useSelectedDate();
-    const { data } = useSWRImmutable(`/summary/month/${formatDate}`, () => getSummaryMonth(formatDate));
+export const useSummaryByDateRange = (start: string, end: string) => {
+    const { data } = useSWRImmutable(`/summary/byDateRange/${start}/${end}`, () => getSummaryByDateRange(start, end));
 
     switch (data?.status) {
         case 'OK':

@@ -1,35 +1,39 @@
 import modifySummaryCalorieMacroData from 'helpers/modifySummaryCalorieMacroData';
-import { getDailyGoals } from './dailyGoals';
-import { getSelectedProductsDay, getSelectedProductsByDateRange } from './selectedProducts';
+import { getDailyGoalsByDateRange } from './dailyGoals';
+import { getSelectedProductsByDateRange } from './selectedProducts';
+import { format } from 'date-fns';
+import { countDaysBetweenDates } from 'helpers/getSummaryDay';
 
-export const getSummaryDay = async (userId: string, date: string) => {
-    const dailyGoals = await getDailyGoals(userId, date);
-    const selectedProductDay = await getSelectedProductsDay(userId, date);
-    const summaryData = modifySummaryCalorieMacroData(selectedProductDay);
+export const getSummaryByDateRange = async (userId: string, startDate: string, endDate: string) => {
+    const selectedProductDays = await getSelectedProductsByDateRange(userId, startDate, endDate);
+    const goals = await getDailyGoalsByDateRange(userId, startDate, endDate);
+    const summaryData = modifySummaryCalorieMacroData(selectedProductDays);
 
-    return { summaryData, dailyGoals };
-};
+    const dailyGoals = goals.reduce(
+        (acc, currentDate, index) => {
+            const nextDate = goals[index + 1];
 
-export const getSummaryWeek = async (userId: string, date: string) => {
-    const dailyGoals = await getDailyGoals(userId, date);
-    const selectedProductDay = await getSelectedProductsByDateRange(userId, '2023-12-08', '2023-12-16');
-    const summaryData = modifySummaryCalorieMacroData(selectedProductDay);
+            let countDays = 1;
+            if (nextDate) {
+                const count = countDaysBetweenDates(
+                    format(currentDate.dateTime, 'yyyy-MM-dd'),
+                    format(nextDate.dateTime, 'yyyy-MM-dd'),
+                );
+                countDays = count;
+            }
 
-    return { summaryData, dailyGoals };
-};
+            return {
+                kcal: acc.kcal + Number(currentDate.kcal) * countDays,
+                protein: acc.protein + Number(currentDate.protein) * countDays,
+                fat: acc.fat + Number(currentDate.fat) * countDays,
+                carbs: acc.carbs + Number(currentDate.carbs) * countDays,
+            };
+        },
+        { kcal: 0, protein: 0, fat: 0, carbs: 0 },
+    );
 
-export const getSummaryMonth = async (userId: string, date: string) => {
-    const dailyGoals = await getDailyGoals(userId, date);
-    const selectedProductDay = await getSelectedProductsByDateRange(userId, '2023-12-01', '2023-12-31');
-    const summaryData = modifySummaryCalorieMacroData(selectedProductDay);
-
-    return { summaryData, dailyGoals };
-};
-
-export const getSummaryYear = async (userId: string, date: string) => {
-    const dailyGoals = await getDailyGoals(userId, date);
-    const selectedProductDay = await getSelectedProductsByDateRange(userId, '2023-01-01', '2023-12-31');
-    const summaryData = modifySummaryCalorieMacroData(selectedProductDay);
-
-    return { summaryData, dailyGoals };
+    return {
+        summaryData,
+        dailyGoals,
+    };
 };

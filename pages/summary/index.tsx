@@ -5,7 +5,10 @@ import { NextPageWithLayout } from 'pages/_app';
 import { AccountType } from 'types/enum';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useSummaryDay } from 'hooks/useSummaryDay';
+import { useSummaryByDateRange } from 'hooks/useSummaryByDateRange';
+import { useState } from 'react';
+import { format } from 'date-fns';
+import { SummarySlider } from 'components/SummarySlider/SummarySlider';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -60,12 +63,21 @@ export const data = {
 };
 
 export function SummaryView() {
-    const da = useSummaryDay();
+    const [date, setDate] = useState({
+        start: new Date(),
+        end: new Date(),
+    });
+    const da = useSummaryByDateRange(format(date.start, 'yyyy-MM-dd'), format(date.end, 'yyyy-MM-dd'));
     console.log(da);
+
+    const getDate = (start: Date, end: Date) => {
+        setDate({ start, end });
+    };
 
     return (
         <>
-            <Bar options={options} data={data} />;
+            <SummarySlider getDate={getDate} />
+            <Bar options={options} data={data} />
         </>
     );
 }

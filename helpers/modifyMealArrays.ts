@@ -2,7 +2,6 @@ import { Meal } from '@prisma/client';
 import { FoodProductKeyType } from '../types/FoodProduct';
 import { MealsData } from '../types/Meal';
 import { SelectedProductWithFoodProductAndMeal } from '../types/SelectedProduct';
-import { format } from 'date-fns';
 
 const modifyData = (mealId: string, selectedProducts: SelectedProductWithFoodProductAndMeal[]) => {
     return selectedProducts
@@ -13,7 +12,7 @@ const modifyData = (mealId: string, selectedProducts: SelectedProductWithFoodPro
             userId,
             weight,
             mealId: meal.id,
-            dateTime: format(dateTime, 'yyyy-MM-dd'),
+            dateTime: dateTime.toISOString(),
         }));
 };
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Response } from 'types/Response';
 import { SummaryResponse } from 'types/Summary';
 
-export const getSummaryByDateRange = async (startDate: string, endDate: string): Response<SummaryResponse> => {
+export const getSummaryByDateRange = async (startDate: Date, endDate: Date): Response<SummaryResponse> => {
     try {
         const response = await axios.get<SummaryResponse>('/api/summary', {
             params: { startDate, endDate },

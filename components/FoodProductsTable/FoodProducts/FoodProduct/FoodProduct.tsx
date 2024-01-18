@@ -1,11 +1,40 @@
+import { useAddSelectedProduct } from 'hooks/useAddSelectedProduct';
 import { FoodProductType } from '../../../../types/FoodProduct';
-import { Container, FoodContainer, FoodMacro, Name, Top, Value, Weight } from './styles/styles';
+import {
+    Container,
+    FoodContainer,
+    FoodMacro,
+    LastSelectedProduct,
+    Name,
+    PlusIcon,
+    Top,
+    Value,
+    Weight,
+} from './styles/styles';
 
 interface IFoodProductProps {
     foodProductData: FoodProductType;
 }
 
-export default function FoodProduct({ foodProductData: { carbs, fat, id, kcal, name, protein } }: IFoodProductProps) {
+export default function FoodProduct({
+    foodProductData: {
+        id,
+        name,
+        kcal,
+        protein,
+        fat,
+        carbs,
+        lastSelectedProduct: { weight },
+    },
+}: IFoodProductProps) {
+    const addFoodProductToMeal = useAddSelectedProduct();
+
+    const addFoodProductToMealHandle = () => {
+        if (weight) {
+            addFoodProductToMeal(id, weight);
+        }
+    };
+
     return (
         <Container href={`/foodProducts/${id}`}>
             <Top>
@@ -23,7 +52,20 @@ export default function FoodProduct({ foodProductData: { carbs, fat, id, kcal, n
                     Węgl. <Value>{carbs} g</Value>
                 </FoodMacro>
             </FoodContainer>
-            <Weight>/ 100 g</Weight>
+            <Weight $isLastSelectedProduct={!!weight}>
+                {weight && (
+                    <LastSelectedProduct
+                        onClick={(e) => {
+                            e.preventDefault();
+                            addFoodProductToMealHandle();
+                        }}
+                    >
+                        {weight} g
+                        <PlusIcon />
+                    </LastSelectedProduct>
+                )}
+                / 100 g
+            </Weight>
         </Container>
     );
 }

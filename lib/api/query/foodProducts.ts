@@ -5,15 +5,40 @@ import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
 import { BodyFoodProducts } from 'types/FoodProduct';
+import { first, omit } from 'lodash';
 
 export const getFoodProducts = async () => {
-    const foodProducts = await prismaClient.foodProduct.findMany();
-    return foodProducts;
+    const foodProducts = await prismaClient.foodProduct.findMany({
+        include: { selectedProducts: { select: { weight: true }, orderBy: { dateTime: 'desc' }, take: 1 } },
+    });
+
+    return foodProducts.map((foodProduct) => ({
+        ...omit(foodProduct, 'selectedProducts'),
+        lastSelectedProduct: { weight: first(foodProduct.selectedProducts)?.weight },
+    }));
 };
 
 export const getFoodProduct = async (id: string) => {
-    const foodProduct = await prismaClient.foodProduct.findUnique({ where: { id } });
-    return foodProduct;
+    const foodProduct = await prismaClient.foodProduct.findUnique({
+        where: { id },
+        include: {
+            selectedProducts: {
+                select: { id: true, weight: true },
+                orderBy: { dateTime: 'desc' },
+                take: 4,
+            },
+        },
+    });
+
+    return {
+        ...omit(foodProduct, 'selectedProducts'),
+        lastSelectedProducts:
+            foodProduct?.selectedProducts.map(({ id, weight }) => ({
+                id,
+                weight,
+                kcal: Number(((foodProduct.kcal * weight) / 100).toFixed(1)),
+            })) ?? [],
+    };
 };
 
 export const createFoodProduct = async (userId: string, body: BodyFoodProducts) => {
@@ -40,6 +65,11 @@ export const updateFoodProduct = async (id: string, userId: string, body: BodyFo
 export const searchFoodProducts = async (term?: string) => {
     const foodProducts = await prismaClient.foodProduct.findMany({
         where: { OR: [{ name: { contains: term, mode: 'insensitive' } }, { code: { contains: term } }] },
+        include: { selectedProducts: { select: { weight: true }, orderBy: { dateTime: 'desc' }, take: 1 } },
     });
-    return foodProducts;
+
+    return foodProducts.map((foodProduct) => ({
+        ...omit(foodProduct, 'selectedProducts'),
+        lastSelectedProduct: { weight: first(foodProduct.selectedProducts)?.weight },
+    }));
 };

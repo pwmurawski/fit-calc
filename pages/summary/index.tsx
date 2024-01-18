@@ -34,7 +34,7 @@ export function SummaryView() {
         start: new Date(),
         end: new Date(),
     });
-    const summary = useSummaryByDateRange(format(date.start, 'yyyy-MM-dd'), format(date.end, 'yyyy-MM-dd'));
+    const summary = useSummaryByDateRange(date.start, date.end);
 
     const getDate = (start: Date, end: Date) => {
         setDate({ start, end });
@@ -43,8 +43,10 @@ export function SummaryView() {
     return (
         <>
             <SummarySlider getDate={getDate} />
-            <BarChart summary={summary} />
-            <SummaryDataView summary={summary} />
+            <div style={{ overflow: 'auto' }}>
+                <BarChart summary={summary} />
+                <SummaryDataView summary={summary} />
+            </div>
         </>
     );
 }

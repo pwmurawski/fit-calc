@@ -11,6 +11,8 @@ import Head from 'next/head';
 import { Secured } from 'components/security/secured';
 import { AccountType } from 'types/enum';
 import { useAuth } from 'hooks/useAuth';
+import { FiveLastSelectedProducts } from 'components/FiveLastSelectedProducts/FiveLastSelectedProducts';
+import { useAddSelectedProduct } from 'hooks/useAddSelectedProduct';
 
 const FoodProduct: NextPageWithLayout = () => {
     const router = useRouter();
@@ -41,25 +43,30 @@ interface FoodProductPageProps {
 export function FoodProductView({ foodProductId }: FoodProductPageProps) {
     const { session } = useAuth();
     const foodProduct = useFoodProduct(foodProductId);
+    const addFoodProductToMeal = useAddSelectedProduct();
 
-    if (!foodProduct?.data) return <Loading />;
+    if (!foodProduct) return <Loading />;
     return (
         <>
             <WeightForm
-                kcal={foodProduct.data.kcal}
+                kcal={foodProduct.kcal}
                 submit={(weight) => {
-                    foodProduct.addFoodProductToMeal(foodProductId, weight);
+                    addFoodProductToMeal(foodProductId, weight);
                 }}
+            />
+            <FiveLastSelectedProducts
+                foodProductId={foodProduct.id}
+                lastSelectedProducts={foodProduct.lastSelectedProducts}
             />
             <Options
                 ids={{
-                    productId: foodProduct?.data.id,
-                    productUserId: foodProduct?.data.userId,
+                    productId: foodProduct?.id,
+                    productUserId: foodProduct?.userId,
                     userAuthId: session.data?.user.id,
                 }}
             />
-            <NutritionalValues productData={foodProduct?.data} />
-            {foodProduct?.data.code ? <BarCode value={foodProduct?.data.code} /> : null}
+            <NutritionalValues productData={foodProduct} />
+            {foodProduct.code ? <BarCode value={foodProduct.code} /> : null}
         </>
     );
 }

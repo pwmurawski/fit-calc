@@ -1,10 +1,24 @@
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ChartOptions,
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { SummaryResponse } from 'types/Summary';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export const options = {
+export const options: ChartOptions<'bar'> = {
+    scales: {
+        y: {
+            position: 'center',
+        },
+    },
     responsive: true,
     plugins: {
         legend: {

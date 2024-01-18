@@ -8,7 +8,6 @@ import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
 import { BodySelectedProduct } from 'types/SelectedProduct';
-import { addDays, eachDayOfInterval, eachWeekOfInterval, subDays } from 'date-fns';
 
 export const checkSelectedProductExist = async (id: string, userId: string) => {
     const selectedProduct = await prismaClient.selectedProduct.count({
@@ -19,11 +18,16 @@ export const checkSelectedProductExist = async (id: string, userId: string) => {
     }
 };
 
-export const getSelectedProductsDay = async (userId: string, date: string) => {
+export const getSelectedProducts = async (userId: string, date: string) => {
     await checkUserExist(userId);
 
+    const startDate = new Date(date);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(date);
+    endDate.setHours(23, 59, 59, 999);
+
     const selectedProducts = await prismaClient.selectedProduct.findMany({
-        where: { dateTime: new Date(date), userId },
+        where: { dateTime: { gte: startDate, lte: endDate }, userId },
         include: {
             foodProduct: {
                 select: {
@@ -87,12 +91,12 @@ export const getSelectedProduct = async (id: string, userId: string) => {
     return selectedProduct;
 };
 
-export const createSelectedProductsDay = async (userId: string, body: BodySelectedProduct) => {
+export const createSelectedProducts = async (userId: string, body: BodySelectedProduct) => {
     await checkUserExist(userId);
     const data = await validation(createSelectedProductsValidationSchema.validate(body));
 
     const newSelectedProduct = await prismaClient.selectedProduct.create({
-        data: { ...data, userId, dateTime: new Date(data.dateTime) },
+        data: { ...data, userId, dateTime: data.dateTime },
     });
     return newSelectedProduct;
 };

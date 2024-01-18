@@ -2,7 +2,7 @@ import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types'
 import { NextApiResponse } from 'next/types';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
 import {
-    createSelectedProductsDay,
+    createSelectedProducts,
     deleteSelectedProduct,
     getSelectedProduct,
     updateSelectedProduct,
@@ -33,7 +33,7 @@ const POST = async (
     const userId = req.session.user.id;
     const body = req.body;
 
-    const { id } = await createSelectedProductsDay(userId, body);
+    const { id } = await createSelectedProducts(userId, body);
     res.status(HttpStatusCode.OK).json({ id });
 };
 

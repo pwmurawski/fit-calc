@@ -54,11 +54,44 @@ export const Value = styled.span`
     align-self: flex-start;
 `;
 
-export const Weight = styled.div`
+export const Weight = styled.div<{ $isLastSelectedProduct?: boolean }>`
     display: flex;
-    justify-content: flex-end;
+    justify-content: ${({ $isLastSelectedProduct }) => ($isLastSelectedProduct ? 'space-between' : 'flex-end')};
     align-items: center;
     width: 100%;
     height: fit-content;
     font-size: 16px;
+    gap: 5px;
+`;
+
+export const LastSelectedProduct = styled.div`
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    margin-top: 5px;
+    padding: 2px 10px;
+    font-size: 13px;
+    border-radius: 10px;
+    background-color: rgb(77, 216, 158);
+    gap: 5px;
+`;
+
+export const PlusIcon = styled.div`
+    position: relative;
+    width: 10px;
+    height: 2px;
+    background-color: white;
+    border-radius: 20px;
+
+    ::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 10px;
+        height: 2px;
+        background-color: white;
+        transform: rotate(90deg);
+        border-radius: 20px;
+    }
 `;

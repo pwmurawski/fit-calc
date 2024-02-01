@@ -8,14 +8,16 @@ import { validation } from '../validation';
 import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'axios';
 import { BodySelectedProduct } from 'types/SelectedProduct';
+import { createUserFoodProductCount, deleteUserFoodProductCount } from './userFoodProductCount';
 
 export const checkSelectedProductExist = async (id: string, userId: string) => {
-    const selectedProduct = await prismaClient.selectedProduct.count({
+    const selectedProduct = await prismaClient.selectedProduct.findFirst({
         where: { id, userId },
     });
     if (!selectedProduct) {
         throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono produktu');
     }
+    return selectedProduct;
 };
 
 export const getSelectedProducts = async (userId: string, date: string) => {
@@ -96,8 +98,10 @@ export const createSelectedProducts = async (userId: string, body: BodySelectedP
     const data = await validation(createSelectedProductsValidationSchema.validate(body));
 
     const newSelectedProduct = await prismaClient.selectedProduct.create({
-        data: { ...data, userId, dateTime: data.dateTime },
+        data: { ...data, userId },
     });
+    await createUserFoodProductCount(userId, newSelectedProduct.foodProductId);
+
     return newSelectedProduct;
 };
 
@@ -112,7 +116,8 @@ export const updateSelectedProduct = async (id: string, userId: string, body: Pi
 
 export const deleteSelectedProduct = async (id: string, userId: string) => {
     await checkUserExist(userId);
-    await checkSelectedProductExist(id, userId);
+    const selectedProduct = await checkSelectedProductExist(id, userId);
 
     await prismaClient.selectedProduct.delete({ where: { id } });
+    await deleteUserFoodProductCount(userId, selectedProduct.foodProductId);
 };

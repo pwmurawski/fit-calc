@@ -6,10 +6,14 @@ import { BodyFoodProducts, CreateFoodProductResponse, FoodProductsResponse } fro
 
 interface Query {
     id: string;
+    page: string;
 }
 
-const GET = async (req: AuthenticatedApiRequest<void, void>, res: NextApiResponse<FoodProductsResponse>) => {
-    const foodProducts = await getFoodProducts();
+const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductsResponse>) => {
+    const { page } = req.query;
+    const userId = req.session.user.id;
+
+    const foodProducts = await getFoodProducts(userId, Number(page));
     res.status(HttpStatusCode.OK).json({ foodProducts });
 };
 

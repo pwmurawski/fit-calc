@@ -27,11 +27,11 @@ FoodProducts.getLayout = function getLayout(page) {
 export default FoodProducts;
 
 export function FoodProductsView() {
-    const foodProducts = useFoodProducts();
+    const { data, ...pagination } = useFoodProducts();
 
     return (
         <>
-            <FoodProductsTable foodProductsData={foodProducts} />
+            <FoodProductsTable foodProductsData={data} pagination={pagination} />
             <AddNewFoodProduct />
         </>
     );

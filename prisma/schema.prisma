@@ -1,6 +1,5 @@
 datasource db {
   provider = "postgresql"
-  // url = env("DATABASE_URL")
   url = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
@@ -52,6 +51,12 @@ model SelectedProduct {
   dateTime      DateTime      @default(now())
 }
 
+model UserFoodProductCount {
+  id            String        @id @default(cuid())
+  userId        String
+  foodProductId String
+  count         Int
+}
 
 model DailyGoals {
   id           String        @id @default(cuid())
@@ -60,5 +65,5 @@ model DailyGoals {
   protein      Float
   fat          Float
   carbs        Float
-  dateTime     DateTime      @default(now()) @db.Date
+  dateTime     DateTime      @default(now())
 }

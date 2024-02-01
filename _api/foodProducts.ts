@@ -7,9 +7,9 @@ import {
 } from 'types/FoodProduct';
 import { Response } from 'types/Response';
 
-export const getFoodProducts = async (): Response<FoodProductsResponse> => {
+export const getFoodProducts = async (page: number = 1): Response<FoodProductsResponse> => {
     try {
-        const response = await axios.get<FoodProductsResponse>('/api/foodProducts');
+        const response = await axios.get<FoodProductsResponse>('/api/foodProducts', { params: { page } });
         if (response.data.foodProducts) {
             return { foodProducts: response.data.foodProducts, status: 'OK' };
         }

@@ -20,7 +20,7 @@ const useEditFoodProduct = (id: string) => {
         switch (res?.status) {
             case 'OK':
                 await mutateFoodProduct();
-                mutate('/foodProducts', () => getFoodProducts());
+                // mutate('/foodProducts', () => getFoodProducts());
                 clearCache(cache, '/selectedProducts');
                 clearCache(cache, '/dayData');
                 back();

@@ -15,7 +15,7 @@ export const useAddFoodProduct = () => {
         const res = await postFoodProduct(data);
         switch (res?.status) {
             case 'OK':
-                await mutate('/foodProducts', () => getFoodProducts());
+                // await mutate('/foodProducts', () => getFoodProducts());
                 push('/foodProducts');
                 break;
             case 'ERROR':

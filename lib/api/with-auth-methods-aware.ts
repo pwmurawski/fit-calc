@@ -2,9 +2,11 @@ import { AuthenticatedApiRequest, HttpMethod, HttpStatusCode } from 'lib/api/typ
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from './session';
 import { ApiError } from 'next/dist/server/api-utils';
+import { AccountType } from 'types/enum';
 
 export const withAuthMethodsAware = (
     handlers: Partial<Record<string, (req: any, res: any) => Promise<unknown | undefined> | void>>,
+    accountType = Object.values(AccountType),
     errorMessage?: string,
 ) => {
     return async (req: AuthenticatedApiRequest, res: NextApiResponse) => {
@@ -21,6 +23,12 @@ export const withAuthMethodsAware = (
             return res.status(HttpStatusCode.NotAuthorized).json({
                 error: 'Nieautoryzowana akcja',
             });
+        }
+
+        if (!accountType.includes(session.user.userType)) {
+            return res.status(HttpStatusCode.Forbidden).json({
+                error: 'Forbidden',
+            } as any);
         }
 
         const handler = handlers[method];

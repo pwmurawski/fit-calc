@@ -8,6 +8,7 @@ import { getDayData } from '_api/dayData';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { clearCache } from 'helpers/clearCache';
 import { addCurrentHour } from 'helpers/addCurrentHour';
+import { getFoodProduct, getFoodProducts } from '_api/foodProducts';
 
 export const useAddSelectedProduct = () => {
     const { mutate, cache } = useSWRConfig();
@@ -29,6 +30,8 @@ export const useAddSelectedProduct = () => {
             const res = await postSelectedProduct(data);
             switch (res?.status) {
                 case 'OK':
+                    // mutate('/foodProducts', () => getFoodProducts());
+                    mutate(`/foodProduct/${foodProductId}`, () => getFoodProduct(foodProductId));
                     mutate(`/dayData/${formatDate}`, () => getDayData(formatDate));
                     clearCache(cache, '/summary');
                     push('/foodProducts');

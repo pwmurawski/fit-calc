@@ -1,9 +1,9 @@
-import { format } from 'date-fns';
 import prismaClient from 'lib/app/prisma-client';
 import { createDailyGoalsValidationSchema } from 'lib/validation/dailyGoalsValidationSchema';
 import { checkUserExist } from './user';
 import { validation } from '../validation';
 import { BodyDailyGoals } from 'types/DailyGoals';
+import { format } from 'date-fns';
 
 export const getDailyGoalsByDateRange = async (userId: string, startDate: string, endDate: string) => {
     await checkUserExist(userId);
@@ -22,8 +22,12 @@ export const getDailyGoalsByDateRange = async (userId: string, startDate: string
         },
     });
 
-    const firstDate = dailyGoals.find(({ dateTime }) => dateTime.getTime() === new Date(startDate).getTime());
-    const lastDate = dailyGoals.find(({ dateTime }) => dateTime.getTime() === new Date(endDate).getTime());
+    const firstDate = dailyGoals.find(
+        ({ dateTime }) => format(dateTime, 'yyyy-MM-dd') === format(new Date(startDate), 'yyyy-MM-dd'),
+    );
+    const lastDate = dailyGoals.find(
+        ({ dateTime }) => format(dateTime, 'yyyy-MM-dd') === format(new Date(endDate), 'yyyy-MM-dd'),
+    );
 
     if (!firstDate) {
         const firstGoal = await getDailyGoals(userId, startDate);
@@ -54,8 +58,11 @@ export const getDailyGoalsByDateRange = async (userId: string, startDate: string
 export const getDailyGoals = async (userId: string, date: string) => {
     await checkUserExist(userId);
 
+    const endDate = new Date(date);
+    endDate.setHours(23, 59, 59, 999);
+
     const dailyGoals = await prismaClient.dailyGoals.findFirst({
-        where: { userId, dateTime: { lte: new Date(date) } },
+        where: { userId, dateTime: { lte: endDate } },
         orderBy: {
             dateTime: 'desc',
         },
@@ -89,16 +96,22 @@ export const getDailyGoals = async (userId: string, date: string) => {
 
 export const changeDailyGoals = async (userId: string, body: BodyDailyGoals) => {
     await checkUserExist(userId);
-    const dataValid = await validation(createDailyGoalsValidationSchema.validate(body));
+    const data = await validation(createDailyGoalsValidationSchema.validate(body));
 
-    const currentDate = format(new Date(), 'yyyy-MM-dd');
-    const dailyGoals = await prismaClient.dailyGoals.findFirst({ where: { userId, dateTime: new Date(currentDate) } });
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+
+    const dailyGoals = await prismaClient.dailyGoals.findFirst({
+        where: { userId, dateTime: { gte: startDate, lte: endDate } },
+    });
     if (dailyGoals) {
         return await prismaClient.dailyGoals.update({
             where: { id: dailyGoals.id },
-            data: dataValid,
+            data,
         });
     }
 
-    return await prismaClient.dailyGoals.create({ data: { ...dataValid, userId, dateTime: new Date(currentDate) } });
+    return await prismaClient.dailyGoals.create({ data: { ...data, userId } });
 };

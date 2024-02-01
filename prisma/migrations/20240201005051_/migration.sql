@@ -1,4 +1,16 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "surname" TEXT,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "userType" TEXT DEFAULT 'STANDARD',
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Meal" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -33,6 +45,16 @@ CREATE TABLE "SelectedProduct" (
 );
 
 -- CreateTable
+CREATE TABLE "UserFoodProductCount" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "foodProductId" TEXT NOT NULL,
+    "count" INTEGER NOT NULL,
+
+    CONSTRAINT "UserFoodProductCount_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "DailyGoals" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -44,6 +66,9 @@ CREATE TABLE "DailyGoals" (
 
     CONSTRAINT "DailyGoals_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "FoodProduct" ADD CONSTRAINT "FoodProduct_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

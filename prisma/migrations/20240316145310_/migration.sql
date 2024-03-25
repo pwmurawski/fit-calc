@@ -33,6 +33,36 @@ CREATE TABLE "FoodProduct" (
 );
 
 -- CreateTable
+CREATE TABLE "UserFoodProductCount" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "foodProductId" TEXT NOT NULL,
+    "count" INTEGER NOT NULL,
+
+    CONSTRAINT "UserFoodProductCount_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "VerifiedFoodProduct" (
+    "id" TEXT NOT NULL,
+    "verified" BOOLEAN NOT NULL DEFAULT true,
+    "dateTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "foodProductId" TEXT NOT NULL,
+
+    CONSTRAINT "VerifiedFoodProduct_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BlockedFoodProduct" (
+    "id" TEXT NOT NULL,
+    "blocked" BOOLEAN NOT NULL DEFAULT true,
+    "dateTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "foodProductId" TEXT NOT NULL,
+
+    CONSTRAINT "BlockedFoodProduct_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "SelectedProduct" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -42,16 +72,6 @@ CREATE TABLE "SelectedProduct" (
     "dateTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "SelectedProduct_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "UserFoodProductCount" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "foodProductId" TEXT NOT NULL,
-    "count" INTEGER NOT NULL,
-
-    CONSTRAINT "UserFoodProductCount_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -70,8 +90,20 @@ CREATE TABLE "DailyGoals" (
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "VerifiedFoodProduct_foodProductId_key" ON "VerifiedFoodProduct"("foodProductId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BlockedFoodProduct_foodProductId_key" ON "BlockedFoodProduct"("foodProductId");
+
 -- AddForeignKey
 ALTER TABLE "FoodProduct" ADD CONSTRAINT "FoodProduct_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "VerifiedFoodProduct" ADD CONSTRAINT "VerifiedFoodProduct_foodProductId_fkey" FOREIGN KEY ("foodProductId") REFERENCES "FoodProduct"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BlockedFoodProduct" ADD CONSTRAINT "BlockedFoodProduct_foodProductId_fkey" FOREIGN KEY ("foodProductId") REFERENCES "FoodProduct"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SelectedProduct" ADD CONSTRAINT "SelectedProduct_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

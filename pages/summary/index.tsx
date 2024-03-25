@@ -5,7 +5,6 @@ import { NextPageWithLayout } from 'pages/_app';
 import { AccountType } from 'types/enum';
 import { useSummaryByDateRange } from 'hooks/useSummaryByDateRange';
 import { useState } from 'react';
-import { format } from 'date-fns';
 import { SummarySlider } from 'components/SummarySlider/SummarySlider';
 import { BarChart } from 'components/BarChart/BarChart';
 import { SummaryDataView } from 'components/SummaryDataView/SummaryDataView';
@@ -16,15 +15,17 @@ const Summary: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Summary</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <SummaryView />
-            </Secured>
+            <SummaryView />
         </>
     );
 };
 
 Summary.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default Summary;

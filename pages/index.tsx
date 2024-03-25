@@ -16,15 +16,17 @@ const Home: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Home</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <HomeView />
-            </Secured>
+            <HomeView />
         </>
     );
 };
 
 Home.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default Home;

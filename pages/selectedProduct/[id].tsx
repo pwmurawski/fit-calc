@@ -19,15 +19,17 @@ const SelectedProduct: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Edit Selected Product</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <SelectedProductView selectedProductId={String(id)} />
-            </Secured>
+            <SelectedProductView selectedProductId={String(id)} />
         </>
     );
 };
 
 SelectedProduct.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default SelectedProduct;

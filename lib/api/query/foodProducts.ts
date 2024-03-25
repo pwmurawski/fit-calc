@@ -7,12 +7,45 @@ import { HttpStatusCode } from 'axios';
 import { BodyFoodProducts } from 'types/FoodProduct';
 import { first, omit } from 'lodash';
 import { FOOD_PRODUCTS_PAGE_SIZE } from '../constants';
+import { verifiedFoodProductExist } from './verifiedFoodProducts';
 
-export const checkFoodProductExist = async (id: string, userId: string) => {
-    const foodProduct = await prismaClient.foodProduct.count({ where: { id, userId }, select: { id: true } });
-    if (!foodProduct) {
-        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono produktu');
+export const checkFoodProductExist = async (id: string, userId?: string) => {
+    if (userId) {
+        const foodProduct = await prismaClient.foodProduct.count({ where: { id, userId } });
+        if (!foodProduct) {
+            throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono produktu');
+        }
+    } else {
+        const foodProduct = await prismaClient.foodProduct.count({ where: { id } });
+        if (!foodProduct) {
+            throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono produktu');
+        }
     }
+};
+
+export const getAllFoodProducts = async () => {
+    const foodProducts = await prismaClient.foodProduct.findMany({
+        where: { blockedFoodProduct: null },
+        include: { verifiedFoodProduct: true, blockedFoodProduct: true },
+    });
+
+    return foodProducts.map((foodProduct) => ({
+        ...foodProduct,
+        verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
+        blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
+    }));
+};
+
+export const getAllFoodProductsBlocked = async () => {
+    const foodProducts = await prismaClient.blockedFoodProduct.findMany({
+        select: { foodProduct: { include: { verifiedFoodProduct: true, blockedFoodProduct: true } } },
+    });
+
+    return foodProducts.map(({ foodProduct }) => ({
+        ...foodProduct,
+        verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
+        blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
+    }));
 };
 
 export const getFoodProducts = async (userId: string, page: number) => {
@@ -61,6 +94,19 @@ export const getFoodProduct = async (id: string) => {
     };
 };
 
+export const searchFoodProducts = async (term?: string) => {
+    const foodProducts = await prismaClient.foodProduct.findMany({
+        where: { OR: [{ name: { contains: term, mode: 'insensitive' } }, { code: { contains: term } }] },
+        include: { selectedProducts: { select: { weight: true }, orderBy: { dateTime: 'desc' }, take: 1 } },
+        take: 100,
+    });
+
+    return foodProducts.map((foodProduct) => ({
+        ...omit(foodProduct, 'selectedProducts'),
+        lastSelectedProduct: { weight: first(foodProduct.selectedProducts)?.weight },
+    }));
+};
+
 export const createFoodProduct = async (userId: string, body: BodyFoodProducts) => {
     await checkUserExist(userId);
     const data = await validation(createFoodProductValidationSchema.validate(body));
@@ -78,15 +124,25 @@ export const updateFoodProduct = async (id: string, userId: string, body: BodyFo
     return newfoodProductData;
 };
 
-export const searchFoodProducts = async (term?: string) => {
-    const foodProducts = await prismaClient.foodProduct.findMany({
-        where: { OR: [{ name: { contains: term, mode: 'insensitive' } }, { code: { contains: term } }] },
-        include: { selectedProducts: { select: { weight: true }, orderBy: { dateTime: 'desc' }, take: 1 } },
-        take: 100,
-    });
+export const deleteFoodProduct = async (id: string, userId: string) => {
+    await checkUserExist(userId);
+    await checkFoodProductExist(id, userId);
+    await prismaClient.foodProduct.delete({ where: { id } });
+};
 
-    return foodProducts.map((foodProduct) => ({
-        ...omit(foodProduct, 'selectedProducts'),
-        lastSelectedProduct: { weight: first(foodProduct.selectedProducts)?.weight },
-    }));
+export const updateFoodProductAdmin = async (id: string, body: BodyFoodProducts) => {
+    await checkFoodProductExist(id);
+    const data = await validation(createFoodProductValidationSchema.validate(body));
+
+    const newfoodProductData = await prismaClient.foodProduct.update({ where: { id }, data });
+    return newfoodProductData;
+};
+
+export const deleteFoodProductAdmin = async (id: string) => {
+    await checkFoodProductExist(id);
+    if (await verifiedFoodProductExist(id)) {
+        await prismaClient.verifiedFoodProduct.delete({ where: { foodProductId: id } });
+    }
+    await prismaClient.blockedFoodProduct.delete({ where: { foodProductId: id } });
+    await prismaClient.foodProduct.delete({ where: { id } });
 };

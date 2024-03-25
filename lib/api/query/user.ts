@@ -6,10 +6,11 @@ import { createUserValidationSchema } from 'lib/validation/userValidationSchema'
 import { validation } from '../validation';
 
 export const checkUserExist = async (userId: string) => {
-    const user = await prismaClient.user.count({ where: { id: userId } });
+    const user = await prismaClient.user.findUnique({ where: { id: userId } });
     if (!user) {
         throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono użytkownika');
     }
+    return user;
 };
 
 export const createUser = async (userData: BodyRegister) => {
@@ -21,4 +22,17 @@ export const createUser = async (userData: BodyRegister) => {
     }
 
     return prismaClient.user.create({ data: userDataValid });
+};
+
+export const getUsers = async () => {
+    const users = await prismaClient.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            surname: true,
+            email: true,
+            userType: true,
+        },
+    });
+    return users;
 };

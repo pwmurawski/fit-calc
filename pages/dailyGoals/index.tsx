@@ -15,15 +15,17 @@ const DailyGoals: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Daily goals</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <DailyGoalsView />
-            </Secured>
+            <DailyGoalsView />
         </>
     );
 };
 
 DailyGoals.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default DailyGoals;

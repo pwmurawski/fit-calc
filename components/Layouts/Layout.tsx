@@ -13,7 +13,7 @@ export interface LayoutProps extends React.PropsWithChildren {
 export const Layout: FC<LayoutProps> = ({ children }) => {
     const { pathname } = useRouter();
 
-    const headers = [{ path: ['/'], component: <Header /> }];
+    const headers = [{ path: ['/', '/admin'], component: <Header /> }];
     const components = [
         {
             path: ['/foodProducts', '/foodProducts/search'],

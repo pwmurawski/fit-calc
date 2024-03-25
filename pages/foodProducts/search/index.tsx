@@ -14,15 +14,17 @@ const Search: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Food Products</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <SearchView />
-            </Secured>
+            <SearchView />
         </>
     );
 };
 
 Search.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default Search;

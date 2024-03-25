@@ -23,15 +23,17 @@ const FoodProduct: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Food Product</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <FoodProductView foodProductId={String(id)} />
-            </Secured>
+            <FoodProductView foodProductId={String(id)} />
         </>
     );
 };
 
 FoodProduct.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default FoodProduct;

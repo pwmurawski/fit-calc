@@ -15,7 +15,7 @@ const initialValues: BodyFoodProducts = {
 };
 
 interface IFoodProductFormProps {
-    submit: (data: BodyFoodProducts) => Promise<void>;
+    submit: (data: BodyFoodProducts) => void;
     defaultValue?: BodyFoodProducts;
 }
 
@@ -29,6 +29,7 @@ export function FoodProductForm({ submit, defaultValue }: IFoodProductFormProps)
             initialValues={defaultValue ?? initialValues}
             onSubmit={handleSubmit}
             validationSchema={createFoodProductValidationSchema}
+            enableReinitialize
         >
             {({ submitForm, setFieldValue, isValid }) => (
                 <Form

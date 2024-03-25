@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { NextPageWithLayout } from 'pages/_app';
 import Head from 'next/head';
 import { RegisterLayout } from 'components/Layouts/RegisterLayout';
+import { UnSecured } from 'components/security/secured';
 
 const initFormValue: InitFormValue = {
     name: {
@@ -37,7 +38,11 @@ const Register: NextPageWithLayout = () => {
 };
 
 Register.getLayout = function getLayout(page) {
-    return <RegisterLayout>{page}</RegisterLayout>;
+    return (
+        <UnSecured>
+            <RegisterLayout>{page}</RegisterLayout>
+        </UnSecured>
+    );
 };
 
 export default Register;

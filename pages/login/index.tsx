@@ -5,6 +5,7 @@ import { NextPageWithLayout } from 'pages/_app';
 import Head from 'next/head';
 import { RegisterLayout } from 'components/Layouts/RegisterLayout';
 import { GoToRegister } from 'components/GoToRegister/GoToRegister';
+import { UnSecured } from 'components/security/secured';
 
 const initFormValue: InitFormValue = {
     email: {
@@ -30,7 +31,11 @@ const Login: NextPageWithLayout = () => {
 };
 
 Login.getLayout = function getLayout(page) {
-    return <RegisterLayout>{page}</RegisterLayout>;
+    return (
+        <UnSecured>
+            <RegisterLayout>{page}</RegisterLayout>
+        </UnSecured>
+    );
 };
 
 export default Login;

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
 export const Container = styled.section`
@@ -8,7 +9,7 @@ export const Container = styled.section`
 
 export const Title = styled.h3``;
 
-export const RegisterLink = styled.a`
+export const RegisterLink = styled(Link)`
     display: flex;
     align-self: center;
     justify-content: center;

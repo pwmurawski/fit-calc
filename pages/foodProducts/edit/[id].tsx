@@ -17,15 +17,17 @@ const EditFoodProduct: NextPageWithLayout = () => {
             <Head>
                 <title>FitCalc | Edit Food Product</title>
             </Head>
-            <Secured authorities={[AccountType.Standard, AccountType.Admin]}>
-                <EditFoodProductView foodProductId={String(id)} />
-            </Secured>
+            <EditFoodProductView foodProductId={String(id)} />
         </>
     );
 };
 
 EditFoodProduct.getLayout = function getLayout(page) {
-    return <Layout>{page}</Layout>;
+    return (
+        <Secured authorities={[AccountType.Standard]}>
+            <Layout>{page}</Layout>
+        </Secured>
+    );
 };
 
 export default EditFoodProduct;

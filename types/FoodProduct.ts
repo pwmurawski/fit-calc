@@ -9,3 +9,8 @@ export type FoodProductsResponse = { foodProducts: FoodProductType[] };
 export type FoodProductResponse = {
     foodProduct: (FoodProduct & { lastSelectedProducts: { id: string; weight: number; kcal: number }[] }) | null;
 };
+export type DeleteFoodProductResponse = { message: string };
+export type FoodProductsAdmin = Array<FoodProduct & { verifiedFoodProduct: boolean; blockedFoodProduct: boolean }>;
+export type FoodProductsAdminTableResponse = {
+    foodProducts: FoodProductsAdmin;
+};

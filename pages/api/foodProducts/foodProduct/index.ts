@@ -9,9 +9,10 @@ interface Query {
 }
 
 const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductResponse>) => {
+    const userId = req.session.user.id;
     const { id } = req.query;
 
-    const foodProduct = await getFoodProduct(id);
+    const foodProduct = await getFoodProduct(id, userId);
     res.status(HttpStatusCode.OK).json({ foodProduct });
 };
 

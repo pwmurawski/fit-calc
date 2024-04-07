@@ -69,6 +69,12 @@ CREATE TABLE "SelectedProduct" (
     "mealId" TEXT NOT NULL,
     "foodProductId" TEXT NOT NULL,
     "weight" DOUBLE PRECISION NOT NULL,
+    "name" TEXT NOT NULL,
+    "kcal" DOUBLE PRECISION NOT NULL,
+    "protein" DOUBLE PRECISION NOT NULL,
+    "fat" DOUBLE PRECISION NOT NULL,
+    "carbs" DOUBLE PRECISION NOT NULL,
+    "code" TEXT,
     "dateTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "SelectedProduct_pkey" PRIMARY KEY ("id")
@@ -107,6 +113,3 @@ ALTER TABLE "BlockedFoodProduct" ADD CONSTRAINT "BlockedFoodProduct_foodProductI
 
 -- AddForeignKey
 ALTER TABLE "SelectedProduct" ADD CONSTRAINT "SelectedProduct_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "SelectedProduct" ADD CONSTRAINT "SelectedProduct_foodProductId_fkey" FOREIGN KEY ("foodProductId") REFERENCES "FoodProduct"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

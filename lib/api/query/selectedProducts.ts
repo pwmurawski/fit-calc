@@ -31,16 +31,6 @@ export const getSelectedProducts = async (userId: string, date: string) => {
     const selectedProducts = await prismaClient.selectedProduct.findMany({
         where: { dateTime: { gte: startDate, lte: endDate }, userId },
         include: {
-            foodProduct: {
-                select: {
-                    code: true,
-                    name: true,
-                    kcal: true,
-                    protein: true,
-                    fat: true,
-                    carbs: true,
-                },
-            },
             meal: true,
         },
     });
@@ -54,16 +44,6 @@ export const getSelectedProductsByDateRange = async (userId: string, startDate: 
     const selectedProducts = await prismaClient.selectedProduct.findMany({
         where: { dateTime: { gte: new Date(startDate), lte: new Date(endDate) }, userId },
         include: {
-            foodProduct: {
-                select: {
-                    code: true,
-                    name: true,
-                    kcal: true,
-                    protein: true,
-                    fat: true,
-                    carbs: true,
-                },
-            },
             meal: true,
         },
     });
@@ -76,31 +56,36 @@ export const getSelectedProduct = async (id: string, userId: string) => {
 
     const selectedProduct = await prismaClient.selectedProduct.findFirst({
         where: { id, userId },
-        include: {
-            foodProduct: {
-                select: {
-                    code: true,
-                    name: true,
-                    kcal: true,
-                    protein: true,
-                    fat: true,
-                    carbs: true,
-                },
-            },
-        },
     });
 
     return selectedProduct;
 };
 
 export const createSelectedProducts = async (userId: string, body: BodySelectedProduct) => {
-    await checkUserExist(userId);
     const data = await validation(createSelectedProductsValidationSchema.validate(body));
+    await checkUserExist(userId);
+
+    const foodProduct = await prismaClient.foodProduct.findUnique({ where: { id: data.foodProductId } });
+    if (!foodProduct) {
+        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono produktu');
+    }
 
     const newSelectedProduct = await prismaClient.selectedProduct.create({
-        data: { ...data, userId },
+        data: {
+            userId,
+            mealId: data.mealId,
+            foodProductId: foodProduct.id,
+            weight: data.weight,
+            dateTime: data.dateTime,
+            name: foodProduct.name,
+            kcal: foodProduct.kcal,
+            protein: foodProduct.protein,
+            fat: foodProduct.fat,
+            carbs: foodProduct.carbs,
+            code: foodProduct.code,
+        },
     });
-    await createUserFoodProductCount(userId, newSelectedProduct.foodProductId);
+    await createUserFoodProductCount(userId, foodProduct.id);
 
     return newSelectedProduct;
 };

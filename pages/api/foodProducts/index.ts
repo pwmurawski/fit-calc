@@ -1,7 +1,7 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
-import { createFoodProduct, getFoodProducts, updateFoodProduct } from 'lib/api/query/foodProducts';
+import { createFoodProduct, deleteFoodProduct, getFoodProducts, updateFoodProduct } from 'lib/api/query/foodProducts';
 import { BodyFoodProducts, CreateFoodProductResponse, FoodProductsResponse } from 'types/FoodProduct';
 
 interface Query {
@@ -40,8 +40,20 @@ const PUT = async (
     res.status(HttpStatusCode.OK).json({ id });
 };
 
+const DELETE = async (
+    req: AuthenticatedApiRequest<Query, BodyFoodProducts>,
+    res: NextApiResponse<CreateFoodProductResponse>,
+) => {
+    const userId = req.session.user.id;
+    const { id } = req.query;
+
+    await deleteFoodProduct(id, userId);
+    res.status(HttpStatusCode.OK).json({ id });
+};
+
 export default withAuthMethodsAware({
     GET,
     POST,
     PUT,
+    DELETE,
 });

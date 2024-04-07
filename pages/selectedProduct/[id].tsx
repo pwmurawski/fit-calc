@@ -46,11 +46,11 @@ export function SelectedProductView({ selectedProductId }: SelectedProductViewPr
         <>
             <WeightForm
                 defaultValues={{ weight: selectedProduct.data.weight }}
-                kcal={selectedProduct.data.foodProduct.kcal}
+                kcal={selectedProduct.data.kcal}
                 submit={(weight) => selectedProduct.edit(selectedProductId, +weight)}
             />
-            <NutritionalValues productData={selectedProduct.data.foodProduct} />
-            {selectedProduct.data.foodProduct.code ? <BarCode value={selectedProduct.data.foodProduct.code} /> : null}
+            <NutritionalValues productData={selectedProduct.data} />
+            {selectedProduct.data.code ? <BarCode value={selectedProduct.data.code} /> : null}
         </>
     );
 }

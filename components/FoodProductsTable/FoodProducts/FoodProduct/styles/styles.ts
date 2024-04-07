@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 export const Container = styled(Link)`
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -94,4 +95,11 @@ export const PlusIcon = styled.div`
         transform: rotate(90deg);
         border-radius: 20px;
     }
+`;
+
+export const Verified = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
 `;

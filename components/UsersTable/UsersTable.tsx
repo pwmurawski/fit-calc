@@ -16,8 +16,6 @@ export const UesrsTable = () => {
     const users = useUsers();
     const [selectedRowId, setSelectedRowId] = useState<TableRowId>();
 
-    console.log(selectedRowId);
-
     if (!users?.length) {
         return <Loading />;
     }
@@ -28,7 +26,7 @@ export const UesrsTable = () => {
             selectedRowId={selectedRowId}
             setSelectedRowId={setSelectedRowId}
             header={<UsersTableHeader />}
-            buttons={<UsersTableButtons />}
+            buttons={<UsersTableButtons selectedRowId={selectedRowId} />}
         />
     );
 };

@@ -1,7 +1,6 @@
 import { FoodProduct, SelectedProduct, Meal } from '@prisma/client';
 
 export type SelectedProductWithFoodProductAndMeal = Omit<SelectedProduct, 'mealId' | 'foodProductId'> & {
-    foodProduct: Omit<FoodProduct, 'id' | 'userId'>;
     meal: Meal;
 };
 export type SelectedProductType = FoodProduct &
@@ -9,12 +8,15 @@ export type SelectedProductType = FoodProduct &
         dateTime: string;
     };
 
-export type BodySelectedProduct = Record<keyof Omit<SelectedProduct, 'id' | 'userId'>, string>;
+export type BodySelectedProduct = Record<
+    keyof Pick<SelectedProduct, 'mealId' | 'foodProductId' | 'weight' | 'dateTime'>,
+    string
+>;
 export type SelectedProductIdResponse = {
     id: string;
 };
 export type SelectedProductResponse = {
-    selectedProduct: (SelectedProduct & { foodProduct: Omit<FoodProduct, 'id' | 'userId'> }) | null;
+    selectedProduct: SelectedProduct | null;
 };
 export type DeleteSelectedProductResponse = {
     message: string;

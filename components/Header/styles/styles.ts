@@ -1,45 +1,56 @@
-import styled from "styled-components";
+import Link from 'next/link';
+import styled from 'styled-components';
 
 export const Container = styled.header`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px 20px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
 `;
 
 export const Logo = styled.h1`
-  flex: 1 1 85px;
-  font-size: 22px;
-  height: 30px;
-  margin: 0;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    flex: 1 1 85px;
+    font-size: 22px;
+    height: 30px;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+        sans-serif;
 `;
 
-export const Logout = styled.div`
-  display: flex;
-  flex: 1.3 1 25px;
-  justify-content: flex-end;
+export const RightContainer = styled.div`
+    display: flex;
+    flex: 1.3 1 25px;
+    justify-content: flex-end;
+    gap: 10px;
 `;
 
-export const LogoutBtn = styled.button`
-  background-color: transparent;
-  width: 25px;
-  height: 25px;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
+export const Button = styled.button`
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+`;
+
+export const LinkStyled = styled(Link)`
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
 `;
 
 export const Calendar = styled.input`
-  border: 0;
-  padding: 0 5px;
-  width: 120px;
-  font-size: 15px;
-  font-weight: bold;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  cursor: pointer;
+    border: 0;
+    padding: 0 5px;
+    width: 120px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+        sans-serif;
+    cursor: pointer;
 `;

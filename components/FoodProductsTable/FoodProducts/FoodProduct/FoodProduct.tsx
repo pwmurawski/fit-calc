@@ -9,34 +9,35 @@ import {
     PlusIcon,
     Top,
     Value,
+    Verified,
     Weight,
 } from './styles/styles';
+import { VerifiedSvg } from 'components/Svg/VerifiedSvg';
 
 interface IFoodProductProps {
     foodProductData: FoodProductType;
 }
 
 export default function FoodProduct({
-    foodProductData: {
-        id,
-        name,
-        kcal,
-        protein,
-        fat,
-        carbs,
-        lastSelectedProduct: { weight },
-    },
+    foodProductData: { id, name, kcal, protein, fat, carbs, verifiedFoodProduct, lastSelectedProductWeight },
 }: IFoodProductProps) {
     const addFoodProductToMeal = useAddSelectedProduct();
 
+    console.log(verifiedFoodProduct);
+
     const addFoodProductToMealHandle = () => {
-        if (weight) {
-            addFoodProductToMeal(id, weight);
+        if (lastSelectedProductWeight) {
+            addFoodProductToMeal(id, lastSelectedProductWeight);
         }
     };
 
     return (
         <Container href={`/foodProducts/${id}`}>
+            {verifiedFoodProduct && (
+                <Verified>
+                    <VerifiedSvg />
+                </Verified>
+            )}
             <Top>
                 <Name>{name}</Name>
             </Top>
@@ -52,15 +53,15 @@ export default function FoodProduct({
                     Węgl. <Value>{carbs} g</Value>
                 </FoodMacro>
             </FoodContainer>
-            <Weight $isLastSelectedProduct={!!weight}>
-                {weight && (
+            <Weight $isLastSelectedProduct={!!lastSelectedProductWeight}>
+                {lastSelectedProductWeight && (
                     <LastSelectedProduct
                         onClick={(e) => {
                             e.preventDefault();
                             addFoodProductToMealHandle();
                         }}
                     >
-                        {weight} g
+                        {lastSelectedProductWeight} g
                         <PlusIcon />
                     </LastSelectedProduct>
                 )}

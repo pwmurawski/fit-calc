@@ -7,7 +7,9 @@ import {
     SelectedProductResponse,
 } from 'types/SelectedProduct';
 
-export type BodySelectedProduct = Omit<SelectedProduct, 'id' | 'userId' | 'dateTime'> & { dateTime: Date };
+export type BodySelectedProduct = Pick<SelectedProduct, 'mealId' | 'foodProductId' | 'weight' | 'dateTime'> & {
+    dateTime: Date;
+};
 
 export const getSelectedProduct = async (id: string): Response<SelectedProductResponse> => {
     try {

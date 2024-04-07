@@ -39,7 +39,6 @@ model FoodProduct {
   code                String?
   verifiedFoodProduct VerifiedFoodProduct?  
   blockedFoodProduct  BlockedFoodProduct?
-  selectedProducts    SelectedProduct[]
 }
 
 model UserFoodProductCount {
@@ -71,8 +70,13 @@ model SelectedProduct {
   mealId        String
   meal          Meal          @relation(fields: [mealId], references: [id])
   foodProductId String
-  foodProduct   FoodProduct   @relation(fields: [foodProductId], references: [id])
   weight        Float
+  name          String
+  kcal          Float
+  protein       Float
+  fat           Float
+  carbs         Float
+  code          String?
   dateTime      DateTime      @default(now())
 }
 

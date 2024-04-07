@@ -1,6 +1,7 @@
 export const VerifiedSvg = () => {
     return (
         <svg viewBox="0 0 48 48" width="25px" height="25px">
+            <title>Produkt zweryfikowany</title>
             <circle cx="24" cy="24" r="20" fill="#4dd0e1" />
             <path
                 fill="#fff"

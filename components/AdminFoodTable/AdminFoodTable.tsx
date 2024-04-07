@@ -5,7 +5,7 @@ import { AdminFoodTableHeader } from './AdminFoodTableHeader';
 import { AdminFoodTableButtons } from './AdminFoodTableButtons';
 import { useAllFoodProducts } from 'hooks/admin/useAllFoodProducts';
 
-const column = {
+const columns = {
     name: 'Nazwa',
     kcal: 'Kalorie',
     protein: 'Białko',
@@ -30,7 +30,7 @@ export const AdminFoodTable = () => {
     return (
         <Table
             data={foodProducts}
-            column={column}
+            column={columns}
             selectedRowId={selectedRowId}
             setSelectedRowId={setSelectedRowId}
             header={<AdminFoodTableHeader isBlocked={isBlocked} setIsBlocked={setIsBlocked} />}

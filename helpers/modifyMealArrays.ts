@@ -6,13 +6,10 @@ import { SelectedProductWithFoodProductAndMeal } from '../types/SelectedProduct'
 const modifyData = (mealId: string, selectedProducts: SelectedProductWithFoodProductAndMeal[]) => {
     return selectedProducts
         .filter(({ meal }) => meal.id === mealId)
-        .map(({ foodProduct, weight, meal, id, userId, dateTime }) => ({
-            ...foodProduct,
-            id,
-            userId,
-            weight,
-            mealId: meal.id,
-            dateTime: dateTime.toISOString(),
+        .map((selectedProduct) => ({
+            ...selectedProduct,
+            mealId: selectedProduct.meal.id,
+            dateTime: selectedProduct.dateTime.toISOString(),
         }));
 };
 

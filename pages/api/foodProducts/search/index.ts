@@ -10,9 +10,10 @@ interface Query {
 
 export default withAuthMethodsAware({
     async GET(req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductsResponse>) {
+        const userId = req.session.user.id;
         const { term } = req.query;
 
-        const foodProducts = await searchFoodProducts(term);
+        const foodProducts = await searchFoodProducts(userId, term);
         res.status(HttpStatusCode.OK).json({ foodProducts });
     },
 });

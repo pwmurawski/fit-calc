@@ -1,14 +1,10 @@
-/* eslint-disable no-return-await */
-import { compare, hash } from "bcryptjs";
+import { compare, hash } from 'bcryptjs';
 
 export async function hashValue(value: string) {
-  return await hash(value, 12);
+    return await hash(value, 12);
 }
 
-export const verifyPassword = async (
-  userProvidedPassword: string,
-  databasePassword: string
-) => {
-  const isEqual = await compare(userProvidedPassword, databasePassword);
-  return isEqual;
+export const verifyPassword = async (userProvidedPassword: string, databasePassword: string) => {
+    const isEqual = await compare(userProvidedPassword, databasePassword);
+    return isEqual;
 };

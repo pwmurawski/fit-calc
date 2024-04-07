@@ -13,4 +13,5 @@ export const Container = styled.section`
     justify-content: center;
     align-items: center;
     padding: 30px;
+    z-index: 999;
 `;

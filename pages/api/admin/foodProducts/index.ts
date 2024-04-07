@@ -4,7 +4,7 @@ import { NextApiResponse } from 'next/types';
 import { AccountType } from 'types/enum';
 import {
     deleteFoodProductAdmin,
-    getAllFoodProducts,
+    getAllFoodProductsNotBlocked,
     getAllFoodProductsBlocked,
     updateFoodProductAdmin,
 } from 'lib/api/query/foodProducts';
@@ -27,7 +27,7 @@ const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiRespon
         const foodProductsBlocked = await getAllFoodProductsBlocked();
         res.status(HttpStatusCode.OK).json({ foodProducts: foodProductsBlocked });
     }
-    const foodProducts = await getAllFoodProducts();
+    const foodProducts = await getAllFoodProductsNotBlocked();
     res.status(HttpStatusCode.OK).json({ foodProducts });
 };
 

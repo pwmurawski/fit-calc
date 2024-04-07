@@ -21,7 +21,6 @@ export const Wrapper = styled.div`
 export const Container = styled.section`
     ${commonStyles};
     max-width: 1000px;
-    background-color: white;
 `;
 
 export const Main = styled.main`

@@ -14,6 +14,7 @@ export default function HeaderFoodProducts({ href }: HeaderFoodProductsProps) {
         if (pathname.includes('selectedProduct')) return `/`;
         if (pathname.includes('dailyGoals')) return `/`;
         if (pathname.includes('summary')) return `/`;
+        if (pathname.includes('profile')) return `/`;
         return './';
     };
 

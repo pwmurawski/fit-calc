@@ -1,4 +1,3 @@
-import { FoodProduct } from '@prisma/client';
 import axios from 'axios';
 import {
     BodyFoodProducts,
@@ -6,7 +5,9 @@ import {
     DeleteFoodProductResponse,
     FoodProductResponse,
     FoodProductsAdminTableResponse,
+    FoodProductsCheckResponse,
     FoodProductsResponse,
+    ImportFoodProductAdmin,
 } from 'types/FoodProduct';
 import { Response } from 'types/Response';
 import {
@@ -71,6 +72,19 @@ export const postFoodProduct = async (body: BodyFoodProducts): Response<CreateFo
 export const putFoodProduct = async (id: string, body: BodyFoodProducts): Response<CreateFoodProductResponse> => {
     try {
         const response = await axios.put<CreateFoodProductResponse>('/api/foodProducts', body, {
+            params: { id },
+        });
+        if (response.data.id) {
+            return { id: response.data.id, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const deleteFoodProduct = async (id: string): Response<CreateFoodProductResponse> => {
+    try {
+        const response = await axios.delete<CreateFoodProductResponse>('/api/foodProducts', {
             params: { id },
         });
         if (response.data.id) {
@@ -164,6 +178,39 @@ export const deleteFoodProductAdmin = async (foodProductId: string): Response<De
         });
         if (response.data.message) {
             return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const exportFoodProducts = async (): Response<{ csv: string }> => {
+    try {
+        const response = await axios.get<{ csv: string }>('/api/admin/foodProducts/export');
+        if (response.data.csv) {
+            return { csv: response.data.csv, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const importFoodProducts = async (data: ImportFoodProductAdmin): Response<{ message: string }> => {
+    try {
+        const response = await axios.post<{ message: string }>('/api/admin/foodProducts/import', data);
+        if (response.data.message) {
+            return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const checkExistFoodProducts = async (foodProductIds: string[]): Response<FoodProductsCheckResponse> => {
+    try {
+        const response = await axios.post<FoodProductsCheckResponse>('/api/admin/foodProducts/check', foodProductIds);
+        if (response.data.ids) {
+            return { ids: response.data.ids, status: 'OK' };
         }
     } catch (error: any) {
         return { error: error.response?.data.error, status: 'ERROR' };

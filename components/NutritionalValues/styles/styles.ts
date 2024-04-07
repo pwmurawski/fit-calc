@@ -5,9 +5,8 @@ export const Container = styled.section`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 50%;
+    height: fit-content;
     padding: 10px;
-    overflow-y: auto;
 `;
 
 export const Name = styled.h2`

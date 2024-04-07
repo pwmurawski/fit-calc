@@ -1,12 +1,17 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 
 export const Container = styled.section`
     display: flex;
     justify-content: flex-end;
-    padding: 10px 5px;
+    height: 30px;
+    padding: 5px 5px 0 0;
+    gap: 10px;
 `;
 
-export const EditLink = styled(Link)`
-    margin: 0 5px;
+export const Button = styled.button`
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
 `;

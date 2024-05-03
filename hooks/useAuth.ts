@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { BodyLogin, BodyRegister } from '../types/Auth';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { register } from '../_api/auth/register';
@@ -7,19 +6,15 @@ import { useLoading } from './useLoading';
 
 export const useAuth = () => {
     const session = useSession();
-    const { push } = useRouter();
     const { isLoading, setLoading } = useLoading();
 
     const loginHandler = async (formValue: Partial<BodyLogin>) => {
         setLoading(true);
         const res = await signIn('credentials', {
             ...formValue,
-            redirect: false,
+            callbackUrl: '/app',
         });
         setLoading(false);
-        if (res?.ok) {
-            push('/');
-        }
         if (!res?.ok && res?.error) {
             toastError(res.error);
         }

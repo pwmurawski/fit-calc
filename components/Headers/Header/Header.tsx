@@ -1,19 +1,22 @@
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import { Container, Logo, Calendar, Button, RightContainer, LinkStyled } from './styles/styles';
-import { useSelectedDate } from '../../hooks/useSelectedDate';
-import { useAuth } from '../../hooks/useAuth';
-import LogoutSvg from '../Svg/LogoutSvg';
+import { useSelectedDate } from '../../../hooks/useSelectedDate';
+import { useAuth } from '../../../hooks/useAuth';
+import LogoutSvg from '../../Svg/LogoutSvg';
 import ProfileSvg from 'components/Svg/ProfileSvg';
+import Link from 'next/link';
 
 export default function Header() {
-    const { logoutHandler } = useAuth();
+    const { session, logoutHandler } = useAuth();
     const { date, setDate } = useSelectedDate();
     const { pathname } = useRouter();
 
     return (
         <Container>
-            <Logo>FitCALC</Logo>
+            <Link href="/">
+                <Logo>FitCALC</Logo>
+            </Link>
             {pathname.includes('login') ? null : (
                 <>
                     <Calendar
@@ -23,7 +26,7 @@ export default function Header() {
                         onChange={(e) => e.target.valueAsDate && setDate(e.target.valueAsDate)}
                     />
                     <RightContainer>
-                        <LinkStyled href={'/user/profile'}>
+                        <LinkStyled href="/user/profile">
                             <ProfileSvg />
                         </LinkStyled>
                         <Button

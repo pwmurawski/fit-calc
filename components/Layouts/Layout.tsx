@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import Header from '../Header/Header';
-import HeaderFoodProducts from '../HeaderFoodProducts/HeaderFoodProducts';
 import NavbarDailyGoalsAndSummary from '../NavbarDailyGoalsAndSummary/NavbarDailyGoalsAndSummary';
 import SearchBar from '../SearchBar/SearchBar';
 import { Container, Wrapper, Main } from './styles/styles';
+import Header from 'components/Headers/Header/Header';
+import HeaderFoodProducts from 'components/Headers/HeaderFoodProducts/HeaderFoodProducts';
 
 export interface LayoutProps extends React.PropsWithChildren {
     protectedPage?: true;
@@ -13,7 +13,7 @@ export interface LayoutProps extends React.PropsWithChildren {
 export const Layout: FC<LayoutProps> = ({ children }) => {
     const { pathname } = useRouter();
 
-    const headers = [{ path: ['/', '/admin'], component: <Header /> }];
+    const headers = [{ path: ['/', '/app', '/admin'], component: <Header /> }];
     const components = [
         {
             path: ['/foodProducts', '/foodProducts/search'],

@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { SummarySlider } from 'components/SummarySlider/SummarySlider';
 import { BarChart } from 'components/BarChart/BarChart';
 import { SummaryDataView } from 'components/SummaryDataView/SummaryDataView';
+import { GeneratePdfBtn } from 'components/GeneratePdfBtn/GeneratePdfBtn';
+import { generatePdf } from '_api/pdf';
 
 const Summary: NextPageWithLayout = () => {
     return (
@@ -41,6 +43,15 @@ export function SummaryView() {
         setDate({ start, end });
     };
 
+    const handleGeneratePdf = async () => {
+        const res = await generatePdf({ action: 'summary-pdf', date });
+
+        if (res?.status === 'OK') {
+            const blobUrl = URL.createObjectURL(res.pdf);
+            window.open(blobUrl);
+        }
+    };
+
     return (
         <>
             <SummarySlider getDate={getDate} />
@@ -48,6 +59,7 @@ export function SummaryView() {
                 <BarChart summary={summary} />
                 <SummaryDataView summary={summary} />
             </div>
+            <GeneratePdfBtn onClick={handleGeneratePdf} />
         </>
     );
 }

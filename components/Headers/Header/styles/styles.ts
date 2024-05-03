@@ -11,7 +11,6 @@ export const Container = styled.header`
 `;
 
 export const Logo = styled.h1`
-    flex: 1 1 85px;
     font-size: 22px;
     height: 30px;
     margin: 0;
@@ -21,7 +20,6 @@ export const Logo = styled.h1`
 
 export const RightContainer = styled.div`
     display: flex;
-    flex: 1.3 1 25px;
     justify-content: flex-end;
     gap: 10px;
 `;

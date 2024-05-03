@@ -89,3 +89,11 @@ model DailyGoals {
   carbs        Float
   dateTime     DateTime      @default(now())
 }
+
+model PdfData {
+  id        String   @id
+  action    String
+  data      Json
+  generated Boolean
+  expires   DateTime
+}

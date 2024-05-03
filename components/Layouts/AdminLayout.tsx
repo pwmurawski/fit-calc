@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Header from '../Header/Header';
 import { Wrapper, Main } from './styles/styles';
+import Header from 'components/Headers/Header/Header';
 
 export interface LayoutProps extends React.PropsWithChildren {
     protectedPage?: true;

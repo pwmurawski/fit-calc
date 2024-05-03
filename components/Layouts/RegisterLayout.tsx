@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import Header from '../Header/Header';
-import HeaderFoodProducts from '../HeaderFoodProducts/HeaderFoodProducts';
 import { Container, Wrapper, Main } from './styles/styles';
+import Header from 'components/Headers/Header/Header';
+import HeaderFoodProducts from 'components/Headers/HeaderFoodProducts/HeaderFoodProducts';
 
 export interface RegisterLayoutProps extends React.PropsWithChildren {
     protectedPage?: true;

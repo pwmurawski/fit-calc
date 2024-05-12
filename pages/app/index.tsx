@@ -10,18 +10,18 @@ import { AccountType } from 'types/enum';
 import { useDailyGoals } from 'hooks/useDailyGoals';
 import { Layout } from 'components/Layouts/Layout';
 
-const Home: NextPageWithLayout = () => {
+const App: NextPageWithLayout = () => {
     return (
         <>
             <Head>
-                <title>FitCalc | Home</title>
+                <title>FitCalc | App</title>
             </Head>
-            <HomeView />
+            <AppView />
         </>
     );
 };
 
-Home.getLayout = function getLayout(page) {
+App.getLayout = function getLayout(page) {
     return (
         <Secured authorities={[AccountType.Standard]}>
             <Layout>{page}</Layout>
@@ -29,9 +29,9 @@ Home.getLayout = function getLayout(page) {
     );
 };
 
-export default Home;
+export default App;
 
-function HomeView() {
+function AppView() {
     const { setDate } = useSelectedDate();
     const dayData = useDayData();
     const dailyGoals = useDailyGoals();

@@ -21,13 +21,17 @@ import {
     VerifiedFoodProductsBody,
 } from 'types/verifiedFoodProducts';
 
-export const getAllFoodProducts = async (blocked?: boolean): Response<FoodProductsAdminTableResponse> => {
+export const getAllFoodProducts = async (
+    page?: number,
+    pageSize?: number,
+    blocked?: boolean,
+): Response<FoodProductsAdminTableResponse> => {
     try {
         const response = await axios.get<FoodProductsAdminTableResponse>('/api/admin/foodProducts', {
-            params: { blocked },
+            params: { page, pageSize, blocked },
         });
         if (response.data.foodProducts) {
-            return { foodProducts: response.data.foodProducts, status: 'OK' };
+            return { ...response.data, status: 'OK' };
         }
     } catch (error: any) {
         return { error: error.response?.data.error, status: 'ERROR' };

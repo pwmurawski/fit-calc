@@ -49,7 +49,7 @@ export function FoodProductView({ foodProductId }: FoodProductPageProps) {
 
     if (!foodProduct) return <Loading />;
     return (
-        <div style={{ overflow: 'auto' }}>
+        <>
             <WeightForm
                 kcal={foodProduct.kcal}
                 submit={(weight) => {
@@ -70,6 +70,6 @@ export function FoodProductView({ foodProductId }: FoodProductPageProps) {
             />
             <NutritionalValues productData={foodProduct} />
             {foodProduct.code ? <BarCode value={foodProduct.code} /> : null}
-        </div>
+        </>
     );
 }

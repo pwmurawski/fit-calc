@@ -13,6 +13,7 @@ export const useAuth = () => {
         const res = await signIn('credentials', {
             ...formValue,
             callbackUrl: '/app',
+            redirect: false,
         });
         setLoading(false);
         if (!res?.ok && res?.error) {
@@ -34,9 +35,9 @@ export const useAuth = () => {
             return await loginHandler(formValue);
         }
         if (userData?.status === 'ERROR') {
-            setLoading(false);
             toastError(userData.error);
         }
+        setLoading(false);
     };
 
     return { session, isLoading, loginHandler, logoutHandler, registerHandler };

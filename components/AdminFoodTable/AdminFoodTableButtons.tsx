@@ -7,16 +7,21 @@ import { useUnBlockedFoodProducts } from 'hooks/admin/useUnBlockedFoodProducts';
 import { useUnVerifiedFoodProducts } from 'hooks/admin/useUnVerifiedFoodProducts';
 import { useVerifiedFoodProducts } from 'hooks/admin/useVerifiedFoodProducts';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Button, ButtonContainer } from './styles/styles';
 
 interface AdminFoodTableButtonsProps {
     selectedRowId: TableRowId;
     setSelectedRowId: Dispatch<SetStateAction<TableRowId>>;
+    currentPage: number;
+    rowsPerPage: number;
     isBlocked: boolean;
 }
 
 export const AdminFoodTableButtons: FC<AdminFoodTableButtonsProps> = ({
     selectedRowId,
     setSelectedRowId,
+    currentPage,
+    rowsPerPage,
     isBlocked,
 }) => {
     const [isAddFoodProductModal, setIsAddFoodProductModal] = useState(false);
@@ -49,75 +54,84 @@ export const AdminFoodTableButtons: FC<AdminFoodTableButtonsProps> = ({
 
     const handleVerified = () => {
         if (selectedRowId) {
-            verified({ foodProductId: String(selectedRowId) }, isBlocked);
+            verified({ foodProductId: String(selectedRowId) }, currentPage, rowsPerPage, isBlocked);
         }
     };
 
     const handleUnVerified = () => {
         if (selectedRowId) {
-            unVerified(String(selectedRowId), isBlocked);
+            unVerified(String(selectedRowId), currentPage, rowsPerPage, isBlocked);
         }
     };
 
     const handleBlocked = () => {
         if (selectedRowId) {
-            blocked({ foodProductId: String(selectedRowId) });
+            blocked({ foodProductId: String(selectedRowId) }, currentPage, rowsPerPage);
             setSelectedRowId(undefined);
         }
     };
 
     const handleUnBlocked = () => {
         if (selectedRowId) {
-            unBlocked(String(selectedRowId));
+            unBlocked(String(selectedRowId), currentPage, rowsPerPage);
         }
     };
 
     const handleDelete = () => {
         if (selectedRowId) {
-            deleteFoodProduct(String(selectedRowId));
+            deleteFoodProduct(String(selectedRowId), currentPage, rowsPerPage);
+            setSelectedRowId(undefined);
         }
     };
 
     return (
         <>
-            {isAddFoodProductModal && <AddFoodProductModal onClose={handleCloseAddFoodProduct} />}
+            {isAddFoodProductModal && (
+                <AddFoodProductModal
+                    onClose={handleCloseAddFoodProduct}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                />
+            )}
             {isEditFoodProductModal && (
                 <EditFoodProductModal
                     foodProductId={String(selectedRowId)}
                     isBlocked={isBlocked}
                     onClose={handleCloseEditFoodProduct}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
                 />
             )}
-            <section style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid gray' }}>
+            <ButtonContainer>
                 {!isBlocked && (
-                    <button onClick={handleAddFoodProduct} disabled={!!selectedRowId}>
+                    <Button onClick={handleAddFoodProduct} disabled={!!selectedRowId}>
                         Dodaj
-                    </button>
+                    </Button>
                 )}
-                <button onClick={handleEditFoodProduct} disabled={!selectedRowId}>
+                <Button onClick={handleEditFoodProduct} disabled={!selectedRowId}>
                     Edytuj
-                </button>
-                <button onClick={handleVerified} disabled={!selectedRowId}>
+                </Button>
+                <Button onClick={handleVerified} disabled={!selectedRowId}>
                     Zweryfikuj
-                </button>
-                <button onClick={handleUnVerified} disabled={!selectedRowId}>
+                </Button>
+                <Button onClick={handleUnVerified} disabled={!selectedRowId}>
                     Anuluj weryfikacje
-                </button>
+                </Button>
                 {!isBlocked ? (
-                    <button onClick={handleBlocked} disabled={!selectedRowId}>
+                    <Button onClick={handleBlocked} disabled={!selectedRowId}>
                         Zablokuj
-                    </button>
+                    </Button>
                 ) : (
-                    <button onClick={handleUnBlocked} disabled={!selectedRowId}>
+                    <Button onClick={handleUnBlocked} disabled={!selectedRowId}>
                         Przywróć
-                    </button>
+                    </Button>
                 )}
                 {isBlocked && (
-                    <button onClick={handleDelete} disabled={!selectedRowId}>
+                    <Button onClick={handleDelete} disabled={!selectedRowId}>
                         Usuń
-                    </button>
+                    </Button>
                 )}
-            </section>
+            </ButtonContainer>
         </>
     );
 };

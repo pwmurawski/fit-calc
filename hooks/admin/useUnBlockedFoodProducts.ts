@@ -2,18 +2,21 @@ import { unBlockedFoodProducts } from '_api/foodProducts';
 import { useSWRConfig } from 'swr';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { useLoading } from '../useLoading';
+import { clearCache } from 'helpers/clearCache';
 
 export const useUnBlockedFoodProducts = () => {
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
 
-    const unBlocked = async (foodProductId: string) => {
+    const unBlocked = async (foodProductId: string, currentPage?: number, rowsPerPage?: number) => {
         setLoading(true);
         const res = await unBlockedFoodProducts(foodProductId);
         switch (res?.status) {
             case 'OK':
-                await mutate(`/admin/foodProducts/blocked`);
-                mutate(`/admin/foodProducts`, undefined);
+                const pageKey = currentPage ? `/${currentPage}` : '';
+                const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
+                clearCache(cache, '/admin/foodProducts');
+                await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}/blocked`);
                 break;
             case 'ERROR':
                 toastError(res.error);

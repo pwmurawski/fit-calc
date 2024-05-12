@@ -3,13 +3,21 @@ import { UploadCsvModal } from 'components/Modals/UploadCsvMachineModal/UploadCs
 import fileDownload from 'js-file-download';
 import { toastSucces } from 'lib/custom-toasts/toast-succes';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Button, Container, HeaderButtonContainer, Title } from './styles/styles';
 
 interface AdminFoodTableHeaderProps {
+    currentPage?: number;
+    rowsPerPage?: number;
     isBlocked: boolean;
     setIsBlocked: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AdminFoodTableHeader: FC<AdminFoodTableHeaderProps> = ({ isBlocked, setIsBlocked }) => {
+export const AdminFoodTableHeader: FC<AdminFoodTableHeaderProps> = ({
+    currentPage,
+    rowsPerPage,
+    isBlocked,
+    setIsBlocked,
+}) => {
     const [importModal, setImportModal] = useState(false);
 
     const handleExport = async () => {
@@ -34,15 +42,22 @@ export const AdminFoodTableHeader: FC<AdminFoodTableHeaderProps> = ({ isBlocked,
 
     return (
         <>
-            <section style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h2 style={{ margin: '20px' }}>{!isBlocked ? 'Produkty' : 'Produkty - Archiwum'}</h2>
-                <div>
-                    <button onClick={handleExport}>Export</button>
-                    <button onClick={handleImport}>Import</button>
-                    <button onClick={handleArchive}>{!isBlocked ? 'Archiwum' : 'Aktywne'}</button>
-                </div>
-            </section>
-            {importModal && <UploadCsvModal onClose={closeImportModal} isBlocked={isBlocked} />}
+            <Container>
+                <Title>{!isBlocked ? 'Produkty' : 'Produkty - Archiwum'}</Title>
+                <HeaderButtonContainer>
+                    <Button onClick={handleExport}>Export</Button>
+                    <Button onClick={handleImport}>Import</Button>
+                    <Button onClick={handleArchive}>{!isBlocked ? 'Archiwum' : 'Aktywne'}</Button>
+                </HeaderButtonContainer>
+            </Container>
+            {importModal && (
+                <UploadCsvModal
+                    onClose={closeImportModal}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    isBlocked={isBlocked}
+                />
+            )}
         </>
     );
 };

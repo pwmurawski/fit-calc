@@ -17,18 +17,22 @@ import {
 
 interface Query {
     id: string;
+    page: string;
+    pageSize: string;
     blocked: string;
 }
 
 const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiResponse<FoodProductsAdminTableResponse>) => {
-    const { blocked } = req.query;
+    const { page, pageSize, blocked } = req.query;
+    const pageConverted = page ? Number(page) : undefined;
+    const pageSizeConverted = pageSize ? Number(pageSize) : undefined;
 
     if (blocked === 'true') {
-        const foodProductsBlocked = await getAllFoodProductsBlocked();
-        res.status(HttpStatusCode.OK).json({ foodProducts: foodProductsBlocked });
+        const foodProductsBlocked = await getAllFoodProductsBlocked(pageConverted, pageSizeConverted);
+        res.status(HttpStatusCode.OK).json(foodProductsBlocked);
     }
-    const foodProducts = await getAllFoodProductsNotBlocked();
-    res.status(HttpStatusCode.OK).json({ foodProducts });
+    const foodProducts = await getAllFoodProductsNotBlocked(pageConverted, pageSizeConverted);
+    res.status(HttpStatusCode.OK).json(foodProducts);
 };
 
 const PUT = async (

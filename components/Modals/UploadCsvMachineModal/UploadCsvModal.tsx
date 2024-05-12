@@ -13,9 +13,12 @@ import { Action, ImportFoodProductAdmin } from 'types/FoodProduct';
 import { useLoading } from 'hooks/useLoading';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { toastSucces } from 'lib/custom-toasts/toast-succes';
+import { clearCache } from 'helpers/clearCache';
 
 interface UploadModalProps {
     onClose: () => void;
+    currentPage?: number;
+    rowsPerPage?: number;
     isBlocked: boolean;
 }
 
@@ -45,9 +48,9 @@ const headers = [
     'user',
 ];
 
-export const UploadCsvModal: FC<UploadModalProps> = ({ onClose, isBlocked }) => {
+export const UploadCsvModal: FC<UploadModalProps> = ({ onClose, currentPage, rowsPerPage, isBlocked }) => {
     const [uploaded, setUploaded] = useState<ImportFoodProductAdmin>();
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
 
     const handleClose = () => {
@@ -61,13 +64,13 @@ export const UploadCsvModal: FC<UploadModalProps> = ({ onClose, isBlocked }) => 
             const res = await importFoodProducts(uploaded);
 
             if (res?.status === 'OK') {
-                if (isBlocked) {
-                    await mutate(`/admin/foodProducts/blocked`);
-                    mutate(`/admin/foodProducts`, undefined);
-                } else {
-                    await mutate(`/admin/foodProducts`);
-                    mutate(`/admin/foodProducts/blocked`, undefined);
-                }
+                const pageKey = currentPage ? `/${currentPage}` : '';
+                const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
+                const blockedKey = isBlocked ? '/blocked' : '';
+
+                clearCache(cache, '/admin/foodProducts');
+                await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
+
                 toastSucces('Dane zostały zaimportowane!');
                 onClose();
             }

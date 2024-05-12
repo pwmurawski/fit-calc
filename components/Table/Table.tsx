@@ -14,6 +14,7 @@ interface TableProps<Col, Data> {
     setSelectedRowId?: Dispatch<SetStateAction<TableRowId>>;
     header?: ReactNode;
     buttons?: ReactNode;
+    pagination?: ReactNode;
     rowRender?: (el: { [x: string]: any }, column: Column<any>) => ReactNode;
 }
 
@@ -24,6 +25,7 @@ export const Table = <Col extends { [x: string]: TableRowId }, Data extends { [x
     setSelectedRowId,
     header,
     buttons,
+    pagination,
     rowRender,
 }: TableProps<Col, Data>) => {
     return (
@@ -35,6 +37,8 @@ export const Table = <Col extends { [x: string]: TableRowId }, Data extends { [x
                 height: '100%',
                 border: '1px solid gray',
                 borderRadius: '5px',
+                backgroundColor: 'white',
+                position: 'relative',
             }}
         >
             {header}
@@ -48,35 +52,59 @@ export const Table = <Col extends { [x: string]: TableRowId }, Data extends { [x
                         </tr>
                     </thead>
                     <tbody style={{ textAlign: 'center' }}>
-                        {data.map((el) =>
-                            rowRender ? (
-                                rowRender(el, column)
-                            ) : (
-                                <Row
-                                    key={el.id}
-                                    onClick={() => {
-                                        if (el.id === selectedRowId) {
-                                            setSelectedRowId?.(undefined);
-                                        } else {
-                                            setSelectedRowId?.(el.id);
-                                        }
-                                    }}
-                                    style={{
-                                        backgroundColor: el.id === selectedRowId ? '#ddedff' : undefined,
-                                    }}
-                                >
-                                    {Object.keys(column).map((head) => (
-                                        <td key={head}>
-                                            {isBoolean(el[head]) ? <Verified verified={el[head]} /> : el[head]}
-                                        </td>
-                                    ))}
-                                </Row>
-                            ),
+                        {data.length ? (
+                            data.map((el) =>
+                                rowRender ? (
+                                    rowRender(el, column)
+                                ) : (
+                                    <Row
+                                        key={el.id}
+                                        onClick={() => {
+                                            if (el.id === selectedRowId) {
+                                                setSelectedRowId?.(undefined);
+                                            } else {
+                                                setSelectedRowId?.(el.id);
+                                            }
+                                        }}
+                                        style={{
+                                            backgroundColor: el.id === selectedRowId ? '#ddedff' : undefined,
+                                        }}
+                                    >
+                                        {Object.keys(column).map((head) => (
+                                            <td key={head}>
+                                                {isBoolean(el[head]) ? <Verified verified={el[head]} /> : el[head]}
+                                            </td>
+                                        ))}
+                                    </Row>
+                                ),
+                            )
+                        ) : (
+                            <tr
+                                style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                }}
+                            >
+                                <td> loading...</td>
+                            </tr>
                         )}
                     </tbody>
                 </table>
             </section>
-            {buttons}
+            <section
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '5px',
+                    gap: '5px',
+                    borderTop: '1px solid gray',
+                }}
+            >
+                {buttons}
+                {pagination}
+            </section>
         </section>
     );
 };

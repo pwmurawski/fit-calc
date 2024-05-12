@@ -61,29 +61,51 @@ export const getAllFoodProducts = async () => {
     }));
 };
 
-export const getAllFoodProductsNotBlocked = async () => {
+export const getAllFoodProductsNotBlocked = async (page?: number, pageSize?: number) => {
+    const skip = page && pageSize ? (page - 1) * pageSize : undefined;
+
     const foodProducts = await prismaClient.foodProduct.findMany({
         where: { blockedFoodProduct: null },
         include: { verifiedFoodProduct: true, blockedFoodProduct: true },
+        take: pageSize,
+        skip,
+    });
+    const total = await prismaClient.foodProduct.count({
+        where: { blockedFoodProduct: null },
     });
 
-    return foodProducts.map((foodProduct) => ({
-        ...foodProduct,
-        verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
-        blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
-    }));
+    return {
+        foodProducts: foodProducts.map((foodProduct) => ({
+            ...foodProduct,
+            verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
+            blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
+        })),
+        total,
+        page,
+        pageSize,
+    };
 };
 
-export const getAllFoodProductsBlocked = async () => {
+export const getAllFoodProductsBlocked = async (page?: number, pageSize?: number) => {
+    const skip = page && pageSize ? (page - 1) * pageSize : undefined;
+
     const foodProducts = await prismaClient.blockedFoodProduct.findMany({
         select: { foodProduct: { include: { verifiedFoodProduct: true, blockedFoodProduct: true } } },
+        take: pageSize,
+        skip,
     });
+    const total = await prismaClient.blockedFoodProduct.count();
 
-    return foodProducts.map(({ foodProduct }) => ({
-        ...foodProduct,
-        verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
-        blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
-    }));
+    return {
+        foodProducts: foodProducts.map(({ foodProduct }) => ({
+            ...foodProduct,
+            verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
+            blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
+        })),
+        total,
+        page,
+        pageSize,
+    };
 };
 
 export const getFoodProducts = async (userId: string, page: number) => {

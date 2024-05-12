@@ -4,6 +4,7 @@ import { useUsers } from 'hooks/admin/useUsers';
 import { useState } from 'react';
 import { UsersTableHeader } from './UsersTableHeader';
 import { UsersTableButtons } from './UsersTableButtons';
+import { TableContainer } from './styles/styles';
 
 const column = {
     name: 'Imie',
@@ -20,13 +21,15 @@ export const UesrsTable = () => {
         return <Loading />;
     }
     return (
-        <Table
-            data={users}
-            column={column}
-            selectedRowId={selectedRowId}
-            setSelectedRowId={setSelectedRowId}
-            header={<UsersTableHeader />}
-            buttons={<UsersTableButtons selectedRowId={selectedRowId} />}
-        />
+        <TableContainer>
+            <Table
+                data={users}
+                column={column}
+                selectedRowId={selectedRowId}
+                setSelectedRowId={setSelectedRowId}
+                header={<UsersTableHeader />}
+                buttons={<UsersTableButtons selectedRowId={selectedRowId} />}
+            />
+        </TableContainer>
     );
 };

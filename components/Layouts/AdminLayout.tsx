@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Wrapper, Main } from './styles/styles';
+import { Wrapper, Main, AdminWrapper, AdminContainer } from './styles/styles';
 import Header from 'components/Headers/Header/Header';
 
 export interface LayoutProps extends React.PropsWithChildren {
@@ -10,7 +10,11 @@ export const AdminLayout: FC<LayoutProps> = ({ children }) => {
     return (
         <Wrapper>
             <Header />
-            <Main>{children}</Main>
+            <Main>
+                <AdminWrapper>
+                    <AdminContainer>{children}</AdminContainer>
+                </AdminWrapper>
+            </Main>
         </Wrapper>
     );
 };

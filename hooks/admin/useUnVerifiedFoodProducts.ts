@@ -7,16 +7,20 @@ export const useUnVerifiedFoodProducts = () => {
     const { mutate } = useSWRConfig();
     const { setLoading } = useLoading();
 
-    const unVerified = async (foodProductId: string, isBlocked: boolean) => {
+    const unVerified = async (
+        foodProductId: string,
+        currentPage?: number,
+        rowsPerPage?: number,
+        isBlocked?: boolean,
+    ) => {
         setLoading(true);
         const res = await unVerifiedFoodProducts(foodProductId);
         switch (res?.status) {
             case 'OK':
-                if (!isBlocked) {
-                    await mutate(`/admin/foodProducts`);
-                } else {
-                    await mutate(`/admin/foodProducts/blocked`);
-                }
+                const pageKey = currentPage ? `/${currentPage}` : '';
+                const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
+                const blockedKey = isBlocked ? '/blocked' : '';
+                await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
                 break;
             case 'ERROR':
                 toastError(res.error);

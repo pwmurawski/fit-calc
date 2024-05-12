@@ -8,16 +8,20 @@ export const useVerifiedFoodProducts = () => {
     const { mutate } = useSWRConfig();
     const { setLoading } = useLoading();
 
-    const verified = async (data: VerifiedFoodProductsBody, isBlocked: boolean) => {
+    const verified = async (
+        data: VerifiedFoodProductsBody,
+        currentPage?: number,
+        rowsPerPage?: number,
+        isBlocked?: boolean,
+    ) => {
         setLoading(true);
         const res = await verifiedFoodProducts(data);
         switch (res?.status) {
             case 'OK':
-                if (!isBlocked) {
-                    await mutate(`/admin/foodProducts`);
-                } else {
-                    await mutate(`/admin/foodProducts/blocked`);
-                }
+                const pageKey = currentPage ? `/${currentPage}` : '';
+                const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
+                const blockedKey = isBlocked ? '/blocked' : '';
+                await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
                 break;
             case 'ERROR':
                 toastError(res.error);

@@ -7,13 +7,15 @@ import { BodyFoodProducts } from 'types/FoodProduct';
 
 interface AddFoodProductModalProps {
     onClose?: () => void;
+    currentPage?: number;
+    rowsPerPage?: number;
 }
 
-export const AddFoodProductModal: FC<AddFoodProductModalProps> = ({ onClose }) => {
+export const AddFoodProductModal: FC<AddFoodProductModalProps> = ({ onClose, currentPage, rowsPerPage }) => {
     const addFoodProduct = useAddFoodProductAdmin();
 
     const handleSubmit = (data: BodyFoodProducts) => {
-        addFoodProduct(data);
+        addFoodProduct(data, currentPage, rowsPerPage);
         onClose?.();
     };
 

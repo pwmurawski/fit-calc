@@ -9,6 +9,7 @@ export const Container = styled.header`
     width: 100%;
     padding: 10px 20px;
     box-shadow: 0 0 15px #ced0d0;
+    z-index: 1;
 `;
 
 export const Logo = styled.h1`

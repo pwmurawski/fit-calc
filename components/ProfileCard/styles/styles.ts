@@ -5,17 +5,26 @@ export const Title = styled.h2`
 `;
 
 export const Container = styled.section`
+    position: relative;
     display: flex;
     justify-content: space-between;
     border: 2px solid lightgray;
     border-radius: 10px;
     padding: 20px;
     margin: 20px;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+        gap: 20px;
+    }
 `;
 
 export const Left = styled.section`
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+        flex-direction: column;
+    }
 `;
 
 export const Right = styled.section`
@@ -47,6 +56,9 @@ export const UserTypeContainer = styled.div`
 `;
 
 export const UserType = styled.div<{ $isAdmin?: boolean }>`
+    position: absolute;
+    top: 20px;
+    right: 20px;
     background-color: ${({ $isAdmin }) => ($isAdmin ? 'rgb(77, 216, 158)' : 'gray')};
     color: white;
     padding: 2px 10px 5px;

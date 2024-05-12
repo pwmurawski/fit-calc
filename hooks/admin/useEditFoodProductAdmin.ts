@@ -10,17 +10,17 @@ const useEditFoodProductAdmin = (id: string, isBlocked: boolean) => {
     const { mutate } = useSWRConfig();
     const { setLoading } = useLoading();
 
-    const editFoodProduct = async (data: BodyFoodProducts) => {
+    const editFoodProduct = async (data: BodyFoodProducts, currentPage?: number, rowsPerPage?: number) => {
         setLoading(true);
         const res = await putFoodProductAdmin(id, data);
 
         switch (res?.status) {
             case 'OK':
-                if (!isBlocked) {
-                    await mutate(`/admin/foodProducts`);
-                } else {
-                    await mutate(`/admin/foodProducts/blocked`);
-                }
+                const pageKey = currentPage ? `/${currentPage}` : '';
+                const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
+                const blockedKey = isBlocked ? '/blocked' : '';
+                await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
+
                 await mutate(`/admin/foodProduct/${id}`, () => getFoodProduct(id));
                 break;
             case 'ERROR':

@@ -80,7 +80,6 @@ pwmurawski123@gmail.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-
 [react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [react-url]: https://reactjs.org/
 [typescript.ts]: https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=typescript&logoColor=3791d2

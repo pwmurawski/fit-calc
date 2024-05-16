@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { DecisionModal } from '../DecisionModal/DecisionModal';
 import { TableRowId } from 'components/Table/Table';
-import { resetPassword } from '_api/users';
+import { resetPasswordAdmin } from '_api/users';
 import { toastSucces } from 'lib/custom-toasts/toast-succes';
 import { toastError } from 'lib/custom-toasts/toast-error';
 
@@ -16,13 +16,12 @@ export const ResetPasswordModal: FC<ResetPasswordModalProps> = ({ onClose, selec
     };
 
     const handleAccept = async () => {
-        const res = await resetPassword(String(selectedRowId));
+        const res = await resetPasswordAdmin(String(selectedRowId));
 
         if (res?.status === 'OK') {
             toastSucces('Hasło zostało zresetowne!');
         }
         if (res?.status === 'ERROR') {
-            console.log(res.error);
             toastError('Hasło nie zostało zresetowne!');
         }
         onClose();

@@ -48,10 +48,34 @@ export const getUsers = async (): Response<{ users: Omit<User, 'password'>[] }> 
     }
 };
 
-export const resetPassword = async (userId: string): Response<{ message: string }> => {
+export const resetPasswordAdmin = async (userId: string): Response<{ message: string }> => {
     try {
         const response = await axios.put<{ message: string }>('/api/admin/users/reset-password', undefined, {
             params: { userId },
+        });
+        if (response.data.message) {
+            return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const resetPassword = async (code: string, newPassword: string): Response<{ message: string }> => {
+    try {
+        const response = await axios.put<{ message: string }>('/api/users/reset-password', { code, newPassword });
+        if (response.data.message) {
+            return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const sendEmailResetPassword = async (email: string): Response<{ message: string }> => {
+    try {
+        const response = await axios.get<{ message: string }>('/api/users/send-email-reset-password', {
+            params: { email },
         });
         if (response.data.message) {
             return { message: response.data.message, status: 'OK' };

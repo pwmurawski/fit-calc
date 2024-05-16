@@ -1,5 +1,5 @@
-import { ChangePasswordForm } from 'components/Forms/FoodProductForm copy 2/ChangePasswordForm';
-import { EditUserForm } from 'components/Forms/FoodProductForm copy/EditUserForm';
+import { ChangePasswordForm } from 'components/Forms/ChangePasswordForm/ChangePasswordForm';
+import { EditUserForm } from 'components/Forms/EditUserForm/EditUserForm';
 import { Layout } from 'components/Layouts/Layout';
 import { ProfileCard } from 'components/ProfileCard/ProfileCard';
 import { Secured } from 'components/security/secured';

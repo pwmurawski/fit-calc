@@ -23,8 +23,6 @@ export default function FoodProduct({
 }: IFoodProductProps) {
     const addFoodProductToMeal = useAddSelectedProduct();
 
-    console.log(verifiedFoodProduct);
-
     const addFoodProductToMealHandle = () => {
         if (lastSelectedProductWeight) {
             addFoodProductToMeal(id, lastSelectedProductWeight);

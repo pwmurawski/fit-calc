@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { RegisterLayout } from 'components/Layouts/RegisterLayout';
 import { GoToRegister } from 'components/GoToRegister/GoToRegister';
 import { UnSecured } from 'components/security/secured';
+import { ResetPassword } from 'components/ResetPassword/ResetPassword';
 
 const initFormValue: InitFormValue = {
     email: {
@@ -46,6 +47,7 @@ export function LoginView() {
     return (
         <>
             <AuthForm initFormValue={initFormValue} validationSchema={loginValidationSchema} onSubmit={loginHandler} />
+            <ResetPassword />
             <GoToRegister />
         </>
     );

@@ -13,6 +13,7 @@ import { sendEmail } from 'helpers/sendEmail';
 import { BodyUpdateUser } from 'pages/api/users';
 import { BodyChangePasswordUser } from 'pages/api/users/change-password';
 import { hashValue, verifyPassword } from 'lib/auth/verify-password';
+import { changePasswordTemplate, resetPasswordTemplate, sendEmailResetPasswordTemplate } from 'helpers/emailTemplates';
 
 export const checkUserExist = async (userId: string) => {
     const user = await prismaClient.user.findUnique({ where: { id: userId } });
@@ -50,13 +51,58 @@ export const changePassword = async (userId: string, userData: BodyChangePasswor
         const newPassword = await hashValue(userDataValid.password);
 
         await sendEmail(user.email, {
-            subject: `Zmiana hasła`,
-            html: `<div>Hasło zostało zmienione</div>`,
+            subject: 'Zmiana hasła',
+            html: changePasswordTemplate,
         });
 
         return prismaClient.user.update({ where: { id: userId }, data: { password: newPassword } });
     }
     throw new ApiError(HttpStatusCode.Forbidden, 'Hasło jest nie prawidłowe!');
+};
+
+export const checkUserExistByCode = async (code: string) => {
+    const user = await prismaClient.user.count({ where: { password: decodeURIComponent(code) } });
+    if (!user) {
+        return false;
+    }
+    return true;
+};
+
+export const checkUserExistByCode2 = async (code: string) => {
+    const user = await prismaClient.user.findFirst({ where: { password: decodeURIComponent(code) } });
+    if (!user) {
+        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono użytkownika');
+    }
+    return user;
+};
+
+export const changePasswordByCode = async (code: string, newPassword: string) => {
+    const user = await checkUserExistByCode2(code);
+
+    if (decodeURIComponent(code) === user.password) {
+        const hashPassword = await hashValue(newPassword);
+
+        await prismaClient.user.update({ where: { id: user.id }, data: { password: hashPassword } });
+        await sendEmail(user.email, {
+            subject: 'Zmiana hasła',
+            html: changePasswordTemplate,
+        });
+    } else {
+        throw new ApiError(HttpStatusCode.Forbidden, 'Hasło jest nie prawidłowe!');
+    }
+};
+
+export const sendEmailResetPassword = async (email: string) => {
+    const user = await prismaClient.user.findUnique({ where: { email }, select: { password: true } });
+    if (!user) {
+        throw new ApiError(HttpStatusCode.Forbidden, 'Nie znaleziono użytkownika');
+    }
+
+    const encodedSecretKey = encodeURIComponent(user?.password);
+    await sendEmail(email, {
+        subject: 'Reset hasła',
+        html: sendEmailResetPasswordTemplate(encodedSecretKey),
+    });
 };
 
 export const getUsers = async () => {
@@ -92,8 +138,8 @@ export const resetPassword = async (userId: string) => {
     const hashedPassword = await hashValue(newPassword);
 
     await sendEmail(user.email, {
-        subject: `Reset hasła`,
-        html: `<div>Kod: ${newPassword}</div>`,
+        subject: 'Reset hasła',
+        html: resetPasswordTemplate(newPassword),
     });
 
     return await prismaClient.user.update({

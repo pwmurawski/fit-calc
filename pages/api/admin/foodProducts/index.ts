@@ -30,9 +30,10 @@ const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiRespon
     if (blocked === 'true') {
         const foodProductsBlocked = await getAllFoodProductsBlocked(pageConverted, pageSizeConverted);
         res.status(HttpStatusCode.OK).json(foodProductsBlocked);
+    } else {
+        const foodProducts = await getAllFoodProductsNotBlocked(pageConverted, pageSizeConverted);
+        res.status(HttpStatusCode.OK).json(foodProducts);
     }
-    const foodProducts = await getAllFoodProductsNotBlocked(pageConverted, pageSizeConverted);
-    res.status(HttpStatusCode.OK).json(foodProducts);
 };
 
 const PUT = async (

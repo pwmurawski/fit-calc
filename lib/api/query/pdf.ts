@@ -73,9 +73,9 @@ export const generatePdf = async (
 
     const browser: Browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.setCookie(...convertCookies(cookies, `${process.env.VERCEL_URL}`));
+    await page.setCookie(...convertCookies(cookies, `${process.env.NEXT_PUBLIC_BASE_URL}`));
 
-    await page.goto(`${process.env.VERCEL_URL}/generate-pdf/${token}`, { waitUntil: 'networkidle0' });
+    await page.goto(`${process.env.NEXT_PUBLIC_BASE_URL}/generate-pdf/${token}`, { waitUntil: 'networkidle0' });
 
     await page.waitForSelector('#generate-pdf');
     await page.emulateMediaType('screen');

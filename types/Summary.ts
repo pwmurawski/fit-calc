@@ -1,4 +1,5 @@
 import { DailyGoals } from '@prisma/client';
+import { MealsData } from './Meal';
 
 export interface SummaryCalorieMacroData {
     kcal: number;
@@ -10,4 +11,9 @@ export interface SummaryCalorieMacroData {
 export interface SummaryResponse {
     summaryData: SummaryCalorieMacroData;
     dailyGoals: Pick<DailyGoals, 'kcal' | 'protein' | 'fat' | 'carbs'> | null;
+    daysData: {
+        mealsData: MealsData[];
+        summaryData: SummaryCalorieMacroData;
+        date: string;
+    }[];
 }

@@ -42,7 +42,7 @@ export const useAddSelectedProduct = () => {
             }
         } else {
             toastError('Brak wybranego posiłku');
-            push('/');
+            push('/app');
         }
         setLoading(false);
     };

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { BodyUpdateUser } from 'pages/api/users';
 import { BodyChangePasswordUser } from 'pages/api/users/change-password';
 import { Response } from 'types/Response';
+import { DeleteUserResponse, UsersAdminTableResponse } from 'types/User';
+import { BlockedUsersBody, CreateBlockedUsersResponse, DeleteBlockedUsersResponse } from 'types/blockedUsers';
 
 export const getUser = async (): Response<{ user: Omit<User, 'password'> }> => {
     try {
@@ -37,11 +39,17 @@ export const changePasswordUser = async (body: BodyChangePasswordUser): Response
     }
 };
 
-export const getUsers = async (): Response<{ users: Omit<User, 'password'>[] }> => {
+export const getAllUsers = async (
+    page?: number,
+    pageSize?: number,
+    blocked?: boolean,
+): Response<UsersAdminTableResponse> => {
     try {
-        const response = await axios.get<{ users: Omit<User, 'password'>[] }>('/api/admin/users');
+        const response = await axios.get<UsersAdminTableResponse>('/api/admin/users', {
+            params: { page, pageSize, blocked },
+        });
         if (response.data.users) {
-            return { users: response.data.users, status: 'OK' };
+            return { ...response.data, status: 'OK' };
         }
     } catch (error: any) {
         return { error: error.response?.data.error, status: 'ERROR' };
@@ -76,6 +84,43 @@ export const sendEmailResetPassword = async (email: string): Response<{ message:
     try {
         const response = await axios.get<{ message: string }>('/api/users/send-email-reset-password', {
             params: { email },
+        });
+        if (response.data.message) {
+            return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const blockedUsers = async (body: BlockedUsersBody): Response<CreateBlockedUsersResponse> => {
+    try {
+        const response = await axios.post<CreateBlockedUsersResponse>('/api/admin/users/blocked', body);
+        if (response.data.id) {
+            return { id: response.data.id, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const unBlockedUsers = async (userId: string): Response<DeleteBlockedUsersResponse> => {
+    try {
+        const response = await axios.delete<DeleteBlockedUsersResponse>('/api/admin/users/blocked', {
+            params: { userId },
+        });
+        if (response.data.message) {
+            return { message: response.data.message, status: 'OK' };
+        }
+    } catch (error: any) {
+        return { error: error.response?.data.error, status: 'ERROR' };
+    }
+};
+
+export const deleteUserAdmin = async (userId: string): Response<DeleteUserResponse> => {
+    try {
+        const response = await axios.delete<DeleteUserResponse>('/api/admin/users', {
+            params: { id: userId },
         });
         if (response.data.message) {
             return { message: response.data.message, status: 'OK' };

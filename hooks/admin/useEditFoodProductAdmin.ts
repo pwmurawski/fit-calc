@@ -4,10 +4,11 @@ import { useSWRConfig } from 'swr';
 import { BodyFoodProducts } from 'types/FoodProduct';
 import useSWRImmutable from 'swr/immutable';
 import { useLoading } from '../useLoading';
+import { clearCache } from 'helpers/clearCache';
 
 const useEditFoodProductAdmin = (id: string, isBlocked: boolean) => {
     const { data } = useSWRImmutable(`/admin/foodProduct/${id}`, () => getFoodProduct(id));
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
 
     const editFoodProduct = async (data: BodyFoodProducts, currentPage?: number, rowsPerPage?: number) => {
@@ -19,8 +20,8 @@ const useEditFoodProductAdmin = (id: string, isBlocked: boolean) => {
                 const pageKey = currentPage ? `/${currentPage}` : '';
                 const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
                 const blockedKey = isBlocked ? '/blocked' : '';
+                clearCache(cache, '/admin/foodProducts');
                 await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
-
                 await mutate(`/admin/foodProduct/${id}`, () => getFoodProduct(id));
                 break;
             case 'ERROR':

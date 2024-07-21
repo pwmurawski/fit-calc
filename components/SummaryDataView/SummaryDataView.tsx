@@ -6,7 +6,7 @@ import { FC, useMemo } from 'react';
 import { SummaryResponse } from 'types/Summary';
 
 interface SummaryDataViewProps {
-    summary: SummaryResponse | undefined;
+    summary: Omit<SummaryResponse, 'daysData'> | undefined;
 }
 
 const getPercent = (obj: { kcal: number; protein: number; fat: number; carbs: number }) => {

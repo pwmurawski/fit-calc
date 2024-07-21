@@ -1,7 +1,7 @@
 import { AuthenticatedApiRequest, HttpStatusCode } from '../../../lib/api/types';
 import { NextApiResponse } from 'next/types';
 import { withAuthMethodsAware } from 'lib/api/with-auth-methods-aware';
-import { getSummaryByDateRange } from 'lib/api/query/summary';
+import { getSummaryByDateRange, getSummaryDaysData } from 'lib/api/query/summary';
 import { SummaryResponse } from 'types/Summary';
 
 interface Query {
@@ -14,7 +14,9 @@ const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiRespon
     const { startDate, endDate } = req.query;
 
     const summary = await getSummaryByDateRange(userId, startDate, endDate);
-    res.status(HttpStatusCode.OK).json(summary);
+    const daysData = await getSummaryDaysData(userId, startDate, endDate);
+
+    res.status(HttpStatusCode.OK).json({ ...summary, ...daysData });
 };
 
 export default withAuthMethodsAware({

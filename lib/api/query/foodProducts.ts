@@ -66,7 +66,7 @@ export const getAllFoodProductsNotBlocked = async (page?: number, pageSize?: num
 
     const foodProducts = await prismaClient.foodProduct.findMany({
         where: { blockedFoodProduct: null },
-        include: { verifiedFoodProduct: true, blockedFoodProduct: true },
+        include: { verifiedFoodProduct: true, blockedFoodProduct: true, user: { select: { email: true } } },
         take: pageSize,
         skip,
     });
@@ -77,6 +77,7 @@ export const getAllFoodProductsNotBlocked = async (page?: number, pageSize?: num
     return {
         foodProducts: foodProducts.map((foodProduct) => ({
             ...foodProduct,
+            user: foodProduct.user?.email,
             verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
             blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
         })),
@@ -90,7 +91,11 @@ export const getAllFoodProductsBlocked = async (page?: number, pageSize?: number
     const skip = page && pageSize ? (page - 1) * pageSize : undefined;
 
     const foodProducts = await prismaClient.blockedFoodProduct.findMany({
-        select: { foodProduct: { include: { verifiedFoodProduct: true, blockedFoodProduct: true } } },
+        select: {
+            foodProduct: {
+                include: { verifiedFoodProduct: true, blockedFoodProduct: true, user: { select: { email: true } } },
+            },
+        },
         take: pageSize,
         skip,
     });
@@ -99,6 +104,7 @@ export const getAllFoodProductsBlocked = async (page?: number, pageSize?: number
     return {
         foodProducts: foodProducts.map(({ foodProduct }) => ({
             ...foodProduct,
+            user: foodProduct.user?.email,
             verifiedFoodProduct: Boolean(foodProduct.verifiedFoodProduct),
             blockedFoodProduct: Boolean(foodProduct.blockedFoodProduct),
         })),
@@ -124,7 +130,7 @@ export const getFoodProducts = async (userId: string, page: number) => {
         LEFT JOIN "UserFoodProductCount" uc ON uc."foodProductId" = fp.id AND uc."userId" = ${userId}
         LEFT JOIN "VerifiedFoodProduct" vf ON vf."foodProductId" = fp.id
         LEFT JOIN "BlockedFoodProduct" bfp ON bfp."foodProductId" = fp.id
-        WHERE bfp.id IS NULL
+        WHERE bfp.id IS NULL AND (vf.id IS NOT NULL OR fp."userId" = ${userId})
         ORDER BY COALESCE(uc."count", 0) DESC
         LIMIT ${FOOD_PRODUCTS_PAGE_SIZE} OFFSET ${(page - 1) * FOOD_PRODUCTS_PAGE_SIZE};
     `;
@@ -164,7 +170,10 @@ export const getFoodProduct = async (id: string, userId: string) => {
 export const searchFoodProducts = async (userId: string, term?: string) => {
     const foodProducts = await prismaClient.foodProduct.findMany({
         where: {
-            OR: [{ name: { contains: term, mode: 'insensitive' } }, { code: { contains: term } }],
+            AND: [
+                { OR: [{ name: { contains: term, mode: 'insensitive' } }, { code: { contains: term } }] },
+                { OR: [{ verifiedFoodProduct: { isNot: null } }, { userId }] },
+            ],
             blockedFoodProduct: { is: null },
         },
         include: { verifiedFoodProduct: true },
@@ -240,7 +249,7 @@ export const exportFoodProductAdmin = async () => {
 
     const data = foodProducts.map((foodProduct) => ({
         ...omit(foodProduct, ['userId']),
-        user: foodProduct.user.email,
+        user: foodProduct.user?.email,
     }));
 
     const headersMap = [

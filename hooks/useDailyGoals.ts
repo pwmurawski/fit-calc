@@ -24,7 +24,7 @@ export const useDailyGoals = (isCurrent = false) => {
         switch (res?.status) {
             case 'OK':
                 await mutate();
-                push('/');
+                push('/app');
                 break;
             case 'ERROR':
                 toastError(res.error);

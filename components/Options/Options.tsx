@@ -10,7 +10,7 @@ interface IEditBtnProps {
     verifiedFoodProduct: boolean;
     ids: {
         productId: string;
-        productUserId: string;
+        productUserId?: string;
         userAuthId?: string;
     };
 }

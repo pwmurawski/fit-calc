@@ -133,7 +133,9 @@ export const UploadCsvModal: FC<UploadModalProps> = ({ onClose, currentPage, row
                         header={<Title>{!uploaded ? 'Prześlij plik' : 'Przesłany plik'}</Title>}
                         buttons={
                             <ActionContainer>
-                                <Button onClick={handleClose}>Anuluj</Button>
+                                <Button onClick={handleClose} $color="rgb(255, 150, 150)">
+                                    Anuluj
+                                </Button>
                                 <Button onClick={handleConfirm}>Potwierdź</Button>
                             </ActionContainer>
                         }

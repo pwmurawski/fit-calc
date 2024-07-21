@@ -3,9 +3,10 @@ import { useSWRConfig } from 'swr';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { useLoading } from '../useLoading';
 import { VerifiedFoodProductsBody } from 'types/verifiedFoodProducts';
+import { clearCache } from 'helpers/clearCache';
 
 export const useVerifiedFoodProducts = () => {
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
 
     const verified = async (
@@ -21,6 +22,7 @@ export const useVerifiedFoodProducts = () => {
                 const pageKey = currentPage ? `/${currentPage}` : '';
                 const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
                 const blockedKey = isBlocked ? '/blocked' : '';
+                clearCache(cache, '/admin/foodProducts');
                 await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
                 break;
             case 'ERROR':

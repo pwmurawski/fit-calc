@@ -7,6 +7,8 @@ import { selectedProductSeed } from './seed/selectedProduct';
 
 const prisma = new PrismaClient();
 
+process.env.TZ = 'Europe/Warsaw';
+
 async function main() {
     for (let user of userSeed) {
         await prisma.user.create({

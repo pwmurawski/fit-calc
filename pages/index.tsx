@@ -7,6 +7,10 @@ import { ThirdSection } from 'components/HomeView/ThirdSection/ThirdSection';
 import { FourthSection } from 'components/HomeView/FourthSection/FourthSection';
 import { Footer } from 'components/HomeView/Footer/Footer';
 
+export async function getStaticProps() {
+    return { props: {} };
+}
+
 const Home: NextPageWithLayout = () => {
     return (
         <>

@@ -8,7 +8,12 @@ export const getSummaryByDateRange = async (startDate: Date, endDate: Date): Res
             params: { startDate, endDate },
         });
         if (response.data.summaryData && response.data.dailyGoals) {
-            return { summaryData: response.data.summaryData, dailyGoals: response.data.dailyGoals, status: 'OK' };
+            return {
+                summaryData: response.data.summaryData,
+                dailyGoals: response.data.dailyGoals,
+                daysData: response.data.daysData,
+                status: 'OK',
+            };
         }
     } catch (error: any) {
         return { error: error.response?.data.error, status: 'ERROR' };

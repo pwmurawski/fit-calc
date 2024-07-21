@@ -2,22 +2,21 @@ import { Secured } from 'components/security/secured';
 import { NextPageWithLayout } from 'pages/_app';
 import Head from 'next/head';
 import { AccountType } from 'types/enum';
-import { UesrsTable } from 'components/UsersTable/UsersTable';
-import { AdminFoodTable } from 'components/AdminFoodTable/AdminFoodTable';
 import { AdminLayout } from 'components/Layouts/AdminLayout';
+import { LogsTable } from 'components/LogsTable/LogsTable';
 
-const Admin: NextPageWithLayout = () => {
+const Logs: NextPageWithLayout = () => {
     return (
         <>
             <Head>
-                <title>FitCalc | Admin</title>
+                <title>FitCalc | Rejestr logowań</title>
             </Head>
-            <AdminView />
+            <LogsView />
         </>
     );
 };
 
-Admin.getLayout = function getLayout(page) {
+Logs.getLayout = function getLayout(page) {
     return (
         <Secured authorities={[AccountType.Admin]}>
             <AdminLayout>{page}</AdminLayout>
@@ -25,13 +24,8 @@ Admin.getLayout = function getLayout(page) {
     );
 };
 
-export default Admin;
+export default Logs;
 
-function AdminView() {
-    return (
-        <>
-            <UesrsTable />
-            <AdminFoodTable />
-        </>
-    );
+function LogsView() {
+    return <LogsTable />;
 }

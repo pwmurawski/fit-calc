@@ -105,17 +105,49 @@ export const sendEmailResetPassword = async (email: string) => {
     });
 };
 
-export const getUsers = async () => {
+export const getUsersNotBlocked = async (page?: number, pageSize?: number) => {
+    const skip = page && pageSize ? (page - 1) * pageSize : undefined;
+
     const users = await prismaClient.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            surname: true,
-            email: true,
-            userType: true,
-        },
+        where: { blockedUser: null },
+        include: { blockedUser: true },
+        take: pageSize,
+        skip,
     });
-    return users;
+    const total = await prismaClient.user.count({
+        where: { blockedUser: null },
+    });
+
+    return {
+        users: users.map((user) => ({
+            ...user,
+            blockedUser: Boolean(user.blockedUser),
+        })),
+        total,
+        page,
+        pageSize,
+    };
+};
+
+export const getUsersBlocked = async (page?: number, pageSize?: number) => {
+    const skip = page && pageSize ? (page - 1) * pageSize : undefined;
+
+    const users = await prismaClient.blockedUser.findMany({
+        select: { user: { include: { blockedUser: true } } },
+        take: pageSize,
+        skip,
+    });
+    const total = await prismaClient.blockedUser.count();
+
+    return {
+        users: users.map(({ user }) => ({
+            ...user,
+            blockedUser: Boolean(user.blockedUser),
+        })),
+        total,
+        page,
+        pageSize,
+    };
 };
 
 export const getUserId = async (email: string | undefined) => {
@@ -146,4 +178,14 @@ export const resetPassword = async (userId: string) => {
         where: { id: userId },
         data: { password: hashedPassword },
     });
+};
+
+export const deleteUserAdmin = async (id: string) => {
+    await checkUserExist(id);
+    await prismaClient.dailyGoals.deleteMany({ where: { userId: id } });
+    await prismaClient.selectedProduct.deleteMany({ where: { userId: id } });
+    await prismaClient.blockedUser.delete({ where: { userId: id } });
+    await prismaClient.userFoodProductCount.deleteMany({ where: { userId: id } });
+    await prismaClient.foodProduct.updateMany({ where: { userId: id }, data: { userId: undefined } });
+    await prismaClient.user.delete({ where: { id } });
 };

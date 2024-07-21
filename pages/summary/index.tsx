@@ -10,6 +10,8 @@ import { BarChart } from 'components/BarChart/BarChart';
 import { SummaryDataView } from 'components/SummaryDataView/SummaryDataView';
 import { GeneratePdfBtn } from 'components/GeneratePdfBtn/GeneratePdfBtn';
 import { generatePdf } from '_api/pdf';
+import { SummarySliderPdf } from 'components/Pdf/SummarySlider/SummarySliderPdf';
+import MealsTablePdf from 'components/Pdf/MealsTable/MealsTable';
 
 const Summary: NextPageWithLayout = () => {
     return (
@@ -55,9 +57,15 @@ export function SummaryView() {
     return (
         <>
             <SummarySlider getDate={getDate} />
-            <div style={{ overflow: 'auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', overflow: 'auto', gap: '10px' }}>
                 <BarChart summary={summary} />
                 <SummaryDataView summary={summary} />
+                {summary?.daysData?.map(({ mealsData, date }, idx) => (
+                    <div key={idx}>
+                        <SummarySliderPdf startDate={date} endDate={date} />
+                        <MealsTablePdf mealsData={mealsData} />
+                    </div>
+                ))}
             </div>
             <GeneratePdfBtn onClick={handleGeneratePdf} />
         </>

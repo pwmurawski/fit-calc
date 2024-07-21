@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const TableContainer = styled.section`
-    flex: 2;
-    height: 50%;
-
-    @media (min-width: 1200px) {
-        height: 100%;
-    }
-`;
-
 export const Container = styled.section`
     display: flex;
     justify-content: space-between;

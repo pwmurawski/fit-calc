@@ -15,7 +15,9 @@ export type FoodProductResponse = {
         | null;
 };
 export type DeleteFoodProductResponse = { message: string };
-export type FoodProductsAdmin = Array<FoodProduct & { verifiedFoodProduct: boolean; blockedFoodProduct: boolean }>;
+export type FoodProductsAdmin = Array<
+    FoodProduct & { verifiedFoodProduct: boolean; blockedFoodProduct: boolean; user: string | undefined }
+>;
 export type FoodProductsAdminTableResponse = {
     foodProducts: FoodProductsAdmin;
     total?: number;

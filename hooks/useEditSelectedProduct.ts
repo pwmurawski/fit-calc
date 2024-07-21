@@ -23,7 +23,7 @@ export const useEditSelectedProduct = (id: string) => {
             case 'OK':
                 mutate(`/dayData/${formatDate}`, () => getDayData(formatDate));
                 mutateSelectedProducts();
-                push('/');
+                push('/app');
                 break;
             case 'ERROR':
                 toastError(res.error);

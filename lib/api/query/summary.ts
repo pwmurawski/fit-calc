@@ -1,8 +1,9 @@
 import modifySummaryCalorieMacroData from 'helpers/modifySummaryCalorieMacroData';
 import { getDailyGoalsByDateRange } from './dailyGoals';
 import { getSelectedProductsByDateRange } from './selectedProducts';
-import { format } from 'date-fns';
+import { eachDayOfInterval, format } from 'date-fns';
 import { countDaysBetweenDates } from 'helpers/getSummaryDay';
+import { getDayData } from './daysData';
 
 export const getSummaryByDateRange = async (userId: string, startDate: string, endDate: string) => {
     const selectedProductDays = await getSelectedProductsByDateRange(userId, startDate, endDate);
@@ -36,4 +37,15 @@ export const getSummaryByDateRange = async (userId: string, startDate: string, e
         summaryData,
         dailyGoals,
     };
+};
+
+export const getSummaryDaysData = async (userId: string, startDate: string, endDate: string) => {
+    const daysData = [];
+    const datesArray = eachDayOfInterval({ start: new Date(startDate), end: new Date(endDate) });
+    for (const date of datesArray) {
+        const dayData = await getDayData(userId, date.toISOString());
+        daysData.push({ date: date.toISOString(), ...dayData });
+    }
+
+    return { daysData };
 };

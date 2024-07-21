@@ -12,6 +12,7 @@ export const useAuth = () => {
         setLoading(true);
         const res = await signIn('credentials', {
             ...formValue,
+            log: navigator.userAgent,
             callbackUrl: '/app',
             redirect: false,
         });

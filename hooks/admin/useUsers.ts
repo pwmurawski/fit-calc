@@ -1,12 +1,17 @@
 import { toastError } from 'lib/custom-toasts/toast-error';
 import useSWRImmutable from 'swr/immutable';
-import { getUsers } from '_api/users';
+import { getAllUsers } from '_api/users';
 
-export const useUsers = () => {
-    const { data } = useSWRImmutable(`/admin/users`, () => getUsers());
+export const useUsers = (page?: number, pageSize?: number, blocked?: boolean) => {
+    const pageKey = page ? `/${page}` : '';
+    const pageSizeKey = pageSize ? `/${pageSize}` : '';
+    const blockedKey = blocked ? '/blocked' : '';
+    const { data } = useSWRImmutable(`/admin/users${pageKey}${pageSizeKey}${blockedKey}`, () =>
+        getAllUsers(page, pageSize, blocked),
+    );
     switch (data?.status) {
         case 'OK':
-            return data.users;
+            return data;
         case 'ERROR':
             toastError(data.error);
             break;

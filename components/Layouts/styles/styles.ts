@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled, { CSSObject } from 'styled-components';
 
 const commonStyles: CSSObject = {
@@ -36,6 +37,14 @@ export const AdminWrapper = styled.div`
     overflow: auto;
 `;
 
+export const AdminMain = styled.main`
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+`;
+
 export const AdminContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -48,4 +57,21 @@ export const AdminContainer = styled.div`
     @media (min-width: 1200px) {
         flex-direction: row;
     }
+`;
+
+export const Menu = styled.section`
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    width: 100%;
+    gap: 10px;
+`;
+
+export const MenuLink = styled(Link)`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    padding: 0 10px;
+    gap: 10px;
 `;

@@ -24,7 +24,9 @@ export const DecisionModal: FC<DecisionModalProps> = ({ onClose, handleAccept, t
                 <Title>{title}</Title>
                 <Typography>{desc}</Typography>
                 <Action>
-                    <Button onClick={handleCancel}>Nie</Button>
+                    <Button onClick={handleCancel} $color="rgb(255, 150, 150)">
+                        Nie
+                    </Button>
                     <Button onClick={handleAccept}>Tak</Button>
                 </Action>
             </Container>

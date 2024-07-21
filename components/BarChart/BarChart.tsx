@@ -28,7 +28,7 @@ export const options: ChartOptions<'bar'> = {
 };
 
 interface BarChartProps {
-    summary: SummaryResponse | undefined;
+    summary: Omit<SummaryResponse, 'daysData'> | undefined;
 }
 
 export function BarChart({ summary }: BarChartProps) {
@@ -94,7 +94,7 @@ export function BarChart({ summary }: BarChartProps) {
     };
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', maxWidth: '983px' }}>
             <div style={{ flex: 1 }}>
                 <Bar width="100%" options={options} data={kcalData} />
             </div>

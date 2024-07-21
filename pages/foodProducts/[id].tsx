@@ -64,7 +64,7 @@ export function FoodProductView({ foodProductId }: FoodProductPageProps) {
                 verifiedFoodProduct={foodProduct.verifiedFoodProduct}
                 ids={{
                     productId: foodProduct?.id,
-                    productUserId: foodProduct?.userId,
+                    productUserId: foodProduct?.userId ?? undefined,
                     userAuthId: session.data?.user.id,
                 }}
             />

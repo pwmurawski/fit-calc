@@ -2,9 +2,10 @@ import { unVerifiedFoodProducts } from '_api/foodProducts';
 import { useSWRConfig } from 'swr';
 import { toastError } from 'lib/custom-toasts/toast-error';
 import { useLoading } from '../useLoading';
+import { clearCache } from 'helpers/clearCache';
 
 export const useUnVerifiedFoodProducts = () => {
-    const { mutate } = useSWRConfig();
+    const { mutate, cache } = useSWRConfig();
     const { setLoading } = useLoading();
 
     const unVerified = async (
@@ -20,6 +21,7 @@ export const useUnVerifiedFoodProducts = () => {
                 const pageKey = currentPage ? `/${currentPage}` : '';
                 const pageSizeKey = rowsPerPage ? `/${rowsPerPage}` : '';
                 const blockedKey = isBlocked ? '/blocked' : '';
+                clearCache(cache, '/admin/foodProducts');
                 await mutate(`/admin/foodProducts${pageKey}${pageSizeKey}${blockedKey}`);
                 break;
             case 'ERROR':

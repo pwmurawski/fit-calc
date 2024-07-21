@@ -9,6 +9,7 @@ import { ApiError } from 'next/dist/server/api-utils';
 import { HttpStatusCode } from 'lib/api/types';
 import { loginValidationSchema } from 'lib/validation/authValidationSchema';
 import { validation } from 'lib/api/validation';
+import { createLogs } from 'lib/api/query/logs';
 
 export const nextAuthOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prismaClient),
@@ -18,6 +19,7 @@ export const nextAuthOptions: NextAuthOptions = {
             credentials: {
                 email: { label: 'Email', type: 'email' },
                 password: { label: 'Password', type: 'password' },
+                log: { label: 'log', type: 'string' },
             },
 
             async authorize(credentials, req) {
@@ -33,6 +35,7 @@ export const nextAuthOptions: NextAuthOptions = {
                             email: true,
                             password: true,
                             userType: true,
+                            blockedUser: true,
                         },
                     });
 
@@ -43,11 +46,21 @@ export const nextAuthOptions: NextAuthOptions = {
                         );
                     }
 
+                    if (user.blockedUser?.blocked) {
+                        throw new ApiError(
+                            HttpStatusCode.NotAuthorized,
+                            'Użytkownik o podanym adresie e-mail jest zablokowany!',
+                        );
+                    }
+
                     const isVerified = await verifyPassword(credentialsValid.password, user.password);
 
                     if (!isVerified) {
                         throw new ApiError(HttpStatusCode.NotAuthorized, 'Podane hasło jest nieprawidłowe!');
                     }
+
+                    await createLogs(user.email, credentials?.log);
+
                     return omit(user, 'password');
                 } else {
                     return null;
@@ -86,7 +99,6 @@ export const nextAuthOptions: NextAuthOptions = {
                 token.id = user.id;
                 token.email = user.email;
                 token.userType = user.userType as AccountType;
-                token.email = user.email;
                 token.surname = user.surname;
             }
 

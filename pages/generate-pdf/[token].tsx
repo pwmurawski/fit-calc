@@ -24,8 +24,6 @@ function GeneratePdf() {
         }
     }, [isReady]);
 
-    console.log(pdfData);
-
     if (!pdfData) {
         return null;
     }

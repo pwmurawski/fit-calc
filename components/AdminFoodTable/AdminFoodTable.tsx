@@ -3,10 +3,7 @@ import { useEffect, useState } from 'react';
 import { AdminFoodTableHeader } from './AdminFoodTableHeader';
 import { AdminFoodTableButtons } from './AdminFoodTableButtons';
 import { useAllFoodProducts } from 'hooks/admin/useAllFoodProducts';
-import { TableContainer } from './styles/styles';
 import Pagination, { ROWS_PER_PAGE } from 'components/Pagination/Pagination';
-import { clearCache } from 'helpers/clearCache';
-import { useSWRConfig } from 'swr';
 
 const columns = {
     name: 'Nazwa',
@@ -15,11 +12,11 @@ const columns = {
     fat: 'Tłuszcz',
     carbs: 'Weglowodany',
     code: 'Kod',
+    user: 'Email',
     verifiedFoodProduct: 'Verified',
 };
 
 export const AdminFoodTable = () => {
-    const { cache } = useSWRConfig();
     const [selectedRowId, setSelectedRowId] = useState<TableRowId>();
     const [isBlocked, setIsBlocked] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,7 +30,6 @@ export const AdminFoodTable = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-        clearCache(cache, '/admin/foodProducts');
     }, [rowsPerPage]);
 
     useEffect(() => {
@@ -41,7 +37,7 @@ export const AdminFoodTable = () => {
     }, [currentPage, rowsPerPage]);
 
     return (
-        <TableContainer>
+        <>
             <Table
                 data={data?.foodProducts ?? []}
                 column={columns}
@@ -74,6 +70,6 @@ export const AdminFoodTable = () => {
                     />
                 }
             />
-        </TableContainer>
+        </>
     );
 };

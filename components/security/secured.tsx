@@ -63,7 +63,7 @@ const Authorized: React.FC<IAuthorizedProps> = ({ user, authorities, children })
         return <>{children}</>;
     } else {
         if (user.userType === AccountType.Admin) {
-            push('/admin');
+            push('/admin/users');
             return null;
         }
         push('/');

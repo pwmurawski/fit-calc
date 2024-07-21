@@ -13,8 +13,15 @@ const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiRespon
     const userId = req.session.user.id;
     const { startDate, endDate } = req.query;
 
-    const summary = await getSummaryByDateRange(userId, startDate, endDate);
-    const daysData = await getSummaryDaysData(userId, startDate, endDate);
+    const start = new Date(
+        Date.UTC(new Date(startDate).getFullYear(), new Date(startDate).getMonth(), new Date(startDate).getDate()),
+    );
+    const end = new Date(
+        Date.UTC(new Date(endDate).getFullYear(), new Date(endDate).getMonth(), new Date(endDate).getDate()),
+    );
+
+    const summary = await getSummaryByDateRange(userId, start.toISOString(), end.toISOString());
+    const daysData = await getSummaryDaysData(userId, start.toISOString(), end.toISOString());
 
     res.status(HttpStatusCode.OK).json({ ...summary, ...daysData });
 };

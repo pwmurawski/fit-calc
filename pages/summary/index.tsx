@@ -12,6 +12,7 @@ import { GeneratePdfBtn } from 'components/GeneratePdfBtn/GeneratePdfBtn';
 import { generatePdf } from '_api/pdf';
 import { SummarySliderPdf } from 'components/Pdf/SummarySlider/SummarySliderPdf';
 import MealsTablePdf from 'components/Pdf/MealsTable/MealsTable';
+import { toUTC } from 'helpers/toUTC';
 
 const Summary: NextPageWithLayout = () => {
     return (
@@ -34,16 +35,17 @@ Summary.getLayout = function getLayout(page) {
 
 export default Summary;
 
-export function SummaryView() {
+const SummaryView = () => {
     const [date, setDate] = useState({
-        start: new Date(),
-        end: new Date(),
+        start: toUTC(new Date()),
+        end: toUTC(new Date()),
     });
-    const summary = useSummaryByDateRange(date.start, date.end);
 
     const getDate = (start: Date, end: Date) => {
-        setDate({ start, end });
+        setDate({ start: toUTC(start), end: toUTC(end) });
     };
+
+    const summary = useSummaryByDateRange(date.start, date.end);
 
     const handleGeneratePdf = async () => {
         const res = await generatePdf({ action: 'summary-pdf', date });
@@ -70,4 +72,4 @@ export function SummaryView() {
             <GeneratePdfBtn onClick={handleGeneratePdf} />
         </>
     );
-}
+};

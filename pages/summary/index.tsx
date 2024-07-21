@@ -34,21 +34,16 @@ Summary.getLayout = function getLayout(page) {
 
 export default Summary;
 
-const toUTC = (date: Date) => {
-    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-};
-
-const SummaryView = () => {
+export function SummaryView() {
     const [date, setDate] = useState({
-        start: toUTC(new Date()),
-        end: toUTC(new Date()),
+        start: new Date(),
+        end: new Date(),
     });
+    const summary = useSummaryByDateRange(date.start, date.end);
 
     const getDate = (start: Date, end: Date) => {
-        setDate({ start: toUTC(start), end: toUTC(end) });
+        setDate({ start, end });
     };
-
-    const summary = useSummaryByDateRange(date.start, date.end);
 
     const handleGeneratePdf = async () => {
         const res = await generatePdf({ action: 'summary-pdf', date });
@@ -75,4 +70,4 @@ const SummaryView = () => {
             <GeneratePdfBtn onClick={handleGeneratePdf} />
         </>
     );
-};
+}

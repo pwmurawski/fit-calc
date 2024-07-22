@@ -13,9 +13,6 @@ const GET = async (req: AuthenticatedApiRequest<Query, void>, res: NextApiRespon
     const userId = req.session.user.id;
     const { startDate, endDate } = req.query;
 
-    console.log(startDate, 'startDate');
-    console.log(endDate, 'endDate');
-
     const summary = await getSummaryByDateRange(userId, startDate, endDate);
     const daysData = await getSummaryDaysData(userId, startDate, endDate);
 

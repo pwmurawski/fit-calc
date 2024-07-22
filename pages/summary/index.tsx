@@ -41,9 +41,6 @@ export function SummaryView() {
     });
     const summary = useSummaryByDateRange(date.start, date.end);
 
-    console.log(date.start, 'start');
-    console.log(date.end, 'end');
-
     const getDate = (start: Date, end: Date) => {
         setDate({ start, end });
     };
